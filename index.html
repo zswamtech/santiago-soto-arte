@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santiago Soto - Artista Digital</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logosantiagoarte1.png" alt="Santiago Soto Arte" class="logo-image">
+                <div class="logo-text">
+                    <h2>Santiago Soto</h2>
+                    <span>Arte Digital</span>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="#sobre-mi">Sobre Mí</a></li>
+                <li><a href="#nft">Colección NFT</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Santiago Soto</h1>
+            <p class="hero-subtitle">Artista Digital de 14 años</p>
+            <p class="hero-description">Creando mundos únicos a través del arte digital y la imaginación</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="scrollToSection('galeria')">Ver Obras</button>
+                <button class="btn-secondary" onclick="scrollToSection('nft')">Colección NFT</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-art">
+                <div class="art-frame"></div>
+                <div class="art-frame"></div>
+                <div class="art-frame"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria" class="gallery">
+        <div class="container">
+            <h2>Galería de Obras</h2>
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="digital">Arte Digital</button>
+                <button class="filter-btn" data-filter="tradicional">Arte Tradicional</button>
+                <button class="filter-btn" data-filter="abstracto">Abstracto</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Las obras se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre-mi" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Sobre Mí</h2>
+                    <p>Soy Santiago, un artista de 14 años apasionado por crear mundos únicos a través del arte digital. Cada pincelada cuenta una historia, cada color expresa una emoción.</p>
+                    <p>Mi objetivo es fusionar el arte tradicional con la tecnología moderna, creando experiencias visuales que transporten al espectador a nuevas dimensiones.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>25+</h3>
+                            <p>Obras Creadas</p>
+                        </div>
+                        <div class="stat">
+                            <h3>3</h3>
+                            <p>Años Pintando</p>
+                        </div>
+                        <div class="stat">
+                            <h3>∞</h3>
+                            <p>Imaginación</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="profile-placeholder" style="background-image: url('https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=300&h=400&fit=crop')"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nft" class="nft-section">
+        <div class="container">
+            <h2>Colección NFT</h2>
+            <p class="section-subtitle">Obras únicas tokenizadas en blockchain</p>
+            <div class="nft-grid">
+                <div class="nft-card">
+                    <div class="nft-image" style="background-image: url('https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=250&h=200&fit=crop')"></div>
+                    <h3>Próximamente</h3>
+                    <p>Primera colección NFT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Conectemos</h2>
+            <p>¿Interesado en adquirir una obra o colaborar?</p>
+            <div class="contact-info">
+                <button class="contact-btn">Enviar Mensaje</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Santiago Soto Arte. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

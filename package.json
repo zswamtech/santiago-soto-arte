@@ -1,0 +1,17 @@
+{
+  "name": "santiago-soto-arte",
+  "version": "1.0.0",
+  "description": "Portfolio digital para Santiago Soto - Artista",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000",
+    "build": "echo 'Build complete'",
+    "start": "live-server --port=3000"
+  },
+  "keywords": ["arte", "portfolio", "nft", "digital-art"],
+  "author": "Santiago Soto",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
