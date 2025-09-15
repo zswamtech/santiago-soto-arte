@@ -1,8 +1,12 @@
 # Santiago Soto Arte - Portfolio Digital
 
+<div align="center">
+  <img src="assets/images/logosantiagoarte1.png" alt="Santiago Soto Arte Logo" width="200" height="200" style="border-radius: 50%;">
+</div>
+
 👉 Portafolio digital interactivo del joven artista Santiago Soto, especializado en pintura al óleo de mascotas, con integración de galería, storytelling y exploración de NFTs.
 
-Portfolio web para Santiago Soto, artista digital de 14 años.
+Portfolio web para Santiago Soto.
 
 ## 🎨 Características
 
