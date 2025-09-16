@@ -1,37 +1,56 @@
-# Santiago Soto Arte - Portfolio Digital
+# 🎨 Santiago Soto Arte
 
 <div align="center">
   <img src="assets/images/logosantiagoarte1.png" alt="Santiago Soto Arte Logo" width="200" height="200" style="border-radius: 50%;">
 </div>
 
-👉 Portafolio digital interactivo del joven artista Santiago Soto, especializado en pintura al óleo de mascotas, con integración de galería, storytelling y exploración de NFTs.
+Bienvenido al repositorio oficial de **Santiago Soto Arte**, un proyecto creativo y educativo que combina **pintura tradicional al óleo** con **tecnología digital**.
+Aquí desarrollamos un portafolio web interactivo para mostrar, aprender e innovar con las obras de **Santiago Soto**, un joven artista de 14 años apasionado por pintar mascotas de forma realista.
 
-Portfolio web para Santiago Soto.
+🌐 [Visita el dominio oficial](https://santiagosoto.art)
 
-## 🎨 Características
+---
 
-- **Portfolio Interactivo**: Galería de obras con filtros dinámicos
-- **Diseño Responsivo**: Optimizado para móviles y desktop
-- **Animaciones Suaves**: Efectos visuales atractivos
-- **Sección NFT**: Preparado para tokenización de obras
-- **Contacto**: Sistema de comunicación directo
-- **Logo Integrado**: Logo personalizado en la navegación
+## ✨ Objetivos del Proyecto
 
-## 🚀 Cómo ejecutar
+- Crear un **portafolio digital** para exhibir las pinturas de Santiago.
+- Explorar el uso de tecnologías web para **interactividad y creatividad**.
+- Desarrollar actividades dinámicas: juegos, minijuegos, concursos, realidad aumentada y galerías 3D.
+- Usar este proyecto como un espacio de **aprendizaje en programación y arte digital** para Santiago.
+- Explorar a futuro ideas como **tokenización de obras** y experiencias inmersivas.
 
-1. Instalar dependencias:
-```bash
-npm install
-```
+---
 
-2. Ejecutar servidor local:
-```bash
-npm run dev
-```
+## 📚 Aprendizaje
 
-3. Abrir navegador en: `http://localhost:3000`
+Más allá de mostrar obras, este proyecto es un **laboratorio de aprendizaje**.
+Hemos creado el archivo [`aprendizaje.md`](./aprendizaje.md) para documentar paso a paso los lenguajes, herramientas y tecnologías que usamos.
 
-## 📁 Estructura del Proyecto
+Esto permite que Santiago (y cualquier visitante) entienda el **para qué** de cada parte:
+- **HTML** → estructura.
+- **CSS** → estilos y diseño.
+- **JavaScript** → interactividad y juegos.
+- **GitHub y Hostinger** → colaboración y publicación en línea.
+
+---
+
+## 🚀 Tecnologías principales
+
+- **HTML5** – estructura de las páginas.
+- **CSS3** – estilos y diseño responsivo.
+- **JavaScript (ES6)** – interactividad, dinámicas y juegos.
+- **Node.js + Live Server** – entorno de desarrollo local.
+- **GitHub** – control de versiones y colaboración.
+- **Hostinger** – hosting y dominio oficial.
+
+Próximamente integraremos:
+- **Three.js** (galerías 3D).
+- **WebXR/AR** (realidad aumentada).
+- **Tokenización (NFTs, exploratorio).**
+
+---
+
+## 🧩 Estructura del Proyecto
 
 ```
 santiago_soto_arte/
@@ -44,30 +63,24 @@ santiago_soto_arte/
 │       └── logosantiagoarte1.png
 ├── index.html
 ├── package.json
+├── aprendizaje.md
 └── README.md
 ```
 
-## 🎯 Próximas Funcionalidades
+---
 
-- [ ] Sistema de subida de imágenes
-- [ ] Integración con blockchain para NFTs
-- [ ] Carrito de compras
-- [ ] Sistema de historias interactivas
-- [ ] Gamificación basada en obras
-- [ ] Blog de artista
+## 🌟 Cómo colaborar
 
-## 🖼️ Agregar Nuevas Obras
-
-Para agregar obras a la galería, edita el array `artworks` en `assets/js/main.js` y agrega las imágenes en `assets/images/`.
-
-## 🎮 Ideas de Desarrollo Futuro
-
-1. **NFT Marketplace**: Venta de obras tokenizadas
-2. **Arte Interactivo**: Historias basadas en los cuadros
-3. **Juegos de Arte**: Experiencias lúdicas con las obras
-4. **Comunidad**: Sistema de comentarios y votaciones
-5. **Realidad Aumentada**: Visualización 3D de obras
+Este proyecto está abierto a la colaboración, siempre con respeto y foco en el **aprendizaje de Santiago**.
+Cualquier sugerencia, mejora o nueva idea puede hacerse mediante **Pull Requests** o **Issues**.
 
 ---
 
-*Desarrollado con ❤️ para Santiago Soto*
+## 📄 Licencia
+
+Este proyecto está bajo la licencia **MIT**.
+Eres libre de usar y modificar este código, siempre reconociendo la autoría de Santiago Soto Arte.
+
+---
+
+✍️ Proyecto en desarrollo por **Santiago Soto** y **Andrés Soto**, con apoyo de IA copilotos (GPT Plus y Claude).
