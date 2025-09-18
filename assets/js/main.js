@@ -5,48 +5,69 @@ function scrollToSection(sectionId) {
     });
 }
 
-// Gallery functionality
+// Gallery functionality - Santiago's Art Collection
 const artworks = [
     {
         id: 1,
-        title: "Sueños Digitales",
-        category: "digital",
-        description: "Una exploración de mundos fantásticos",
-        image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop"
+        title: "Max, el Golden Retriever",
+        category: "tradicional",
+        description: "Óleo sobre lienzo - Retrato de mi perro favorito del barrio",
+        image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop"
     },
     {
         id: 2,
-        title: "Colores del Alma",
-        category: "abstracto",
-        description: "Expresión pura de emociones",
-        image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=300&fit=crop"
+        title: "Luna, la Gata Misteriosa",
+        category: "digital",
+        description: "Arte digital - Capturando la elegancia felina",
+        image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop"
     },
     {
         id: 3,
-        title: "Naturaleza Urbana",
+        title: "Buddy en el Parque",
         category: "tradicional",
-        description: "Fusión entre lo natural y lo artificial",
-        image: "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?w=400&h=300&fit=crop"
+        description: "Acrílico - La alegría pura de un perro jugando",
+        image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=300&fit=crop"
     },
     {
         id: 4,
-        title: "Reflexiones",
+        title: "Reflexiones Caninas",
         category: "digital",
-        description: "Autoexploración a través del arte",
-        image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop"
+        description: "Composición digital - La mirada profunda de un Border Collie",
+        image: "https://images.unsplash.com/photo-1551717743-49959800b1f6?w=400&h=300&fit=crop"
     },
     {
         id: 5,
-        title: "Energia Cósmica",
+        title: "Trio de Gatitos",
         category: "abstracto",
-        description: "Fuerzas invisibles del universo",
-        image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop"
+        description: "Técnica mixta - Interpretación colorida de tres hermanos felinos",
+        image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop"
     },
     {
         id: 6,
-        title: "Retrato de la Juventud",
+        title: "Charlie, el Bulldog Francés",
         category: "tradicional",
-        description: "La perspectiva única de los 14 años",
+        description: "Óleo sobre canvas - Mi primera obra vendida",
+        image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=300&fit=crop"
+    },
+    {
+        id: 7,
+        title: "Mundo Felino Digital",
+        category: "digital",
+        description: "Ilustración digital - Universo fantástico de gatos voladores",
+        image: "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?w=400&h=300&fit=crop"
+    },
+    {
+        id: 8,
+        title: "Rex, el Pastor Alemán",
+        category: "tradicional",
+        description: "Carboncillo y pastel - Retrato de un perro guardián noble",
+        image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop"
+    },
+    {
+        id: 9,
+        title: "Colores de la Amistad",
+        category: "abstracto",
+        description: "Acrílico abstracto - La conexión entre humanos y mascotas",
         image: "https://images.unsplash.com/photo-1592754862816-1a21a4ea2281?w=400&h=300&fit=crop"
     }
 ];
