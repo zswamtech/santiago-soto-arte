@@ -360,6 +360,11 @@ h1, h2, h3 {
     background-repeat: no-repeat;
 }
 
+/* Variantes (reemplazo de estilos inline) */
+.profile-placeholder--main {
+    background-image: url('https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=300&h=400&fit=crop');
+}
+
 /* NFT Section */
 .nft-section {
     padding: 100px 0;
@@ -402,6 +407,11 @@ h1, h2, h3 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* Placeholder NFT image (antes inline style) */
+.nft-image--placeholder {
+    background-image: url('https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=250&h=200&fit=crop');
 }
 
 /* Contact Section */
