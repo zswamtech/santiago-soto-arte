@@ -1,10 +1,18 @@
 {
   "outputDirectory": ".",
-  "buildCommand": "echo 'No build needed for static site'",
-  "rewrites": [
+  "buildCommand": "echo 'Static site - no build'",
+  "headers": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/assets/(.*)\\.(png|jpg|jpeg|gif|svg|webp|css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
     }
   ]
 }

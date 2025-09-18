@@ -3,9 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santiago Soto - Artista Digital</title>
+    <title>Santiago Soto - Pintor de Mascotas</title>
+    <!-- SEO Básico -->
+    <meta name="description" content="Portfolio de Santiago Soto, joven artista de 14 años especializado en retratos hiperrealistas al óleo de mascotas.">
+    <meta name="keywords" content="arte, pintura, oleo, mascotas, retratos, joven artista, hiperrealismo, Santiago Soto">
+    <link rel="canonical" href="https://santiago-soto-arte.vercel.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Santiago Soto - Pintor de Mascotas">
+    <meta property="og:description" content="Retratos hiperrealistas al óleo que capturan la esencia de tus mascotas.">
+    <meta property="og:url" content="https://santiago-soto-arte.vercel.app/">
+    <meta property="og:image" content="https://santiago-soto-arte.vercel.app/assets/images/banner.png">
+    <meta property="og:locale" content="es_ES">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Santiago Soto - Pintor de Mascotas">
+    <meta name="twitter:description" content="Retratos al óleo de mascotas – arte joven con detalle y alma.">
+    <meta name="twitter:image" content="https://santiago-soto-arte.vercel.app/assets/images/banner.png">
+
+    <!-- Favicon / Icons -->
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    <link rel="apple-touch-icon" href="/assets/images/favicon.svg">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Accesibilidad y color -->
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        <!-- JSON-LD Schema.org -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Person",
+                    "@id": "https://santiago-soto-arte.vercel.app/#person",
+                    "name": "Santiago Soto",
+                    "alternateName": "Santiago Soto Arte",
+                    "description": "Joven artista de 14 años especializado en retratos hiperrealistas al óleo de mascotas.",
+                    "url": "https://santiago-soto-arte.vercel.app/",
+                    "image": "https://santiago-soto-arte.vercel.app/assets/images/banner.png",
+                    "knowsAbout": ["pintura al óleo", "retratos de mascotas", "arte hiperrealista"],
+                    "sameAs": []
+                },
+                {
+                    "@type": "WebSite",
+                    "@id": "https://santiago-soto-arte.vercel.app/#website",
+                    "name": "Santiago Soto Arte",
+                    "url": "https://santiago-soto-arte.vercel.app/",
+                    "inLanguage": "es",
+                    "description": "Portfolio de arte y retratos de mascotas al óleo por Santiago Soto.",
+                    "publisher": { "@id": "https://santiago-soto-arte.vercel.app/#person" }
+                }
+            ]
+        }
+        </script>
 </head>
 <body>
     <nav class="navbar">
@@ -14,7 +72,7 @@
                 <img src="assets/images/logosantiagoarte1.png" alt="Santiago Soto Arte" class="logo-image">
                 <div class="logo-text">
                     <h2>Santiago Soto</h2>
-                    <span>Arte Digital</span>
+                    <span>Pintura al Óleo</span>
                 </div>
             </div>
             <ul class="nav-menu">
@@ -30,8 +88,8 @@
     <section id="inicio" class="hero">
         <div class="hero-content">
             <h1>Santiago Soto</h1>
-            <p class="hero-subtitle">Artista Digital de 14 años</p>
-            <p class="hero-description">Creando mundos únicos a través del arte digital y la imaginación</p>
+            <p class="hero-subtitle">Pintor de Mascotas de 14 años</p>
+            <p class="hero-description">Capturando la esencia de nuestros compañeros fieles a través del hiperrealismo en óleo</p>
             <div class="hero-buttons">
                 <button class="btn-primary" onclick="scrollToSection('galeria')">Ver Obras</button>
                 <button class="btn-secondary" onclick="scrollToSection('nft')">Colección NFT</button>
@@ -66,8 +124,8 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2>Sobre Mí</h2>
-                    <p>Soy Santiago, un artista de 14 años apasionado por crear mundos únicos a través del arte digital. Cada pincelada cuenta una historia, cada color expresa una emoción.</p>
-                    <p>Mi objetivo es fusionar el arte tradicional con la tecnología moderna, creando experiencias visuales que transporten al espectador a nuevas dimensiones.</p>
+                    <p>Soy Santiago, un artista de 14 años apasionado por capturar la personalidad única de las mascotas a través del hiperrealismo en óleo. Cada pincelada cuenta una historia, cada mirada expresa el alma de nuestros compañeros fieles.</p>
+                    <p>Mi especialidad es crear retratos que no solo muestren la apariencia física, sino que capturen la esencia y personalidad de cada mascota, creando recuerdos eternos para sus familias.</p>
                     <div class="stats">
                         <div class="stat">
                             <h3>25+</h3>
@@ -84,7 +142,7 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <div class="profile-placeholder" style="background-image: url('https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=300&h=400&fit=crop')"></div>
+                    <div class="profile-placeholder profile-placeholder--main"></div>
                 </div>
             </div>
         </div>
@@ -96,7 +154,7 @@
             <p class="section-subtitle">Obras únicas tokenizadas en blockchain</p>
             <div class="nft-grid">
                 <div class="nft-card">
-                    <div class="nft-image" style="background-image: url('https://images.unsplash.com/photo-1548681528-6a5c45b66b42?w=250&h=200&fit=crop')"></div>
+                    <div class="nft-image nft-image--placeholder"></div>
                     <h3>Próximamente</h3>
                     <p>Primera colección NFT</p>
                 </div>
