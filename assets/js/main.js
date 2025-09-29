@@ -302,6 +302,12 @@ const artworksDetailedData = {
 
 let currentArtworkId = null;
 let artworkIds = Object.keys(artworksDetailedData);
+let lastFocusedCard = null; // Para restaurar foco al cerrar
+
+// Construir hash legible para cada obra
+function buildArtworkHash(id) {
+    return `#obra-${id}`;
+}
 
 function ensureModalStructure() {
     if (!document.getElementById('artwork-modal')) {
@@ -309,6 +315,7 @@ function ensureModalStructure() {
             <div id="artwork-modal" class="artwork-modal" aria-hidden="true" role="dialog">
                 <div class="modal-artwork-content">
                     <button class="modal-close-btn" aria-label="Cerrar" onclick="closeArtworkModal()">×</button>
+                    <button class="modal-back-btn" type="button" aria-label="Volver a la galería" onclick="closeArtworkModal('back-btn')">← Volver</button>
                     <div class="modal-artwork-grid">
                         <div class="modal-artwork-image-section">
                             <div class="artwork-badge" id="modal-badge"></div>
@@ -319,7 +326,7 @@ function ensureModalStructure() {
                             </div>
                         </div>
                         <div class="modal-artwork-info-section">
-                            <h2 class="artwork-title-main" id="modal-title"></h2>
+                            <h2 class="artwork-title-main" id="modal-title" tabindex="-1"></h2>
                             <p class="artwork-subtitle" id="modal-subtitle"></p>
                             <div class="artwork-story">
                                 <h3>📖 Historia de la Obra</h3>
@@ -344,10 +351,22 @@ function ensureModalStructure() {
 
 function attachArtworkCardListeners() {
     document.querySelectorAll('.artwork-card[data-artwork-id]').forEach(card => {
+        if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0'); // accesible
         card.addEventListener('click', () => {
             const id = card.getAttribute('data-artwork-id');
             if (artworksDetailedData[id]) {
+                lastFocusedCard = card;
                 openArtworkModal(id);
+            }
+        });
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const id = card.getAttribute('data-artwork-id');
+                if (artworksDetailedData[id]) {
+                    lastFocusedCard = card;
+                    openArtworkModal(id);
+                }
             }
         });
     });
@@ -359,10 +378,33 @@ function initArtworkModal() {
 
     const modal = document.getElementById('artwork-modal');
     if (modal) {
-        modal.addEventListener('click', e => { if (e.target === modal) closeArtworkModal(); });
+        modal.addEventListener('click', e => { if (e.target === modal) closeArtworkModal('overlay'); });
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArtworkModal(); });
-    console.log('✅ Modal de galería listo');
+    document.addEventListener('keydown', e => {
+        if (!currentArtworkId) return; // Solo cuando el modal está activo
+        if (e.key === 'Escape') closeArtworkModal('esc');
+        if (e.key === 'ArrowRight') navigateArtwork('next');
+        if (e.key === 'ArrowLeft') navigateArtwork('prev');
+    });
+
+    // Apertura directa vía hash (#obra-id)
+    if (location.hash.startsWith('#obra-')) {
+        const id = location.hash.replace('#obra-','');
+        if (artworksDetailedData[id]) openArtworkModal(id);
+    }
+
+    // Navegación del historial
+    window.addEventListener('popstate', () => {
+        if (location.hash.startsWith('#obra-')) {
+            const id = location.hash.replace('#obra-','');
+            if (artworksDetailedData[id]) {
+                openArtworkModal(id);
+            }
+        } else if (currentArtworkId) {
+            closeArtworkModal('popstate');
+        }
+    });
+    console.log('✅ Modal de galería listo con navegación mejorada');
 }
 
 function openArtworkModal(artworkId) {
@@ -386,13 +428,30 @@ function openArtworkModal(artworkId) {
     updateNavigationButtons();
     document.getElementById('artwork-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
+    const newHash = buildArtworkHash(artworkId);
+    if (location.hash !== newHash) {
+        history.pushState({ artworkId }, '', newHash);
+    }
+    const titleEl = document.getElementById('modal-title');
+    if (titleEl) titleEl.focus({ preventScroll: true });
 }
 
-function closeArtworkModal() {
+function closeArtworkModal(trigger = 'close') {
     const modal = document.getElementById('artwork-modal');
     if (modal) modal.classList.remove('active');
     document.body.style.overflow = 'auto';
     currentArtworkId = null;
+    if (trigger !== 'popstate' && location.hash.startsWith('#obra-')) {
+        // Volver a la sección galería si existe
+        if (document.getElementById('galeria')) {
+            history.pushState({}, '', '#galeria');
+        } else {
+            history.pushState({}, '', '#');
+        }
+    }
+    if (lastFocusedCard) {
+        setTimeout(() => lastFocusedCard.focus({ preventScroll: false }), 40);
+    }
 }
 
 function navigateArtwork(direction) {

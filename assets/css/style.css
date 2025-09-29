@@ -2059,6 +2059,36 @@ h1, h2, h3 {
     transform: rotate(90deg);
 }
 
+/* Botón volver dentro del modal */
+.modal-back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #FFD700, #FFB347);
+    border: none;
+    color: #1a1a2e;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255, 215, 0, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-back-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+}
+
+.modal-back-btn:active {
+    transform: translateY(-1px) scale(0.97);
+}
+
 .modal-artwork-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
