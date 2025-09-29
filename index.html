@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/contact.css">
     <link rel="stylesheet" href="assets/css/pricing.css">
+    <link rel="stylesheet" href="assets/css/gamification.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <!-- JSON-LD Schema.org -->
         <script type="application/ld+json">
@@ -149,17 +150,37 @@
     <section id="juegos" class="games-section">
         <div class="container">
             <h2>🎮 Espacio Creativo</h2>
-            <p class="section-subtitle">Juegos para inspirar tu arte</p>
-            <div class="games-menu">
-                <button class="game-btn" onclick="artGames.colorGuessGame()">🎨 Adivina el Color</button>
-                <button class="game-btn" onclick="artGames.memoryGame()">🧠 Memoria Artística</button>
-                <button class="game-btn" onclick="artGames.ideaGenerator()">💡 Generador de Ideas</button>
-                <button class="game-btn" onclick="showMotivation()">✨ Motivación Diaria</button>
-            </div>
-            <div id="game-container" class="game-container">
-                <div class="welcome-game">
-                    <h3>¡Bienvenido al espacio creativo!</h3>
-                    <p>Elige un juego para desarrollar tu inspiración artística</p>
+            <p class="section-subtitle">Juega, gana puntos y obtén descuentos reales</p>
+
+            <div class="games-layout">
+                <div class="games-main">
+                    <div class="games-menu">
+                        <button class="game-btn" onclick="artGames.colorGuessGame()">🎨 Adivina el Color</button>
+                        <button class="game-btn" onclick="artGames.memoryGame()">🧠 Memoria Artística</button>
+                        <button class="game-btn" onclick="artGames.ideaGenerator()">💡 Generador de Ideas</button>
+                        <button class="game-btn" onclick="showMotivation()">✨ Motivación Diaria</button>
+                    </div>
+                    <div id="game-container" class="game-container">
+                        <div class="welcome-game">
+                            <h3>¡Bienvenido al espacio creativo!</h3>
+                            <p>Elige un juego para desarrollar tu inspiración artística</p>
+                            <div class="game-benefits">
+                                <h4>🎁 ¿Qué ganas jugando?</h4>
+                                <ul>
+                                    <li>🎯 Puntos por cada actividad</li>
+                                    <li>🏆 Logros especiales por habilidades</li>
+                                    <li>💰 Descuentos reales en encargos (hasta 20%)</li>
+                                    <li>🎨 Apoyas el crecimiento de Santiago</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="games-sidebar">
+                    <div id="patron-display">
+                        <!-- El Art Patron System se cargará aquí -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -336,6 +357,7 @@
         </div>
     </footer>
 
+    <script src="assets/js/art-patron-system.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/games.js"></script>
     <script src="assets/js/real-artworks.js"></script>

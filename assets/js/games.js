@@ -43,8 +43,21 @@ class ArtGames {
         if (selected === correct) {
             this.score += 10;
             this.showFeedback('¡Excelente elección artística! 🎨', 'success');
+
+            // 🎮 Integración con Art Patron System
+            if (typeof artPatronSystem !== 'undefined') {
+                artPatronSystem.addPoints('perfect_color_match');
+                artPatronSystem.playerData.stats.perfectScores++;
+                artPatronSystem.playerData.stats.gamesPlayed++;
+            }
         } else {
             this.showFeedback('Sigue practicando, cada color tiene su momento ✨', 'info');
+
+            // 🎮 Puntos básicos por jugar
+            if (typeof artPatronSystem !== 'undefined') {
+                artPatronSystem.addPoints('play_color_game');
+                artPatronSystem.playerData.stats.gamesPlayed++;
+            }
         }
         setTimeout(() => this.colorGuessGame(), 1500);
     }
@@ -92,6 +105,18 @@ class ArtGames {
                             flippedCards = [];
                             if (matches === 6) {
                                 this.showFeedback('¡Has completado tu galería mental! 🏆', 'success');
+
+                                // 🎮 Juego completado perfectamente
+                                if (typeof artPatronSystem !== 'undefined') {
+                                    artPatronSystem.addPoints('memory_perfect_score');
+                                    artPatronSystem.playerData.stats.perfectScores++;
+                                    artPatronSystem.playerData.stats.gamesPlayed++;
+                                }
+                            } else {
+                                // 🎮 Puntos por completar memoria
+                                if (typeof artPatronSystem !== 'undefined') {
+                                    artPatronSystem.addPoints('complete_memory_game');
+                                }
                             }
                         } else {
                             setTimeout(() => {
@@ -141,6 +166,12 @@ class ArtGames {
         ideas.push(JSON.parse(ideaString));
         localStorage.setItem('santiagoIdeas', JSON.stringify(ideas));
         this.showFeedback('¡Idea guardada en tu biblioteca creativa! 📚', 'success');
+
+        // 🎮 Puntos por guardar idea
+        if (typeof artPatronSystem !== 'undefined') {
+            artPatronSystem.addPoints('save_idea');
+            artPatronSystem.playerData.stats.ideasSaved++;
+        }
     }
 
     // 📈 Sistema de Logros
