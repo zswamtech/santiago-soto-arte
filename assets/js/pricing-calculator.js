@@ -325,8 +325,11 @@ class PricingCalculator {
                 </div>
 
                 <div class="action-buttons">
-                    <button onclick="openContactModal('encargo')" class="btn-primary">
-                        🎨 Solicitar Este Encargo
+                    <button onclick="pricingCalculator.addToCart(${result.totalPrice})" class="btn-primary">
+                        🛒 Añadir al Carrito
+                    </button>
+                    <button onclick="openContactModal('encargo')" class="btn-secondary">
+                        💬 Contactar Primero
                     </button>
                     <button onclick="pricingCalculator.shareEstimate(${result.totalPrice})" class="btn-secondary">
                         📤 Compartir Estimación
@@ -337,6 +340,80 @@ class PricingCalculator {
 
         resultDiv.style.display = 'block';
         resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // 🛒 Añadir encargo personalizado al carrito
+    addToCart(price) {
+        const form = document.getElementById('pricing-form');
+        if (!form) return;
+
+        const formData = new FormData(form);
+
+        // Crear descripción detallada del encargo
+        const params = {
+            size: formData.get('size'),
+            complexity: formData.get('complexity'),
+            technique: formData.get('technique'),
+            animalType: formData.get('animalType'),
+            urgency: formData.get('urgency'),
+            background: formData.get('background'),
+            extras: formData.getAll('extras')
+        };
+
+        const sizeLabels = {
+            small: 'Pequeño (20x30 cm)',
+            medium: 'Mediano (30x40 cm)',
+            large: 'Grande (40x60 cm)',
+            xlarge: 'Extra Grande (60x80+ cm)'
+        };
+
+        const techniqueLabels = {
+            pencil: 'Lápiz/Carboncillo',
+            acrylic: 'Acrílico',
+            oil: 'Óleo',
+            mixed: 'Técnica Mixta'
+        };
+
+        const complexityLabels = {
+            simple: 'Simple',
+            moderate: 'Moderada',
+            complex: 'Compleja',
+            masterpiece: 'Obra Maestra'
+        };
+
+        let description = `Retrato personalizado ${sizeLabels[params.size]}, técnica ${techniqueLabels[params.technique]}, complejidad ${complexityLabels[params.complexity]}`;
+
+        if (params.background !== 'none') {
+            description += `, con fondo personalizado`;
+        }
+
+        if (params.extras && params.extras.length > 0) {
+            description += `, incluye servicios adicionales`;
+        }
+
+        const cartItem = {
+            id: `custom_artwork_${Date.now()}`,
+            type: 'custom_artwork',
+            name: `🎨 Retrato Personalizado - ${sizeLabels[params.size]}`,
+            description: description,
+            price: price,
+            quantity: 1,
+            customData: {
+                calculatorParams: params,
+                estimationDate: new Date().toISOString(),
+                notes: 'Encargo personalizado generado desde calculadora de precios'
+            },
+            image: null
+        };
+
+        // Usar la API del sistema de pagos
+        if (window.PaymentGatewayAPI) {
+            window.PaymentGatewayAPI.addToCart(cartItem);
+        } else {
+            console.warn('Sistema de pagos no disponible');
+            // Fallback: abrir modal de contacto
+            openContactModal('encargo');
+        }
     }
 
     // 📤 Compartir estimación

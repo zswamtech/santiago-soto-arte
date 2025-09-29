@@ -89,6 +89,9 @@ const contactModals = {
                         <h4>Vasos Personalizados</h4>
                         <p>Tu mascota en una taza especial para cada mañana</p>
                         <span class="price">$25 - $35</span>
+                        <button class="add-to-cart-btn" data-item='{"id":"mug_001","type":"product","name":"Vaso Personalizado","description":"Taza personalizada con retrato de mascota","price":30,"image":null}'>
+                            🛒 Añadir al Carrito
+                        </button>
                     </div>
 
                     <div class="product-card">
@@ -96,6 +99,9 @@ const contactModals = {
                         <h4>Camisetas Artísticas</h4>
                         <p>Ropa única con el retrato de tu compañero</p>
                         <span class="price">$30 - $45</span>
+                        <button class="add-to-cart-btn" data-item='{"id":"tshirt_001","type":"product","name":"Camiseta Artística","description":"Camiseta personalizada con arte de mascota","price":37,"image":null}'>
+                            🛒 Añadir al Carrito
+                        </button>
                     </div>
 
                     <div class="product-card">
@@ -103,6 +109,9 @@ const contactModals = {
                         <h4>Kit Memorial</h4>
                         <p>Un conjunto especial para honrar a tu mascota</p>
                         <span class="price">$80 - $120</span>
+                        <button class="add-to-cart-btn" data-item='{"id":"memorial_001","type":"product","name":"Kit Memorial","description":"Conjunto especial para honrar a tu mascota","price":100,"image":null}'>
+                            🛒 Añadir al Carrito
+                        </button>
                     </div>
 
                     <div class="product-card">
@@ -110,6 +119,9 @@ const contactModals = {
                         <h4>Prints de Alta Calidad</h4>
                         <p>Reproducciones profesionales de tu retrato</p>
                         <span class="price">$20 - $40</span>
+                        <button class="add-to-cart-btn" data-item='{"id":"print_001","type":"product","name":"Print de Alta Calidad","description":"Reproducción profesional de retrato","price":30,"image":null}'>
+                            🛒 Añadir al Carrito
+                        </button>
                     </div>
                 </div>
 

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Sistema de Pagos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-left: 4px solid #4CAF50;
+            background: #f8fff8;
+        }
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #45A049;
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #e8f4f8;
+            border: 1px solid #b3d9e8;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test - Sistema de Pagos Santiago Soto Arte</h1>
+
+        <div class="test-section">
+            <h3>📦 Test: Añadir productos al carrito</h3>
+            <button class="test-button" onclick="testAddToCart()">
+                🛒 Añadir Producto de Prueba
+            </button>
+            <button class="test-button" onclick="testAddCustomArtwork()">
+                🎨 Añadir Encargo Personalizado
+            </button>
+            <button class="test-button" onclick="testOpenCart()">
+                👀 Abrir Carrito
+            </button>
+            <div id="cart-status" class="status" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>💳 Test: Proceso de Checkout</h3>
+            <button class="test-button" onclick="testCheckout()">
+                💳 Abrir Checkout
+            </button>
+            <button class="test-button" onclick="testStripeIntegration()">
+                🔗 Test Integración Stripe
+            </button>
+            <div id="checkout-status" class="status" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎮 Test: Integración Art Patron</h3>
+            <button class="test-button" onclick="testPatronDiscount()">
+                🎯 Test Descuento Patron
+            </button>
+            <div id="patron-status" class="status" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Estado del Sistema</h3>
+            <div id="system-status" class="status"></div>
+        </div>
+    </div>
+
+    <!-- Incluir archivos necesarios -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="assets/js/art-patron-system.js"></script>
+    <script src="assets/js/payment-gateway.js"></script>
+
+    <script>
+        // Scripts de prueba
+        function updateSystemStatus() {
+            const systemStatus = document.getElementById('system-status');
+            let status = '<h4>📊 Estado del Sistema:</h4><ul>';
+
+            // Verificar si Payment Gateway está cargado
+            if (typeof paymentGateway !== 'undefined') {
+                status += '<li>✅ Payment Gateway: Cargado correctamente</li>';
+
+                // Verificar carrito
+                const cartInfo = paymentGateway.cart;
+                status += `<li>🛒 Items en carrito: ${cartInfo.items.length}</li>`;
+                status += `<li>💰 Total carrito: $${cartInfo.finalTotal}</li>`;
+            } else {
+                status += '<li>❌ Payment Gateway: No cargado</li>';
+            }
+
+            // Verificar Stripe
+            if (typeof Stripe !== 'undefined') {
+                status += '<li>✅ Stripe SDK: Cargado correctamente</li>';
+            } else {
+                status += '<li>❌ Stripe SDK: No cargado</li>';
+            }
+
+            // Verificar Art Patron System
+            if (typeof artPatronSystem !== 'undefined') {
+                status += '<li>✅ Art Patron System: Cargado correctamente</li>';
+            } else {
+                status += '<li>❌ Art Patron System: No cargado</li>';
+            }
+
+            status += '</ul>';
+            systemStatus.innerHTML = status;
+        }
+
+        function testAddToCart() {
+            if (typeof paymentGateway === 'undefined') {
+                showStatus('cart-status', '❌ Payment Gateway no está cargado', 'error');
+                return;
+            }
+
+            const testProduct = {
+                id: 'test_001',
+                type: 'product',
+                name: 'Producto de Prueba',
+                description: 'Este es un producto para testing',
+                price: 25,
+                quantity: 1
+            };
+
+            paymentGateway.addToCart(testProduct);
+            showStatus('cart-status', '✅ Producto añadido al carrito correctamente', 'success');
+            updateSystemStatus();
+        }
+
+        function testAddCustomArtwork() {
+            if (typeof paymentGateway === 'undefined') {
+                showStatus('cart-status', '❌ Payment Gateway no está cargado', 'error');
+                return;
+            }
+
+            const customArtwork = {
+                id: 'custom_test_001',
+                type: 'custom_artwork',
+                name: '🎨 Retrato Personalizado - Test',
+                description: 'Retrato personalizado de prueba',
+                price: 150,
+                quantity: 1,
+                customData: {
+                    size: 'medium',
+                    technique: 'oil',
+                    complexity: 'moderate'
+                }
+            };
+
+            paymentGateway.addToCart(customArtwork);
+            showStatus('cart-status', '✅ Encargo personalizado añadido al carrito', 'success');
+            updateSystemStatus();
+        }
+
+        function testOpenCart() {
+            if (typeof paymentGateway === 'undefined') {
+                showStatus('cart-status', '❌ Payment Gateway no está cargado', 'error');
+                return;
+            }
+
+            paymentGateway.openCart();
+            showStatus('cart-status', '✅ Carrito abierto (debería aparecer en la derecha)', 'success');
+        }
+
+        function testCheckout() {
+            if (typeof paymentGateway === 'undefined') {
+                showStatus('checkout-status', '❌ Payment Gateway no está cargado', 'error');
+                return;
+            }
+
+            if (paymentGateway.cart.items.length === 0) {
+                showStatus('checkout-status', '⚠️ Primero añade productos al carrito', 'warning');
+                return;
+            }
+
+            paymentGateway.openCheckout();
+            showStatus('checkout-status', '✅ Checkout abierto correctamente', 'success');
+        }
+
+        function testStripeIntegration() {
+            if (typeof Stripe === 'undefined') {
+                showStatus('checkout-status', '❌ Stripe SDK no cargado', 'error');
+                return;
+            }
+
+            if (typeof paymentGateway !== 'undefined' && paymentGateway.stripe) {
+                showStatus('checkout-status', '✅ Stripe inicializado correctamente', 'success');
+            } else {
+                showStatus('checkout-status', '⚠️ Stripe SDK disponible pero no inicializado en Payment Gateway', 'warning');
+            }
+        }
+
+        function testPatronDiscount() {
+            if (typeof artPatronSystem === 'undefined') {
+                showStatus('patron-status', '❌ Art Patron System no está cargado', 'error');
+                return;
+            }
+
+            if (typeof paymentGateway !== 'undefined') {
+                const discount = paymentGateway.getPatronDiscount();
+                showStatus('patron-status', `✅ Descuento disponible: $${discount}`, 'success');
+            } else {
+                showStatus('patron-status', '❌ Payment Gateway no disponible para test', 'error');
+            }
+        }
+
+        function showStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = message;
+
+            // Cambiar color según tipo
+            switch(type) {
+                case 'success':
+                    element.style.background = '#d4edda';
+                    element.style.borderColor = '#c3e6cb';
+                    element.style.color = '#155724';
+                    break;
+                case 'error':
+                    element.style.background = '#f8d7da';
+                    element.style.borderColor = '#f5c6cb';
+                    element.style.color = '#721c24';
+                    break;
+                case 'warning':
+                    element.style.background = '#fff3cd';
+                    element.style.borderColor = '#ffeaa7';
+                    element.style.color = '#856404';
+                    break;
+                default:
+                    element.style.background = '#e8f4f8';
+                    element.style.borderColor = '#b3d9e8';
+                    element.style.color = '#0c5460';
+            }
+        }
+
+        // Actualizar estado del sistema al cargar
+        setTimeout(updateSystemStatus, 1000);
+
+        // Actualizar cada 5 segundos
+        setInterval(updateSystemStatus, 5000);
+
+        console.log('🧪 Página de testing cargada. Abre las herramientas de desarrollador para ver logs.');
+    </script>
+</body>
+</html>

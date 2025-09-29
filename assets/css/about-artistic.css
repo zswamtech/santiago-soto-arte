@@ -1,0 +1,411 @@
+/* ==========================================
+   SECCIÓN SOBRE MÍ - ESTILO ARTÍSTICO
+   ========================================== */
+
+#sobre-mi {
+    min-height: 100vh;
+    padding: 80px 20px;
+    position: relative;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    overflow: hidden;
+}
+
+/* Partículas de pintura en el fondo */
+.paint-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 20s infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-100px) rotate(180deg); }
+}
+
+/* Header artístico */
+.artist-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.sketch-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.sketch-title::before {
+    content: attr(data-text);
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    z-index: -1;
+    color: rgba(255, 215, 0, 0.2);
+    -webkit-text-fill-color: rgba(255, 215, 0, 0.2);
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: #b8b8b8;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.pencil-line {
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    margin: 20px auto;
+    position: relative;
+    animation: draw 2s ease-in-out infinite;
+}
+
+@keyframes draw {
+    0%, 100% { width: 150px; }
+    50% { width: 250px; }
+}
+
+/* Cuaderno de bocetos */
+.sketchbook {
+    background: linear-gradient(to bottom, #f5f5dc 0%, #e8e8d0 100%);
+    border-radius: 15px;
+    padding: 50px 40px;
+    margin-bottom: 50px;
+    position: relative;
+    box-shadow: 
+        0 10px 40px rgba(0,0,0,0.3),
+        inset 0 0 100px rgba(0,0,0,0.05);
+    z-index: 1;
+}
+
+/* Efecto de espiral de cuaderno */
+.sketchbook::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #d4af37 0px,
+        #d4af37 2px,
+        transparent 2px,
+        transparent 30px
+    );
+}
+
+/* Líneas del cuaderno */
+.sketchbook::after {
+    content: '';
+    position: absolute;
+    left: 70px;
+    right: 40px;
+    top: 50px;
+    bottom: 50px;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 38px,
+        rgba(150, 150, 150, 0.15) 38px,
+        rgba(150, 150, 150, 0.15) 40px
+    );
+    pointer-events: none;
+}
+
+.story-content {
+    position: relative;
+    z-index: 1;
+    padding-left: 50px;
+}
+
+.story-paragraph {
+    font-size: 1.15rem;
+    line-height: 2;
+    color: #2c2c2c;
+    margin-bottom: 25px;
+    text-align: justify;
+    position: relative;
+    font-family: 'Courier New', monospace;
+}
+
+.highlight {
+    background: linear-gradient(120deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #1a1a2e;
+}
+
+/* Trazos de lápiz decorativos */
+.pencil-sketch {
+    position: absolute;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.sketch-heart {
+    top: 20px;
+    right: 30px;
+    font-size: 3rem;
+    color: #8b4513;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.sketch-brush {
+    bottom: 20px;
+    left: 50px;
+    font-size: 2.5rem;
+    color: #8b4513;
+    transform: rotate(-15deg);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Timeline artística */
+.timeline {
+    margin: 60px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #FFD700;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.timeline-container {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    position: relative;
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.2s; }
+.timeline-item:nth-child(2) { animation-delay: 0.4s; }
+.timeline-item:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    width: 45%;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: scale(1.05);
+    border-color: #FFD700;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.timeline-year {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.timeline-event {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.timeline-description {
+    color: #b8b8b8;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: #FFD700;
+    border-radius: 50%;
+    border: 4px solid #1a1a2e;
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Contadores animados */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    border-color: #FFD700;
+    box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4);
+}
+
+.stat-number {
+    font-size: 4rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    color: #e8e8e8;
+    font-weight: 600;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-sublabel {
+    font-size: 0.9rem;
+    color: #b8b8b8;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sketch-title {
+        font-size: 2.5rem;
+    }
+
+    .sketchbook {
+        padding: 30px 20px;
+    }
+
+    .story-content {
+        padding-left: 20px;
+    }
+
+    .story-paragraph {
+        font-size: 1rem;
+    }
+
+    .timeline-line {
+        left: 20px;
+    }
+
+    .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px !important;
+    }
+
+    .timeline-dot {
+        left: 20px;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+    }
+}
