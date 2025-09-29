@@ -35,6 +35,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/contact.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <!-- JSON-LD Schema.org -->
         <script type="application/ld+json">
@@ -69,7 +70,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/images/logosantiagoarte1.png" alt="Santiago Soto Arte" class="logo-image">
+                <img src="assets/images/favicon.svg" alt="Santiago Soto Arte" class="logo-image">
                 <div class="logo-text">
                     <h2>Santiago Soto</h2>
                     <span>Pintura al Óleo</span>
@@ -78,6 +79,7 @@
             <ul class="nav-menu">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#galeria">Galería</a></li>
+                <li><a href="#juegos">Juegos</a></li>
                 <li><a href="#sobre-mi">Sobre Mí</a></li>
                 <li><a href="#nft">Colección NFT</a></li>
                 <li><a href="#contacto">Contacto</a></li>
@@ -107,14 +109,57 @@
     <section id="galeria" class="gallery">
         <div class="container">
             <h2>Galería de Obras</h2>
-            <div class="gallery-filter">
-                <button class="filter-btn active" data-filter="all">Todas</button>
-                <button class="filter-btn" data-filter="digital">Arte Digital</button>
-                <button class="filter-btn" data-filter="tradicional">Arte Tradicional</button>
-                <button class="filter-btn" data-filter="abstracto">Abstracto</button>
+            <div class="gallery-tabs">
+                <button class="gallery-tab active" onclick="switchGallery('practice', this)">🎨 Obras de Práctica</button>
+                <button class="gallery-tab" onclick="switchGallery('real', this)">🏆 Galería Oficial</button>
             </div>
-            <div class="gallery-grid" id="galleryGrid">
-                <!-- Las obras se cargarán dinámicamente -->
+
+            <!-- Galería de práctica (obras actuales) -->
+            <div id="practice-gallery" class="gallery-content active">
+                <div class="gallery-filter">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="digital">Arte Digital</button>
+                    <button class="filter-btn" data-filter="tradicional">Arte Tradicional</button>
+                    <button class="filter-btn" data-filter="abstracto">Abstracto</button>
+                </div>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Las obras de práctica se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Galería real (obras oficiales de Santiago) -->
+            <div id="real-gallery" class="gallery-content">
+                <div class="gallery-filter">
+                    <button class="real-filter-btn active" data-filter="all">Todas</button>
+                    <button class="real-filter-btn" data-filter="disponible">Disponibles</button>
+                    <button class="real-filter-btn" data-filter="vendida">Vendidas</button>
+                    <button class="real-filter-btn" data-filter="exhibición">En Exhibición</button>
+                </div>
+                <div id="artwork-stats" class="artwork-stats">
+                    <!-- Estadísticas se cargarán automáticamente -->
+                </div>
+                <div class="gallery-grid" id="real-gallery-grid">
+                    <!-- Las obras reales se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="juegos" class="games-section">
+        <div class="container">
+            <h2>🎮 Espacio Creativo</h2>
+            <p class="section-subtitle">Juegos para inspirar tu arte</p>
+            <div class="games-menu">
+                <button class="game-btn" onclick="artGames.colorGuessGame()">🎨 Adivina el Color</button>
+                <button class="game-btn" onclick="artGames.memoryGame()">🧠 Memoria Artística</button>
+                <button class="game-btn" onclick="artGames.ideaGenerator()">💡 Generador de Ideas</button>
+                <button class="game-btn" onclick="showMotivation()">✨ Motivación Diaria</button>
+            </div>
+            <div id="game-container" class="game-container">
+                <div class="welcome-game">
+                    <h3>¡Bienvenido al espacio creativo!</h3>
+                    <p>Elige un juego para desarrollar tu inspiración artística</p>
+                </div>
             </div>
         </div>
     </section>
@@ -124,16 +169,16 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2>Sobre Mí</h2>
-                    <p>Soy Santiago, un artista de 14 años apasionado por capturar la personalidad única de las mascotas a través del hiperrealismo en óleo. Cada pincelada cuenta una historia, cada mirada expresa el alma de nuestros compañeros fieles.</p>
-                    <p>Mi especialidad es crear retratos que no solo muestren la apariencia física, sino que capturen la esencia y personalidad de cada mascota, creando recuerdos eternos para sus familias.</p>
+                    <p>Soy Santiago Soto, tengo 14 años y descubrí mi pasión por la pintura a los 10. Desde hace 9 meses me dedico a trabajar con la técnica de óleo sobre lienzo, explorando especialmente el retrato de mascotas.</p>
+                    <p>A través de mis obras busco inmortalizar los recuerdos y transmitir los sentimientos que un animal despierta en la vida de una persona. Cada pincelada cuenta una historia, cada mirada expresa el alma de nuestros compañeros fieles.</p>
                     <div class="stats">
                         <div class="stat">
-                            <h3>25+</h3>
-                            <p>Obras Creadas</p>
+                            <h3>4</h3>
+                            <p>Años de Pasión</p>
                         </div>
                         <div class="stat">
-                            <h3>3</h3>
-                            <p>Años Pintando</p>
+                            <h3>9</h3>
+                            <p>Meses con Óleo</p>
                         </div>
                         <div class="stat">
                             <h3>∞</h3>
@@ -166,11 +211,40 @@
         <div class="container">
             <h2>Conectemos</h2>
             <p>¿Interesado en adquirir una obra o colaborar?</p>
-            <div class="contact-info">
-                <button class="contact-btn">Enviar Mensaje</button>
+            <div class="contact-content">
+                <div class="contact-options">
+                    <div class="contact-card">
+                        <div class="contact-icon">🎨</div>
+                        <h3>Encargo Personalizado</h3>
+                        <p>¿Quieres un retrato de tu mascota? Cuéntame sobre tu compañero fiel y crearemos algo especial juntos.</p>
+                        <button class="contact-btn" onclick="openContactModal('encargo')">Solicitar Encargo</button>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">💝</div>
+                        <h3>Productos Únicos</h3>
+                        <p>Lleva el arte de tu mascota a vasos, camisetas, o kits especiales para inmortalizar esos momentos.</p>
+                        <button class="contact-btn" onclick="openContactModal('productos')">Ver Productos</button>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🤝</div>
+                        <h3>Colaboración</h3>
+                        <p>¿Tienes ideas para proyectos? Me encanta aprender y explorar nuevas formas de crear arte.</p>
+                        <button class="contact-btn" onclick="openContactModal('colaboracion')">Colaborar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal de Contacto -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeContactModal()">&times;</span>
+            <div id="modal-content-area">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
@@ -179,5 +253,8 @@
     </footer>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/games.js"></script>
+    <script src="assets/js/real-artworks.js"></script>
+    <script src="assets/js/contact.js"></script>
 </body>
 </html>
