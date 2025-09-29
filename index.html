@@ -35,9 +35,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/about-artistic.css">
+    <link rel="stylesheet" href="assets/css/pencil-hero.css">
     <link rel="stylesheet" href="assets/css/contact.css">
     <link rel="stylesheet" href="assets/css/pricing.css">
     <link rel="stylesheet" href="assets/css/gamification.css">
+    <link rel="stylesheet" href="assets/css/payment-gateway.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <!-- JSON-LD Schema.org -->
         <script type="application/ld+json">
@@ -85,6 +88,12 @@
                 <li><a href="#sobre-mi">Sobre Mí</a></li>
                 <li><a href="#pricing">Precios</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li>
+                    <button class="cart-button" onclick="paymentGateway?.toggleCart()">
+                        🛒 Carrito
+                        <span class="cart-icon-count">0</span>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -92,18 +101,47 @@
     <section id="inicio" class="hero">
         <div class="hero-content">
             <h1>Santiago Soto</h1>
-            <p class="hero-subtitle">Pintor de Mascotas de 14 años</p>
-            <p class="hero-description">Capturando la esencia de nuestros compañeros fieles a través del hiperrealismo en óleo</p>
+            <p class="hero-subtitle">Joven maestro de <span class="age-highlight">14 años</span> que pinta con el corazón</p>
+
+            <div class="hero-poetry">
+                Cada pincelada cuenta una historia, cada obra abraza un alma.
+                En el silencio del lienzo, nacen los retratos que inmortalizan
+                el amor incondicional de nuestros fieles compañeros.
+            </div>
+
             <div class="hero-buttons">
-                <button class="btn-primary" onclick="scrollToSection('galeria')">Ver Obras</button>
-                <button class="btn-secondary" onclick="scrollToSection('nft')">Colección NFT</button>
+                <button class="btn-primary" onclick="scrollToSection('galeria')">
+                    🖼️ Descubrir mi Arte
+                </button>
+                <button class="btn-secondary" onclick="scrollToSection('pricing')">
+                    🎨 Encargar Retrato
+                </button>
             </div>
         </div>
+
         <div class="hero-visual">
-            <div class="floating-art">
-                <div class="art-frame"></div>
-                <div class="art-frame"></div>
-                <div class="art-frame"></div>
+            <div class="sketch-showcase">
+                <!-- Cuaderno de Dibujo -->
+                <div class="sketch-notebook">
+                    <div class="notebook-page">
+                        <div class="sketch-area">
+                            <div class="rotating-sketches">
+                                <!-- Los bocetos se cargarán dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lápices Flotantes -->
+                <div class="floating-pencils">
+                    <!-- Lápices se crean dinámicamente -->
+                </div>
+
+                <!-- Herramientas de Dibujo -->
+                <div class="sketch-tools">
+                    <div class="sketch-tool eraser" title="Borrador">🧽</div>
+                    <div class="sketch-tool sharpener" title="Sacapuntas">📐</div>
+                </div>
             </div>
         </div>
     </section>
@@ -186,30 +224,91 @@
         </div>
     </section>
 
-    <section id="sobre-mi" class="about">
+    <section id="sobre-mi">
+        <!-- Partículas de pintura -->
+        <div class="paint-particles" id="particles"></div>
+
         <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Sobre Mí</h2>
-                    <p>Soy Santiago Soto, tengo 14 años y descubrí mi pasión por la pintura a los 10. Desde hace 9 meses me dedico a trabajar con la técnica de óleo sobre lienzo, explorando especialmente el retrato de mascotas.</p>
-                    <p>A través de mis obras busco inmortalizar los recuerdos y transmitir los sentimientos que un animal despierta en la vida de una persona. Cada pincelada cuenta una historia, cada mirada expresa el alma de nuestros compañeros fieles.</p>
-                    <div class="stats">
-                        <div class="stat">
-                            <h3>4</h3>
-                            <p>Años de Pasión</p>
+            <!-- Header -->
+            <div class="artist-header">
+                <h1 class="sketch-title" data-text="Sobre Mí">Sobre Mí</h1>
+                <p class="subtitle">Mi historia con la pintura</p>
+                <div class="pencil-line"></div>
+            </div>
+
+            <!-- Cuaderno de bocetos -->
+            <div class="sketchbook">
+                <div class="pencil-sketch sketch-heart">♥</div>
+                <div class="pencil-sketch sketch-brush">🖌️</div>
+                
+                <div class="story-content">
+                    <p class="story-paragraph">
+                        Soy <span class="highlight">Santiago Soto</span>, tengo 14 años y descubrí mi pasión por la pintura a los 10. Desde hace un año me dedico a trabajar con la <span class="highlight">técnica de óleo sobre lienzo</span>, explorando especialmente el retrato de mascotas.
+                    </p>
+                    
+                    <p class="story-paragraph">
+                        A través de mis obras busco <span class="highlight">inmortalizar los recuerdos</span> y transmitir los sentimientos que un animal despierta en la vida de una persona. Cada pincelada cuenta una historia, cada mirada expresa el alma de nuestros compañeros fieles.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <h2 class="timeline-title">🎨 Mi Evolución Artística</h2>
+                
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-event">Primeros trazos</div>
+                            <div class="timeline-description">Empecé a dibujar y descubrí que me gustaba expresarme a través del arte</div>
                         </div>
-                        <div class="stat">
-                            <h3>9</h3>
-                            <p>Meses con Óleo</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-event">Inicio con óleo</div>
+                            <div class="timeline-description">Comencé a pintar al óleo y me enfoqué en retratos de mascotas</div>
                         </div>
-                        <div class="stat">
-                            <h3>∞</h3>
-                            <p>Imaginación</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">Hoy</div>
+                            <div class="timeline-event">Aprendiendo cada día</div>
+                            <div class="timeline-description">Practico constantemente para mejorar mi técnica</div>
                         </div>
                     </div>
                 </div>
-                <div class="about-image">
-                    <div class="profile-placeholder profile-placeholder--main"></div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🎨</div>
+                    <div class="stat-number" id="years-counter">0</div>
+                    <div class="stat-label">Años dibujando</div>
+                    <div class="stat-sublabel">Desde 2020</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🖌️</div>
+                    <div class="stat-number" id="months-counter">0</div>
+                    <div class="stat-label">Meses con óleo</div>
+                    <div class="stat-sublabel">Desde diciembre 2023</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">✨</div>
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Por aprender</div>
+                    <div class="stat-sublabel">Siempre hay más por descubrir</div>
                 </div>
             </div>
         </div>
@@ -351,17 +450,50 @@
         </div>
     </div>
 
+    <!-- Carrito Sidebar -->
+    <div id="cart-sidebar">
+        <div class="cart-header">
+            <h3>🛒 Tu Carrito</h3>
+            <button class="cart-close" onclick="paymentGateway?.closeCart()">×</button>
+        </div>
+        <div class="cart-content">
+            <!-- El contenido del carrito se cargará dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal">
+        <div class="checkout-content">
+            <!-- El contenido del checkout se cargará dinámicamente -->
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <p>&copy; 2024 Santiago Soto Arte. Todos los derechos reservados.</p>
         </div>
     </footer>
 
+    <!-- Stripe SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script src="assets/js/auth.js"></script>
     <script src="assets/js/art-patron-system.js"></script>
+    <script src="assets/js/pencil-hero.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/about-artistic.js"></script>
     <script src="assets/js/games.js"></script>
     <script src="assets/js/real-artworks.js"></script>
     <script src="assets/js/contact.js"></script>
     <script src="assets/js/pricing-calculator.js"></script>
+        <script src="assets/js/payment-gateway.js"></script>
+        <!-- Ejemplo de uso de authFetch (cuando exista backend):
+        <script>
+            // setInitialAccessToken('TOKEN_INICIAL') // después de login
+            // getProtectedJson('/api/usuario/perfil')
+            //   .then(data => console.log('Perfil:', data))
+            //   .catch(err => console.error('Error perfil', err));
+        </script>
+        -->
 </body>
 </html>
