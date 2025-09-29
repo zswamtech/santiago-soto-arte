@@ -148,6 +148,7 @@ class PaymentGateway {
     updateCartDisplay() {
         this.updateCartIcon();
         this.updateCartSidebar();
+        this.updateFloatingWidget();
     }
 
     updateCartIcon() {
@@ -777,6 +778,20 @@ class PaymentGateway {
         } catch (_) { /* noop */ }
     }
 
+    updateFloatingWidget() {
+        const widget = document.getElementById('floating-cart-widget');
+        if (!widget) return;
+
+        const countEl = document.getElementById('fcw-count');
+        const totalEl = document.getElementById('fcw-total');
+        const itemCount = this.cart.items.reduce((s,i)=>s+i.quantity,0);
+        if (countEl) countEl.textContent = itemCount;
+        if (totalEl) totalEl.textContent = `$${this.cart.finalTotal}`;
+
+        // Mostrar / ocultar
+        widget.style.display = itemCount > 0 ? 'flex' : 'none';
+    }
+
     setupEventListeners() {
         // Escuchar clicks en botones de añadir al carrito
         document.addEventListener('click', (e) => {
@@ -784,6 +799,13 @@ class PaymentGateway {
                 const button = e.target.matches('.add-to-cart-btn') ? e.target : e.target.closest('.add-to-cart-btn');
                 const itemData = JSON.parse(button.dataset.item || '{}');
                 this.addToCart(itemData);
+                // Pulso visual widget
+                const widget = document.getElementById('floating-cart-widget');
+                if (widget) {
+                    widget.classList.remove('pulse');
+                    void widget.offsetWidth; // reflow
+                    widget.classList.add('pulse');
+                }
             }
         });
 
@@ -806,6 +828,16 @@ class PaymentGateway {
                 this.closeCheckout();
             }
         });
+
+        // Interacción widget flotante
+        const widget = document.getElementById('floating-cart-widget');
+        if (widget) {
+            const open = () => this.openCart();
+            widget.addEventListener('click', open);
+            widget.addEventListener('keypress', (ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); open(); }
+            });
+        }
     }
 }
 
