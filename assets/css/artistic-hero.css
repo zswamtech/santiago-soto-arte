@@ -1,0 +1,591 @@
+/* 🎨 HERO ARTÍSTICO - SANTIAGO SOTO ARTE */
+/* El Atelier Digital: Donde cada pixel grita arte */
+
+/* === 🌟 HERO PRINCIPAL === */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    /* Fondo estilo lienzo artístico */
+    background:
+        radial-gradient(circle at 20% 80%, rgba(255, 238, 226, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 245, 238, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #f8f6f0 0%, #f0ebe5 25%, #ede7e0 50%, #f5f1eb 75%, #faf8f5 100%);
+
+    /* Textura sutil de canvas */
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4c5b6' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-11.046 8.954-20 20-20s20 8.954 20 20-8.954 20-20 20-20-8.954-20-20zm0-30c0-11.046 8.954-20 20-20s20 8.954 20 20-8.954 20-20 20-20-8.954-20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+    color: #2c1810; /* Color café oscuro natural */
+}
+
+/* === ✨ PARTÍCULAS DE PINTURA FLOTANTES === */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(2px 2px at 20px 30px, rgba(196, 143, 102, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(162, 117, 91, 0.3), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(139, 104, 84, 0.3), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(184, 149, 123, 0.3), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(206, 171, 145, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px, 180px 120px, 220px 90px, 170px 110px, 190px 95px;
+    animation: paintParticles 20s linear infinite;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+@keyframes paintParticles {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(5px); }
+    100% { transform: translateY(-20px) translateX(-3px); }
+}
+
+/* === 🎭 CONTENIDO HERO === */
+.hero-content {
+    flex: 1;
+    padding: 0 3rem;
+    z-index: 3;
+    position: relative;
+}
+
+/* Título principal con efecto artístico */
+.hero h1 {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #2c1810;
+    text-shadow: 2px 2px 4px rgba(139, 104, 84, 0.1);
+
+    /* Efecto de pincelada */
+    background: linear-gradient(135deg, #2c1810 0%, #5d4037 50%, #3e2723 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: fadeInBrush 2s ease-out;
+    position: relative;
+}
+
+/* Decoración de pincelada debajo del título */
+.hero h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(196, 143, 102, 0.6), rgba(162, 117, 91, 0.8), rgba(139, 104, 84, 0.6), transparent);
+    border-radius: 2px;
+    animation: brushStroke 2.5s ease-out 0.5s both;
+}
+
+@keyframes brushStroke {
+    from { width: 0%; opacity: 0; }
+    to { width: 60%; opacity: 1; }
+}
+
+.hero-subtitle {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    color: #5d4037;
+    font-style: italic;
+    animation: fadeInUp 1.5s ease 0.3s both;
+    position: relative;
+}
+
+/* Edad destacada artísticamente */
+.age-highlight {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(196, 143, 102, 0.2), rgba(184, 149, 123, 0.2));
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 2px solid rgba(162, 117, 91, 0.3);
+    font-weight: 600;
+    color: #3e2723;
+    font-size: 0.9em;
+}
+
+.hero-description {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    color: #4a3429;
+    max-width: 90%;
+    animation: fadeInUp 1.5s ease 0.6s both;
+}
+
+/* Texto poético mejorado */
+.hero-poetry {
+    font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+    line-height: 1.8;
+    color: #5d4037;
+    font-style: italic;
+    margin-bottom: 2rem;
+    max-width: 85%;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.hero-poetry::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -0.2rem;
+    font-size: 3rem;
+    color: rgba(196, 143, 102, 0.4);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+}
+
+/* === 🎨 BOTONES ARTÍSTICOS === */
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 1.5s ease 1s both;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8d6e63 0%, #6d4c41 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(141, 110, 99, 0.3);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(141, 110, 99, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #6d4c41;
+    border: 2px solid #8d6e63;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, rgba(141, 110, 99, 0.1), rgba(109, 76, 65, 0.1));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(141, 110, 99, 0.2);
+}
+
+/* === 🖼️ GALERÍA VISUAL ARTÍSTICA === */
+.hero-visual {
+    flex: 1;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor principal de arte */
+.artistic-showcase {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === 🎯 CABALLETE VIRTUAL === */
+.virtual-easel {
+    position: relative;
+    z-index: 2;
+}
+
+.easel-canvas {
+    width: 280px;
+    height: 350px;
+    background: linear-gradient(135deg, #fefefe 0%, #f8f6f0 100%);
+    border: 8px solid #8d6e63;
+    border-radius: 8px;
+    box-shadow:
+        0 0 0 3px #a1887f,
+        0 15px 40px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+    animation: easelSway 8s ease-in-out infinite;
+}
+
+@keyframes easelSway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(1deg); }
+}
+
+/* Canvas interno con obra */
+.canvas-artwork {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f9f7f4;
+}
+
+/* Galería rotativa de obras */
+.rotating-artwork {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.artwork-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.artwork-slide.active {
+    opacity: 1;
+}
+
+/* Placeholder para obras (mientras se cargan las reales) */
+.artwork-placeholder {
+    background: linear-gradient(
+        45deg,
+        rgba(196, 143, 102, 0.3) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(196, 143, 102, 0.3) 75%
+    ), linear-gradient(
+        45deg,
+        rgba(162, 117, 91, 0.3) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(162, 117, 91, 0.3) 75%
+    );
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8d6e63;
+    font-size: 3rem;
+}
+
+/* === 🎨 PALETA DE COLORES FLOTANTE === */
+.floating-palette {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    z-index: 3;
+    animation: paletteFloat 6s ease-in-out infinite;
+}
+
+@keyframes paletteFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+.art-palette {
+    width: 120px;
+    height: 80px;
+    background: linear-gradient(135deg, #d7ccc8 0%, #bcaaa4 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.paint-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.paint-dot:nth-child(1) { background: #8d6e63; top: 15px; left: 20px; }
+.paint-dot:nth-child(2) { background: #a1887f; top: 25px; left: 45px; }
+.paint-dot:nth-child(3) { background: #6d4c41; top: 40px; left: 25px; }
+.paint-dot:nth-child(4) { background: #5d4037; top: 35px; left: 55px; }
+.paint-dot:nth-child(5) { background: #4e342e; top: 50px; left: 40px; }
+
+/* === 🖌️ PINCELES ANIMADOS === */
+.floating-brushes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.animated-brush {
+    position: absolute;
+    width: 4px;
+    height: 60px;
+    background: linear-gradient(to bottom, #8d6e63, #6d4c41, #4e342e);
+    border-radius: 2px 2px 0 0;
+    opacity: 0.6;
+    animation: brushPaint 12s ease-in-out infinite;
+}
+
+.animated-brush::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -2px;
+    width: 8px;
+    height: 12px;
+    background: #37474f;
+    border-radius: 4px;
+}
+
+.animated-brush::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: -1px;
+    width: 6px;
+    height: 4px;
+    background: rgba(141, 110, 99, 0.8);
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.animated-brush:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.animated-brush:nth-child(2) {
+    top: 60%;
+    left: 80%;
+    animation-delay: 4s;
+}
+
+.animated-brush:nth-child(3) {
+    top: 80%;
+    left: 30%;
+    animation-delay: 8s;
+}
+
+@keyframes brushPaint {
+    0%, 90%, 100% {
+        opacity: 0;
+        transform: translateY(20px) rotate(0deg);
+    }
+    10%, 80% {
+        opacity: 0.6;
+        transform: translateY(0px) rotate(15deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-10px) rotate(-10deg);
+    }
+}
+
+/* === ✨ EFECTOS DE PINTURA DINÁMICA === */
+.paint-splashes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.paint-splash {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: splash 8s ease-out infinite;
+}
+
+.paint-splash:nth-child(1) {
+    width: 8px;
+    height: 8px;
+    background: rgba(196, 143, 102, 0.6);
+    top: 30%;
+    left: 70%;
+    animation-delay: 0s;
+}
+
+.paint-splash:nth-child(2) {
+    width: 12px;
+    height: 12px;
+    background: rgba(162, 117, 91, 0.5);
+    top: 70%;
+    left: 20%;
+    animation-delay: 3s;
+}
+
+.paint-splash:nth-child(3) {
+    width: 6px;
+    height: 6px;
+    background: rgba(139, 104, 84, 0.7);
+    top: 50%;
+    left: 85%;
+    animation-delay: 6s;
+}
+
+@keyframes splash {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    20% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+/* === 📱 RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 0;
+    }
+
+    .hero-content {
+        padding: 0 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+
+    .hero-visual {
+        height: 60vh;
+    }
+
+    .easel-canvas {
+        width: 220px;
+        height: 280px;
+    }
+
+    .floating-palette {
+        bottom: 5%;
+        right: 5%;
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .easel-canvas {
+        width: 180px;
+        height: 230px;
+    }
+
+    .floating-palette {
+        transform: scale(0.6);
+    }
+}
+
+/* === 🌟 ANIMACIONES DE ENTRADA === */
+@keyframes fadeInBrush {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === 🎯 ACCESIBILIDAD === */
+@media (prefers-reduced-motion: reduce) {
+    .hero *,
+    .hero::before {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
