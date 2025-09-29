@@ -1,0 +1,481 @@
+/* 💰 Sección de Precios y Calculadora - Santiago Soto Arte */
+
+.pricing-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.pricing-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.pricing-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pricing-intro h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.pricing-intro p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+/* Factores de precio */
+.pricing-factors {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.factor {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.factor:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.factor-icon {
+    font-size: 1.5rem;
+}
+
+.factor span:last-child {
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* Calculadora de precios */
+.pricing-calculator {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pricing-calculator h3 {
+    font-size: 2rem;
+    color: #667eea;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.calculator-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+
+.pricing-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.pricing-form .form-group {
+    margin-bottom: 0;
+}
+
+.pricing-form .form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.pricing-form .form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.pricing-form .form-group select:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.checkbox-group {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-weight: 500 !important;
+}
+
+.checkbox-group label:hover {
+    background: #e9ecef;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #667eea;
+}
+
+.calculate-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Resultado de la calculadora */
+.pricing-result {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 15px;
+    animation: slideInUp 0.5s ease;
+}
+
+.price-summary {
+    text-align: center;
+}
+
+.final-price h3 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.price-range {
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.price-breakdown {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.price-breakdown h4 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.price-breakdown ul {
+    list-style: none;
+    padding: 0;
+}
+
+.price-breakdown li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-breakdown li:last-child {
+    border-bottom: none;
+}
+
+.next-steps {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+}
+
+.next-steps h4 {
+    margin-bottom: 1rem;
+}
+
+.next-steps ol {
+    line-height: 1.8;
+    padding-left: 1.2rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.action-buttons .btn-primary,
+.action-buttons .btn-secondary {
+    padding: 12px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.action-buttons .btn-primary {
+    background: white;
+    color: #667eea;
+}
+
+.action-buttons .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+.action-buttons .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.action-buttons .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.pricing-note {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.pricing-note p {
+    margin: 0;
+    color: #856404;
+}
+
+/* Sección Futuro */
+.future-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.future-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Roadmap */
+.roadmap {
+    margin-bottom: 4rem;
+}
+
+.roadmap-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border-left: 5px solid rgba(255, 255, 255, 0.3);
+}
+
+.roadmap-item.active {
+    border-left-color: #FFD700;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.roadmap-item.upcoming {
+    border-left-color: #87CEEB;
+}
+
+.roadmap-item.future {
+    border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+.roadmap-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.roadmap-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.roadmap-item p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.95;
+    margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    height: 8px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.progress {
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    height: 100%;
+    border-radius: 25px;
+    transition: width 1s ease;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.timeline {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* Learning Journey */
+.learning-journey {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.learning-journey h3 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.learning-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.learning-stats .stat {
+    text-align: center;
+}
+
+.learning-stats .stat-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #FFD700;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.learning-stats .stat-label {
+    display: block;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.learning-note {
+    font-size: 1.1rem;
+    font-style: italic;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* Animaciones */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pricing-factors {
+        gap: 1rem;
+    }
+
+    .factor {
+        padding: 0.8rem 1.2rem;
+        gap: 0.6rem;
+    }
+
+    .pricing-calculator {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .learning-stats {
+        gap: 2rem;
+    }
+
+    .learning-stats .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .roadmap-item {
+        padding: 2rem 1.5rem;
+    }
+}

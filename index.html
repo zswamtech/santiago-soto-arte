@@ -36,6 +36,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/contact.css">
+    <link rel="stylesheet" href="assets/css/pricing.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <!-- JSON-LD Schema.org -->
         <script type="application/ld+json">
@@ -81,7 +82,7 @@
                 <li><a href="#galeria">Galería</a></li>
                 <li><a href="#juegos">Juegos</a></li>
                 <li><a href="#sobre-mi">Sobre Mí</a></li>
-                <li><a href="#nft">Colección NFT</a></li>
+                <li><a href="#pricing">Precios</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </div>
@@ -193,15 +194,98 @@
         </div>
     </section>
 
-    <section id="nft" class="nft-section">
+    <section id="pricing" class="pricing-section">
         <div class="container">
-            <h2>Colección NFT</h2>
-            <p class="section-subtitle">Obras únicas tokenizadas en blockchain</p>
-            <div class="nft-grid">
-                <div class="nft-card">
-                    <div class="nft-image nft-image--placeholder"></div>
-                    <h3>Próximamente</h3>
-                    <p>Primera colección NFT</p>
+            <h2>💰 Precios y Encargos</h2>
+            <p class="section-subtitle">Encuentra el precio justo para tu obra personalizada</p>
+
+            <div class="pricing-content">
+                <div class="pricing-intro">
+                    <h3>🎨 ¿Cómo se determina el precio?</h3>
+                    <p>Cada obra es única, y el precio refleja el tiempo, técnica y dedicación que Santiago pone en cada retrato. Nuestra calculadora considera múltiples factores para darte una estimación justa y transparente.</p>
+
+                    <div class="pricing-factors">
+                        <div class="factor">
+                            <span class="factor-icon">📏</span>
+                            <span>Tamaño</span>
+                        </div>
+                        <div class="factor">
+                            <span class="factor-icon">🎨</span>
+                            <span>Complejidad</span>
+                        </div>
+                        <div class="factor">
+                            <span class="factor-icon">🖌️</span>
+                            <span>Técnica</span>
+                        </div>
+                        <div class="factor">
+                            <span class="factor-icon">⏰</span>
+                            <span>Tiempo</span>
+                        </div>
+                        <div class="factor">
+                            <span class="factor-icon">🐾</span>
+                            <span>Tipo de mascota</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="calculator-container">
+                    <!-- La calculadora se cargará aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="future" class="future-section">
+        <div class="container">
+            <h2>🚀 Explorando el Futuro</h2>
+            <p class="section-subtitle">Santiago y el mundo del arte digital</p>
+
+            <div class="future-content">
+                <div class="roadmap">
+                    <div class="roadmap-item active">
+                        <div class="roadmap-icon">🎨</div>
+                        <h3>Fase Actual: Maestría Tradicional</h3>
+                        <p>Perfeccionando la técnica del óleo y construyendo un portafolio sólido de obras físicas</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <span class="progress-text">75% Completado</span>
+                    </div>
+
+                    <div class="roadmap-item upcoming">
+                        <div class="roadmap-icon">📱</div>
+                        <h3>Siguiente: Transición Digital</h3>
+                        <p>Experimentando con arte digital, creando contenido educativo y construyendo comunidad online</p>
+                        <div class="timeline">Próximos 6 meses</div>
+                    </div>
+
+                    <div class="roadmap-item future">
+                        <div class="roadmap-icon">🌐</div>
+                        <h3>Futuro: Innovación Blockchain</h3>
+                        <p>Cuando el mercado NFT madure, exploraremos tokenización inteligente con utilidad real</p>
+                        <div class="timeline">2025-2026</div>
+                    </div>
+                </div>
+
+                <div class="learning-journey">
+                    <h3>📚 Journey de Aprendizaje</h3>
+                    <div class="learning-stats">
+                        <div class="stat">
+                            <span class="stat-number">4</span>
+                            <span class="stat-label">Años pintando</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">9</span>
+                            <span class="stat-label">Meses con óleo</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">∞</span>
+                            <span class="stat-label">Potencial</span>
+                        </div>
+                    </div>
+                    <p class="learning-note">
+                        <em>"Cada obra es un paso más en mi viaje artístico. Estoy emocionado por lo que viene." - Santiago</em>
+                    </p>
                 </div>
             </div>
         </div>
@@ -256,5 +340,6 @@
     <script src="assets/js/games.js"></script>
     <script src="assets/js/real-artworks.js"></script>
     <script src="assets/js/contact.js"></script>
+    <script src="assets/js/pricing-calculator.js"></script>
 </body>
 </html>
