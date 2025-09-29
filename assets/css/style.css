@@ -2161,6 +2161,44 @@ h1, h2, h3 {
     border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Badge preview próximo nivel (juego mezclas) */
+.preview-badge {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    animation: pulsePreview 2.2s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(101,143,255,0.4);
+}
+
+@keyframes pulsePreview {
+  0% { box-shadow: 0 0 0 0 rgba(101,143,255,0.45); }
+  70% { box-shadow: 0 0 0 12px rgba(101,143,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(101,143,255,0); }
+}
+
+.preview-badge::after {
+    content: 'Beta';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ffca28;
+    color: #1a1a2e;
+    padding: 2px 6px;
+    font-size: 0.55rem;
+    border-radius: 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
 /* Lado derecho - Información */
 .modal-artwork-info-section {
     color: white;

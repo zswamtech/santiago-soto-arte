@@ -682,6 +682,7 @@ class ArtGames {
                     <div class="level-info">
                         <span class="badge level-badge">Nivel ${unlockedLevel}</span>
                         <span class="badge difficulty-${currentMixture.difficulty}">${difficultyLabel}</span>
+                        ${currentMixture._preview ? `<span class="badge preview-badge" title="Vista previa de mezcla del próximo nivel">⚡ Próximo Nivel</span>` : ''}
                     </div>
                 </div>
                 <div class="level-progress-bar">
