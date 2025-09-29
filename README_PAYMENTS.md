@@ -59,6 +59,22 @@ Otros estados futuros: `refunded`, `canceled`.
 - Encriptar/firmar cookies con `orderId` para seguimiento.
 - Panel interno para revisar órdenes.
 
+### (Stub) Flujo Nequi / Wompi
+
+1. Frontend llama a `POST /api/payments/nequi-init` con items.
+2. Se crea orden interna (provider = wompi) y se devuelve referencia simulada.
+3. Respuesta contiene `nextAction.url` (stub). En real: redirigir a checkout Wompi o mostrar QR.
+4. Usuario paga con Nequi en Wompi.
+5. Wompi envía webhook (pendiente de implementar) a `/api/payments/wompi-webhook`.
+6. Webhook verifica integridad (firma HMAC con WOMPI_PRIVATE_KEY) y actualiza orden a `paid`.
+7. UI puede hacer polling a un endpoint `/api/payments/order-status?orderId=...`.
+
+Archivos involucrados del stub:
+ 
+- `api/payments/nequi-init.js`
+
+Para implementación real: seguir documentación oficial Wompi, crear hash firmado para `integrity_signature` y manejar estados `APPROVED`, `DECLINED`, `VOIDED`, etc.
+
 ## Pruebas Requeridas
 
 | Caso | Acción | Resultado |
