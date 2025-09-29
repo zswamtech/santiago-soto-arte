@@ -27,6 +27,7 @@ h1, h2, h3 {
     top: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 1rem 0;
@@ -395,6 +396,7 @@ h1, h2, h3 {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 2rem;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
 
@@ -543,5 +545,497 @@ h1, h2, h3 {
     .nft-section h2,
     .contact h2 {
         font-size: 2.2rem;
+    }
+
+    .games-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .game-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        min-width: 160px;
+    }
+}
+
+/* 🎮 Sección de Juegos */
+.games-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.games-menu {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.game-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    min-width: 180px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.game-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.game-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    color: #333;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-game {
+    text-align: center;
+}
+
+.welcome-game h3 {
+    font-size: 1.8rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+/* Juego de Colores */
+.color-game {
+    text-align: center;
+    width: 100%;
+}
+
+.color-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 2rem auto;
+    border: 5px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.color-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.color-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Juego de Memoria */
+.memory-game {
+    text-align: center;
+    width: 100%;
+}
+
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+.memory-card {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-radius: 12px;
+    transition: transform 0.6s;
+    border: 3px solid #667eea;
+}
+
+.card-front {
+    background: #f8f9fa;
+}
+
+.card-back {
+    background: #667eea;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.memory-card.flipped .card-front {
+    transform: rotateY(-180deg);
+}
+
+.memory-card.flipped .card-back {
+    transform: rotateY(0deg);
+}
+
+/* Generador de Ideas */
+.idea-generator {
+    text-align: center;
+    width: 100%;
+}
+
+.idea-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.idea-card h4 {
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+.idea-card p {
+    margin: 0.8rem 0;
+    font-size: 1.1rem;
+}
+
+/* Feedback y Logros */
+.feedback {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+}
+
+.feedback.success {
+    background: #4CAF50;
+}
+
+.feedback.info {
+    background: #2196F3;
+}
+
+.achievement-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #333;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    z-index: 10000;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: bounceIn 0.5s ease;
+}
+
+.motivation-message {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    max-width: 300px;
+    z-index: 10000;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    animation: slideInLeft 0.3s ease;
+}
+
+.score-display {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #667eea;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px solid #667eea;
+}
+
+/* Animaciones */
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes bounceIn {
+    0% { transform: translate(-50%, -50%) scale(0.3); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* 🏆 Galería Real y Tabs */
+.gallery-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 15px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gallery-tab {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: #666;
+}
+
+.gallery-tab.active {
+    background: #667eea;
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.gallery-content {
+    display: none;
+}
+
+.gallery-content.active {
+    display: block;
+    animation: fadeInUp 0.5s ease;
+}
+
+/* Estadísticas de obras */
+.artwork-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+}
+
+/* Tarjetas de obras reales */
+.real-artwork-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.real-artwork-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.real-artwork-image {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.available {
+    background: #4CAF50;
+    color: white;
+}
+
+.status-badge.sold {
+    background: #FF5722;
+    color: white;
+}
+
+.status-badge.exhibition {
+    background: #FFB74D;
+    color: #333;
+}
+
+.real-artwork-info {
+    padding: 1.5rem;
+}
+
+.real-artwork-info h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.artwork-details {
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.artwork-story {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.artwork-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+}
+
+.sold-date {
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* Mensaje "Próximamente" */
+.coming-soon-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 3rem;
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+
+.coming-soon-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.encouragement {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    font-size: 1.1rem;
+}
+
+.upload-guide {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: left;
+    max-width: 500px;
+    margin: 2rem auto 0;
+}
+
+.upload-guide h4 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.upload-guide ol {
+    line-height: 1.8;
+    padding-left: 1.5rem;
+}
+
+.upload-guide code {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

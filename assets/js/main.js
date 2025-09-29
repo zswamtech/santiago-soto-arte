@@ -176,3 +176,29 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 });
+
+// 🔄 Función para cambiar entre galerías
+function switchGallery(galleryType, clickedButton) {
+    // Actualizar tabs
+    const tabs = document.querySelectorAll('.gallery-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    if (clickedButton) {
+        clickedButton.classList.add('active');
+    }
+
+    // Actualizar contenido
+    const galleries = document.querySelectorAll('.gallery-content');
+    galleries.forEach(gallery => gallery.classList.remove('active'));
+
+    if (galleryType === 'practice') {
+        document.getElementById('practice-gallery').classList.add('active');
+    } else if (galleryType === 'real') {
+        document.getElementById('real-gallery').classList.add('active');
+        // Asegurarse de que la galería real esté renderizada
+        setTimeout(() => {
+            if (typeof renderRealGallery === 'function') {
+                renderRealGallery();
+            }
+        }, 100);
+    }
+}
