@@ -2199,6 +2199,76 @@ h1, h2, h3 {
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
+/* Panel educativo preview nivel siguiente */
+.preview-edu-panel {
+        display: flex;
+        gap: 16px;
+        background: linear-gradient(135deg, rgba(70,90,200,0.15), rgba(40,30,90,0.35));
+        border: 1px solid rgba(120,150,255,0.35);
+        padding: 18px 20px;
+        border-radius: 18px;
+        margin: 15px 0 25px;
+        position: relative;
+        overflow: hidden;
+}
+.preview-edu-panel::before {
+        content: '';
+        position: absolute;
+        top: -40%;
+        right: -20%;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle at center, rgba(120,150,255,0.35), rgba(120,150,255,0) 70%);
+        opacity: 0.6;
+        pointer-events: none;
+        animation: floatGlow 8s linear infinite;
+}
+@keyframes floatGlow {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(10px) rotate(160deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+}
+.preview-edu-icon {
+        font-size: 2rem;
+        line-height: 1;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+.preview-edu-content h4.preview-edu-title {
+        margin: 0 0 6px;
+        font-size: 1.05rem;
+        color: #d5dcff;
+        letter-spacing: 0.5px;
+}
+.preview-edu-text {
+        margin: 0 0 8px;
+        font-size: 0.9rem;
+        color: #c3c9e8;
+        line-height: 1.5;
+}
+.preview-edu-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 4px;
+}
+.preview-edu-list li {
+        font-size: 0.78rem;
+        color: #b5c3ff;
+        background: rgba(255,255,255,0.05);
+        padding: 6px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.08);
+}
+@media (max-width: 640px) {
+    .preview-edu-panel {
+        flex-direction: column;
+    }
+    .preview-edu-icon {
+        font-size: 1.6rem;
+    }
+}
+
 /* Lado derecho - Información */
 .modal-artwork-info-section {
     color: white;

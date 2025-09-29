@@ -702,6 +702,19 @@ class ArtGames {
                         <div class="result-placeholder">?</div>
                     </div>
                 </div>
+                ${currentMixture._preview ? `
+                <div class="preview-edu-panel" aria-live="polite">
+                    <div class="preview-edu-icon">🔓</div>
+                    <div class="preview-edu-content">
+                        <h4 class="preview-edu-title">Vista anticipada del Nivel ${unlockedLevel + 1}</h4>
+                        <p class="preview-edu-text">Estás viendo una mezcla que normalmente aparece en el siguiente nivel. Ganando más puntos desbloquearás más combinaciones como esta.</p>
+                        <ul class="preview-edu-list">
+                            <li>Progreso: ${progress.label}</li>
+                            <li>Próxima característica: ${this.getNextLevelFeature(unlockedLevel + 1) || 'Más retos avanzados'}</li>
+                            <li>Consejo: Observa cómo cambia el matiz al variar proporciones.</li>
+                        </ul>
+                    </div>
+                </div>` : ''}
                 <div class="color-options-grid">
                     ${allOptions.map((option, idx) => `
                         <button class="color-option-btn" data-option-index="${idx}" onclick="artGames.checkColorMixing('${option.name}')">
