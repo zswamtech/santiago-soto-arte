@@ -8,7 +8,15 @@ class PaymentGateway {
             items: [],
             total: 0,
             discount: 0,
-            finalTotal: 0
+            tax: 0,
+            shipping: 0,
+            finalTotal: 0 // total a pagar (subtotal - discount + tax + shipping)
+        };
+
+        // Metadatos del carrito para futuras migraciones / auditoría
+        this.cartMeta = {
+            version: 1,
+            updatedAt: null
         };
 
         this.paymentMethods = {
@@ -24,6 +32,7 @@ class PaymentGateway {
         await this.loadStripe();
         this.setupEventListeners();
         this.loadSavedCart();
+        this.setupStorageSync();
     }
 
     // 🔄 Cargar Stripe SDK
@@ -97,16 +106,34 @@ class PaymentGateway {
 
     // 💰 Calcular totales
     updateCart() {
+        // Subtotal bruto
         this.cart.total = this.cart.items.reduce((sum, item) =>
             sum + (item.price * item.quantity), 0
         );
 
-        // Aplicar descuento del Art Patron System
+        // Descuento (gamification / fidelización)
         this.cart.discount = this.getPatronDiscount();
-        this.cart.finalTotal = Math.max(0, this.cart.total - this.cart.discount);
+
+        // Total tras descuento (base imponible)
+        const discountedTotal = Math.max(0, this.cart.total - this.cart.discount);
+
+        // Impuestos (solo productos físicos) – simple demo: 10%
+        const taxable = this.hasPhysicalProducts() ? discountedTotal : 0;
+        this.cart.tax = Math.round(taxable * 0.10);
+
+        // Envío (solo si hay productos físicos) – flat rate demo 15, gratis > $250
+        this.cart.shipping = this.hasPhysicalProducts() && discountedTotal > 0
+            ? (discountedTotal >= 250 ? 0 : 15) : 0;
+
+        // Total final a pagar
+        this.cart.finalTotal = Math.max(0, discountedTotal + this.cart.tax + this.cart.shipping);
+
+        // Timestamp
+        this.cartMeta.updatedAt = Date.now();
 
         this.updateCartDisplay();
         this.saveCart();
+        this.dispatchCartEvent();
     }
 
     getPatronDiscount() {
@@ -202,13 +229,25 @@ class PaymentGateway {
                         <span>-$${this.cart.discount}</span>
                     </div>
                 ` : ''}
+                ${this.cart.tax > 0 ? `
+                    <div class="cart-tax">
+                        <span>Impuestos (10%):</span>
+                        <span>$${this.cart.tax}</span>
+                    </div>
+                ` : ''}
+                ${this.cart.shipping > 0 ? `
+                    <div class="cart-shipping">
+                        <span>Envío:</span>
+                        <span>$${this.cart.shipping}</span>
+                    </div>
+                ` : ''}
                 <div class="cart-total">
-                    <span>Total:</span>
+                    <span>Total a Pagar:</span>
                     <span>$${this.cart.finalTotal}</span>
                 </div>
                 <div class="cart-actions">
                     <button onclick="paymentGateway.openCheckout()" class="btn-primary checkout-btn">
-                        💳 Proceder al Pago
+                        💳 Pagar $${this.cart.finalTotal}
                     </button>
                     <button onclick="paymentGateway.clearCart()" class="btn-secondary clear-cart-btn">
                         🗑️ Vaciar Carrito
@@ -282,8 +321,20 @@ class PaymentGateway {
                                     <span>-$${this.cart.discount}</span>
                                 </div>
                             ` : ''}
-                            <div class="order-total">
-                                <span><strong>Total:</strong></span>
+                            ${this.cart.tax > 0 ? `
+                                <div class="order-tax">
+                                    <span>Impuestos:</span>
+                                    <span>$${this.cart.tax}</span>
+                                </div>
+                            ` : ''}
+                            ${this.cart.shipping > 0 ? `
+                                <div class="order-shipping">
+                                    <span>Envío:</span>
+                                    <span>$${this.cart.shipping}</span>
+                                </div>
+                            ` : ''}
+                            <div class="order-total final">
+                                <span><strong>Total a Pagar:</strong></span>
                                 <span><strong>$${this.cart.finalTotal}</strong></span>
                             </div>
                         </div>
@@ -386,7 +437,7 @@ class PaymentGateway {
                     </div>
 
                     <button id="submit-payment" class="btn-primary payment-submit-btn" disabled>
-                        🔄 Procesando pago...
+                        � Completar información
                     </button>
                 </div>
             </div>
@@ -664,7 +715,11 @@ class PaymentGateway {
     // 💾 Persistencia del carrito
     saveCart() {
         try {
-            localStorage.setItem('santiago_soto_cart', JSON.stringify(this.cart));
+            const payload = {
+                meta: this.cartMeta,
+                cart: this.cart
+            };
+            localStorage.setItem('santiago_soto_cart', JSON.stringify(payload));
         } catch (error) {
             console.warn('No se pudo guardar el carrito en localStorage:', error);
         }
@@ -674,12 +729,52 @@ class PaymentGateway {
         try {
             const savedCart = localStorage.getItem('santiago_soto_cart');
             if (savedCart) {
-                this.cart = JSON.parse(savedCart);
+                const parsed = JSON.parse(savedCart);
+                if (parsed.cart && parsed.meta) {
+                    // Futuras migraciones: if(parsed.meta.version < this.cartMeta.version) { ... }
+                    this.cart = {
+                        items: parsed.cart.items || [],
+                        total: parsed.cart.total || 0,
+                        discount: parsed.cart.discount || 0,
+                        tax: parsed.cart.tax || 0,
+                        shipping: parsed.cart.shipping || 0,
+                        finalTotal: parsed.cart.finalTotal || 0
+                    };
+                    this.cartMeta = parsed.meta;
+                } else {
+                    // Compatibilidad retro (versión antigua sin meta)
+                    const legacy = JSON.parse(savedCart);
+                    this.cart = {
+                        items: legacy.items || [],
+                        total: legacy.total || 0,
+                        discount: legacy.discount || 0,
+                        tax: 0,
+                        shipping: 0,
+                        finalTotal: legacy.finalTotal || (legacy.total - (legacy.discount || 0))
+                    };
+                    this.cartMeta.updatedAt = Date.now();
+                }
+                // Recalcular para asegurar coherencia
                 this.updateCart();
             }
         } catch (error) {
             console.warn('No se pudo cargar el carrito guardado:', error);
         }
+    }
+
+    setupStorageSync() {
+        // Sincronización multi-pestaña
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'santiago_soto_cart' && !document.hidden) {
+                this.loadSavedCart();
+            }
+        });
+    }
+
+    dispatchCartEvent() {
+        try {
+            window.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart: this.cart, meta: this.cartMeta } }));
+        } catch (_) { /* noop */ }
     }
 
     setupEventListeners() {

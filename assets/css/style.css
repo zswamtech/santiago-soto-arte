@@ -1614,6 +1614,56 @@ h1, h2, h3 {
     }
 }
 
+/* ===================== */
+/* Carrito de Compras    */
+/* ===================== */
+.cart-summary {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
+.cart-summary > div { margin-bottom: 6px; }
+.cart-summary > div:last-child { margin-bottom: 0; }
+
+.cart-summary .cart-subtotal,
+.cart-summary .cart-discount,
+.cart-summary .cart-tax,
+.cart-summary .cart-shipping,
+.cart-summary .cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+.cart-summary .cart-discount { color: #d35400; }
+.cart-summary .cart-tax span:first-child,
+.cart-summary .cart-shipping span:first-child { color: #555; }
+.cart-summary .cart-total { font-weight: 600; font-size: 1rem; }
+.cart-summary .cart-total.final { border-top: 1px solid #eee; margin-top: 8px; padding-top: 8px; }
+
+.cart-actions { display: flex; gap: .5rem; margin-top: .75rem; }
+.cart-actions .btn-primary, .cart-actions .btn-secondary { flex: 1; font-size: .9rem; padding: .75rem 1rem; }
+
+/* Notificación del carrito */
+#cart-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #222;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all .3s ease;
+    z-index: 9999;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+#cart-notification.show { opacity: 1; transform: translateY(0); }
+
 /* Animaciones */
 @keyframes slideInRight {
     from { transform: translateX(100%); }
@@ -2259,6 +2309,25 @@ h1, h2, h3 {
         padding: 6px 10px;
         border-radius: 10px;
         border: 1px solid rgba(255,255,255,0.08);
+}
+/* Contador de previews vistas */
+.preview-counter-line {
+        margin: 10px 0 18px;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: #b7c6ff;
+        background: rgba(120,150,255,0.10);
+        border: 1px solid rgba(120,150,255,0.25);
+        padding: 6px 12px;
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        border-radius: 14px;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+@media (max-width:640px){
+    .preview-counter-line { font-size:0.7rem; padding:5px 10px; }
 }
 @media (max-width: 640px) {
     .preview-edu-panel {
