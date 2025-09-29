@@ -557,40 +557,68 @@ class PaymentGateway {
         submitButton.innerHTML = '🔄 Procesando pago...';
 
         try {
-            // Recopilar datos del formulario
+            // Datos del formulario
             const formData = new FormData(form);
             const customerData = Object.fromEntries(formData);
 
-            // Simular procesamiento (en producción, esto iría al backend)
-            const paymentResult = await this.simulatePayment(customerData);
+            // Preparar items mínimos (id, quantity) desde carrito
+            const minimalItems = this.cart.items.map(i => ({ id: i.id, quantity: i.quantity }));
 
-            if (paymentResult.success) {
-                this.handlePaymentSuccess(paymentResult);
-            } else {
-                this.handlePaymentError(paymentResult.error);
+            // Crear PaymentIntent en backend
+            const intentResp = await fetch('/api/payments/create-intent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: minimalItems, customer: { email: customerData.email } })
+            });
+
+            if (!intentResp.ok) {
+                const errJson = await intentResp.json().catch(()=>({error:'Error'}));
+                throw new Error(errJson.error || 'No se pudo crear intento de pago');
             }
 
+            const { clientSecret, orderId } = await intentResp.json();
+            submitButton.innerHTML = '🔐 Confirmando tarjeta...';
+
+            if (!this.stripe || !this.cardElement) {
+                throw new Error('Stripe no inicializado');
+            }
+
+            const { error, paymentIntent } = await this.stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: this.cardElement,
+                    billing_details: {
+                        name: `${customerData.firstName || ''} ${customerData.lastName || ''}`.trim(),
+                        email: customerData.email || undefined
+                    }
+                }
+            });
+
+            if (error) {
+                throw new Error(error.message || 'Fallo al confirmar pago');
+            }
+
+            if (paymentIntent.status === 'succeeded') {
+                this.handlePaymentSuccess({
+                    success: true,
+                    paymentId: paymentIntent.id,
+                    orderId,
+                    amount: (paymentIntent.amount / 100).toFixed(2),
+                    transactionId: paymentIntent.id
+                });
+            } else if (paymentIntent.status === 'processing' || paymentIntent.status === 'requires_action') {
+                // Estado intermedio, UI informativa
+                submitButton.innerHTML = '⚙️ Verificando autenticación...';
+            } else {
+                throw new Error('Estado inesperado: ' + paymentIntent.status);
+            }
         } catch (error) {
-            console.error('Error procesando pago:', error);
-            this.handlePaymentError('Error inesperado procesando el pago');
+            console.error('Error procesando pago real:', error);
+            this.handlePaymentError(error.message || 'Error inesperado procesando el pago');
         }
     }
 
     // Simulación de pago (reemplazar con integración real)
-    async simulatePayment(customerData) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                // Simular éxito del pago
-                resolve({
-                    success: true,
-                    paymentId: 'payment_' + Date.now(),
-                    transactionId: 'txn_' + Math.random().toString(36).substring(2, 11),
-                    amount: this.cart.finalTotal,
-                    customer: customerData
-                });
-            }, 2000);
-        });
-    }
+    // simulatePayment eliminado en flujo real
 
     handlePaymentSuccess(paymentResult) {
         // 🎮 Puntos por compra exitosa
