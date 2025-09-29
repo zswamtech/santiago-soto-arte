@@ -6,6 +6,11 @@ class ArtGames {
         this.score = 0;
         this.level = 1;
         this.achievements = [];
+        // Control de variedad para mezclas
+        this.mixingDeck = {}; // { nivel: [mixtures barajadas] }
+        this.lastMixtureKey = null; // Evitar repetición inmediata
+        this.mixingHistory = []; // Últimas N mezclas para anti repetición extendida
+        this.MAX_HISTORY = 6;
         // 🎨 Teoría de color EXPANDIDA para el juego de mezclas
         this.colorTheory = {
             primary: {
@@ -652,10 +657,7 @@ class ArtGames {
 
         // Determinar nivel desbloqueado real por puntuación
         const unlockedLevel = this.getUnlockedMixingLevel();
-
-        // Filtrar mezclas por nivel desbloqueado y distribuir dificultad progresiva
-        const availableMixtures = this.colorMixtures.filter(m => m.level <= unlockedLevel);
-        const currentMixture = availableMixtures[Math.floor(Math.random() * availableMixtures.length)];
+        const currentMixture = this.getNextMixture(unlockedLevel);
 
         // Guardar estado actual para manejo de intentos y penalización
         this.currentMixingChallenge = {
@@ -689,15 +691,12 @@ class ArtGames {
                 <div class="mixing-question">
                     <p class="question-text">¿Qué color se forma al mezclar?</p>
                     <div class="color-combination">
-                        <div class="source-color">
-                            <div class="color-sample" style="background-color:${color1Data.hex}"></div>
-                            <span class="color-name">${color1Data.name}</span>
-                        </div>
-                        <div class="mixing-symbol">+</div>
-                        <div class="source-color">
-                            <div class="color-sample" style="background-color:${color2Data.hex}"></div>
-                            <span class="color-name">${color2Data.name}</span>
-                        </div>
+                        ${currentMixture._displayOrder.map(c => `
+                          <div class="source-color">
+                              <div class="color-sample" style="background-color:${c.hex}"></div>
+                              <span class="color-name">${c.name}</span>
+                          </div>
+                        `).join('<div class="mixing-symbol">+</div>')}
                         <div class="mixing-symbol">=</div>
                         <div class="result-placeholder">?</div>
                     </div>
@@ -729,6 +728,69 @@ class ArtGames {
                 </div>
             </div>
         `;
+    }
+
+    // ================= VARIEDAD MEZCLAS =================
+    mixtureKey(m) {
+        return [m.color1, m.color2, m.result].sort().join('|');
+    }
+
+    buildDeck(level) {
+        // Construir deck barajado de todas las mezclas <= nivel
+        const pool = this.colorMixtures.filter(m => m.level <= level);
+        // Barajar (Fisher-Yates)
+        for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        this.mixingDeck[level] = pool;
+    }
+
+    getNextMixture(unlockedLevel) {
+        // Ocasionalmente (30%) previsualizar mezcla del siguiente nivel para variedad y motivación
+        const nextLevel = unlockedLevel + 1;
+        let candidate = null;
+        const previewChance = (unlockedLevel < 6 && Math.random() < 0.30);
+
+        if (previewChance) {
+            const nextPool = this.colorMixtures.filter(m => m.level === nextLevel);
+            if (nextPool.length) {
+                candidate = nextPool[Math.floor(Math.random() * nextPool.length)];
+                candidate._preview = true;
+            }
+        }
+
+        // Usar deck para nivel actual si no hay candidate preview
+        if (!candidate) {
+            if (!this.mixingDeck[unlockedLevel] || this.mixingDeck[unlockedLevel].length === 0) {
+                this.buildDeck(unlockedLevel);
+            }
+            candidate = this.mixingDeck[unlockedLevel].pop();
+        }
+
+        // Anti repetición: si coincide con último o aparece demasiado en historia, elegir otro (hasta 5 intentos)
+        let attempts = 0;
+        while (attempts < 5) {
+            const key = this.mixtureKey(candidate);
+            const repeatCount = this.mixingHistory.filter(k => k === key).length;
+            if (key !== this.lastMixtureKey && repeatCount < 2) break; // aceptable
+            // Buscar alternativa
+            const altPool = this.colorMixtures.filter(m => m.level <= unlockedLevel + 1);
+            candidate = altPool[Math.floor(Math.random() * altPool.length)];
+            attempts++;
+        }
+
+        // Registrar historial
+        const usedKey = this.mixtureKey(candidate);
+        this.lastMixtureKey = usedKey;
+        this.mixingHistory.push(usedKey);
+        if (this.mixingHistory.length > this.MAX_HISTORY) this.mixingHistory.shift();
+
+        // Preparar orden de presentación (posible swap para variar visualmente)
+        const c1 = this.getColorData(candidate.color1);
+        const c2 = this.getColorData(candidate.color2);
+        candidate._displayOrder = Math.random() < 0.5 ? [c1, c2] : [c2, c1];
+        return candidate;
     }
 
     // 🎨 Función auxiliar para obtener datos de color por clave técnica
