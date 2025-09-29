@@ -101,7 +101,12 @@ class PricingCalculator {
             return total + (this.addOns.extras[extra] || 0);
         }, 0);
 
-        const totalPrice = corePrice + backgroundCost + extrasCost;
+        const subtotal = corePrice + backgroundCost + extrasCost;
+
+        // 🎮 Aplicar descuento de Art Patron System
+        const patronDiscount = this.getPatronDiscount();
+        const discountAmount = Math.round(subtotal * (patronDiscount / 100));
+        const totalPrice = subtotal - discountAmount;
 
         return {
             basePrice,
@@ -109,13 +114,16 @@ class PricingCalculator {
             corePrice,
             backgroundCost,
             extrasCost,
+            subtotal,
+            patronDiscount,
+            discountAmount,
             totalPrice,
-            breakdown: this.generateBreakdown(params, basePrice, multiplier, backgroundCost, extrasCost)
+            breakdown: this.generateBreakdown(params, basePrice, multiplier, backgroundCost, extrasCost, patronDiscount, discountAmount)
         };
     }
 
     // 📊 Generar desglose detallado
-    generateBreakdown(params, basePrice, multiplier, backgroundCost, extrasCost) {
+    generateBreakdown(params, basePrice, multiplier, backgroundCost, extrasCost, patronDiscount, discountAmount) {
         return {
             base: `Precio base (${params.size}): $${basePrice}`,
             factors: [
@@ -126,8 +134,17 @@ class PricingCalculator {
                 `Nivel artista: x${this.multipliers.experience[params.experience]}`
             ],
             addons: backgroundCost > 0 ? `Fondo: +$${backgroundCost}` : null,
-            extras: extrasCost > 0 ? `Extras: +$${extrasCost}` : null
+            extras: extrasCost > 0 ? `Extras: +$${extrasCost}` : null,
+            patron: patronDiscount > 0 ? `Descuento Art Patron (${patronDiscount}%): -$${discountAmount}` : null
         };
+    }
+
+    // 🎮 Obtener descuento del Art Patron System
+    getPatronDiscount() {
+        if (typeof artPatronSystem !== 'undefined') {
+            return artPatronSystem.getPatronDiscount();
+        }
+        return 0;
     }
 
     // 🎯 Crear interfaz de calculadora
@@ -254,6 +271,12 @@ class PricingCalculator {
 
         const result = this.calculatePrice(params);
         this.displayResult(result, params);
+
+        // 🎮 Registrar uso de calculadora en Art Patron System
+        if (typeof artPatronSystem !== 'undefined') {
+            artPatronSystem.addPoints('calculator_use');
+            artPatronSystem.playerData.stats.calculatorUses++;
+        }
     }
 
     // 📱 Mostrar resultado
@@ -264,7 +287,11 @@ class PricingCalculator {
             <div class="price-summary">
                 <div class="final-price">
                     <h3>💰 Precio Total: $${result.totalPrice}</h3>
-                    <p class="price-range">Rango estimado: $${Math.round(result.totalPrice * 0.9)} - $${Math.round(result.totalPrice * 1.1)}</p>
+                    ${result.patronDiscount > 0 ?
+                        `<p class="patron-savings">🎮 ¡Ahorras $${result.discountAmount} con Art Patron!</p>
+                         <p class="price-before">Precio sin descuento: <span style="text-decoration: line-through">$${result.subtotal}</span></p>` :
+                        `<p class="price-range">Rango estimado: $${Math.round(result.totalPrice * 0.9)} - $${Math.round(result.totalPrice * 1.1)}</p>`
+                    }
                 </div>
 
                 <div class="price-breakdown">
@@ -272,11 +299,20 @@ class PricingCalculator {
                     <ul>
                         <li>${result.breakdown.base}</li>
                         ${result.breakdown.factors.map(factor => `<li>${factor}</li>`).join('')}
-                        <li><strong>Subtotal: $${result.corePrice}</strong></li>
+                        <li><strong>Subtotal: $${result.subtotal}</strong></li>
                         ${result.breakdown.addons ? `<li>${result.breakdown.addons}</li>` : ''}
                         ${result.breakdown.extras ? `<li>${result.breakdown.extras}</li>` : ''}
+                        ${result.breakdown.patron ? `<li class="patron-discount"><strong>🎮 ${result.breakdown.patron}</strong></li>` : ''}
                     </ul>
                 </div>
+
+                ${result.patronDiscount === 0 ? `
+                    <div class="patron-cta">
+                        <h4>🎮 ¡Obtén descuentos jugando!</h4>
+                        <p>Juega nuestros juegos y gana puntos para desbloquear descuentos de hasta 20%</p>
+                        <button onclick="scrollToSection('juegos')" class="patron-cta-btn">Ir a Juegos</button>
+                    </div>
+                ` : ''}
 
                 <div class="next-steps">
                     <h4>🚀 Próximos pasos:</h4>

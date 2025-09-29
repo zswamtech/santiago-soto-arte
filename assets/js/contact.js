@@ -255,6 +255,11 @@ function submitContactForm(event, type) {
     // Simular envío (en la vida real, esto iría a un backend)
     console.log('Formulario enviado:', type, data);
 
+    // 🎮 Puntos por usar formulario de contacto
+    if (typeof artPatronSystem !== 'undefined') {
+        artPatronSystem.addPoints('contact_form');
+    }
+
     // Mostrar mensaje de éxito
     showSuccessMessage(type, data);
 
