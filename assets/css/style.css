@@ -1705,6 +1705,28 @@ h1, h2, h3 {
 @keyframes fcwPulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.6);} 70% { box-shadow:0 0 0 14px rgba(255,255,255,0);} 100% { box-shadow:0 0 0 0 rgba(255,255,255,0);} }
 @media (max-width:640px){ .floating-cart-widget { bottom: 80px; right: 12px; padding: 9px 12px; } }
 
+/* === Animaciones Add-to-Cart === */
+.add-to-cart-btn { position: relative; overflow: hidden; }
+.add-to-cart-btn.adding { animation: cartBtnPulse 0.55s ease; }
+@keyframes cartBtnPulse { 0% { transform: scale(1); box-shadow:0 0 0 0 rgba(231,76,60,0.4);} 40% { transform: scale(1.06); box-shadow:0 0 0 6px rgba(231,76,60,0.0);} 100% { transform: scale(1); box-shadow:0 0 0 0 rgba(231,76,60,0); } }
+
+/* Contador animado (badge y widget) */
+.cart-icon-count, .fcw-count { transition: transform .25s ease, color .25s ease; }
+.count-bump { animation: countBump .45s ease; }
+@keyframes countBump { 0% { transform: scale(1); } 35% { transform: scale(1.35); color:#ffd54f; } 65% { transform: scale(0.9); } 100% { transform: scale(1); color:inherit; } }
+
+/* Highlight item recién agregado */
+.cart-item.new-item-flash { animation: newItemFlash 1.2s ease; position: relative; }
+/* Reutilizar misma animación para resumen en checkout */
+.order-item.new-item-flash { animation: newItemFlash 1.2s ease; position: relative; }
+@keyframes newItemFlash {
+    0% { background: #fff8e1; box-shadow: 0 0 0 0 rgba(255,193,7,0.6); }
+    40% { background: #ffecb3; box-shadow: 0 0 0 6px rgba(255,193,7,0.0); }
+    75% { background: #fff; }
+    100% { background: #fff; }
+}
+
+
 /* Animaciones */
 @keyframes slideInRight {
     from { transform: translateX(100%); }

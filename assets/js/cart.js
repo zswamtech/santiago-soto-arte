@@ -172,8 +172,15 @@
 
   function snapshot(){
     return {
+      // Items clonados para inmutabilidad externa
       items: state.items.map(i=>({...i})),
-      pricing: state.pricing,
+      // Campos agregados que otras capas (paymentGateway, debug) esperan
+      subtotal: state.subtotal,
+      discount: state.discount,
+      tax: state.tax,
+      shipping: state.shipping,
+      total: state.total,
+      meta: { ...state.meta },
       breakdown: {
         discounts: { ...state.breakdown.discounts },
         shippingTier: state.breakdown.shippingTier,
