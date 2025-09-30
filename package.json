@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "live-server --port=3000",
     "build": "echo 'Build complete'",
-    "start": "live-server --port=3000"
+    "start": "live-server --port=3000",
+    "migrate": "node scripts/run-migrations.js",
+    "test:pricing-tiers": "node tests/pricing-tiers.smoke.js",
+    "test:discount-cap": "node tests/discount-cap.smoke.js",
+    "test:pricing-smokes": "npm run test:pricing-tiers && npm run test:discount-cap"
   },
   "keywords": ["arte", "portfolio", "nft", "digital-art"],
   "author": "Santiago Soto",
@@ -15,6 +19,7 @@
     "live-server": "^1.2.2"
   },
   "dependencies": {
-    "stripe": "^14.0.0"
+    "stripe": "^14.0.0",
+    "pg": "^8.11.5"
   }
 }

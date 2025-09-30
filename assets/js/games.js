@@ -6,6 +6,8 @@ class ArtGames {
         this.score = 0;
         this.level = 1;
         this.achievements = [];
+        // Contador de vistas previas de mezclas de próximos niveles
+        this.previewSeenCount = this.previewSeenCount || 0; // init
         // Control de variedad para mezclas
         this.mixingDeck = {}; // { nivel: [mixtures barajadas] }
         this.lastMixtureKey = null; // Evitar repetición inmediata
@@ -740,6 +742,7 @@ class ArtGames {
                 <div class="mixing-footer">
                     <button class="back-to-menu-btn" onclick="artGames.showGameMenu()">Menú 🏠</button>
                 </div>
+                <div class="preview-counter-line">⚡ Previews vistas: <strong>${this.previewSeenCount}</strong></div>
             </div>
         `;
     }
@@ -771,6 +774,8 @@ class ArtGames {
             if (nextPool.length) {
                 candidate = nextPool[Math.floor(Math.random() * nextPool.length)];
                 candidate._preview = true;
+                this.previewSeenCount++;
+                try { this.saveProgress(); } catch(e) {}
             }
         }
 
@@ -1207,11 +1212,6 @@ class ArtGames {
         const cards = document.querySelectorAll('.memory-card');
         let flippedCards = [];
         let matches = 0;
-        const category = this.animalCategories[this.selectedCategory];
-
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
                     card.classList.add('flipped');
                     flippedCards.push(card);
 
