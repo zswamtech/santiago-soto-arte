@@ -10,7 +10,8 @@
     "migrate": "node scripts/run-migrations.js",
     "test:pricing-tiers": "node tests/pricing-tiers.smoke.js",
     "test:discount-cap": "node tests/discount-cap.smoke.js",
-    "test:pricing-smokes": "npm run test:pricing-tiers && npm run test:discount-cap"
+    "test:discount-combo": "node tests/discount-combo.smoke.js",
+    "test:pricing-smokes": "npm run test:pricing-tiers && npm run test:discount-cap && npm run test:discount-combo"
   },
   "keywords": ["arte", "portfolio", "nft", "digital-art"],
   "author": "Santiago Soto",
