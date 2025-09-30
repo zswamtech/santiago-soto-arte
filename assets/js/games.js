@@ -1212,53 +1212,55 @@ class ArtGames {
         const cards = document.querySelectorAll('.memory-card');
         let flippedCards = [];
         let matches = 0;
-                    card.classList.add('flipped');
-                    flippedCards.push(card);
 
-                    if (flippedCards.length === 2) {
-                        if (flippedCards[0].dataset.card === flippedCards[1].dataset.card) {
-                            matches++;
-                            // Puntos variables según la dificultad de la categoría
-                            const categoryBonus = this.getCategoryBonus(this.selectedCategory);
-                            this.score += (20 + categoryBonus);
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Evitar interacción con cartas ya resueltas o mostradas
+                if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+                if (flippedCards.length === 2) return; // esperar a que se resuelva el par actual
 
-                            // Efecto visual de éxito
-                            flippedCards.forEach(card => {
-                                card.classList.add('matched');
-                            });
+                card.classList.add('flipped');
+                flippedCards.push(card);
 
-                            flippedCards = [];
+                if (flippedCards.length === 2) {
+                    const [c1, c2] = flippedCards;
+                    const isMatch = c1.dataset.card === c2.dataset.card;
+                    if (isMatch) {
+                        matches++;
+                        const categoryBonus = this.getCategoryBonus(this.selectedCategory);
+                        this.score += (20 + categoryBonus);
+                        flippedCards.forEach(fc => fc.classList.add('matched'));
+                        flippedCards = [];
+                        this.updateScoreDisplay();
 
-                            // Actualizar puntuación en pantalla
-                            this.updateScoreDisplay();
-
-                            if (matches === totalPairs) {
-                                setTimeout(() => {
-                                    this.showMemoryGameComplete(category, totalPairs);
-                                }, 500);
-
-                                // 🎮 Juego completado perfectamente
-                                if (typeof artPatronSystem !== 'undefined') {
-                                    artPatronSystem.addPoints('memory_perfect_score');
-                                    artPatronSystem.playerData.stats.perfectScores++;
-                                    artPatronSystem.playerData.stats.gamesPlayed++;
-                                }
-                            } else {
-                                // 🎮 Puntos por completar memoria
-                                if (typeof artPatronSystem !== 'undefined') {
-                                    artPatronSystem.addPoints('complete_memory_game');
-                                }
+                        if (matches === totalPairs) {
+                            setTimeout(() => {
+                                // Pasar la categoría actual correctamente
+                                this.showMemoryGameComplete(this.animalCategories[this.selectedCategory], totalPairs);
+                            }, 400);
+                            if (typeof artPatronSystem !== 'undefined') {
+                                artPatronSystem.addPoints('memory_perfect_score');
+                                artPatronSystem.playerData.stats.perfectScores++;
+                                artPatronSystem.playerData.stats.gamesPlayed++;
                             }
                         } else {
-                            setTimeout(() => {
-                                flippedCards.forEach(c => c.classList.remove('flipped'));
-                                flippedCards = [];
-                            }, 1000);
+                            if (typeof artPatronSystem !== 'undefined') {
+                                artPatronSystem.addPoints('complete_memory_game');
+                                artPatronSystem.playerData.stats.gamesPlayed++;
+                            }
                         }
+                    } else {
+                        setTimeout(() => {
+                            flippedCards.forEach(fc => fc.classList.remove('flipped'));
+                            flippedCards = [];
+                        }, 900);
                     }
                 }
             });
         });
+
+        // Guardar progreso cada vez que se entra en un nuevo set-up
+        try { this.saveProgress(); } catch(e) {}
     }
 
     // 🎯 Bonificación por categoría basada en dificultad
