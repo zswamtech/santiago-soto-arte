@@ -1719,10 +1719,19 @@ h1, h2, h3 {
 .cart-item.new-item-flash { animation: newItemFlash 1.2s ease; position: relative; }
 /* Reutilizar misma animación para resumen en checkout */
 .order-item.new-item-flash { animation: newItemFlash 1.2s ease; position: relative; }
+/* Item cuyo quantity se incrementó (diferente tono) */
+.cart-item.increment-item-flash { animation: incrementItemFlash 1s ease; position: relative; }
+.order-item.increment-item-flash { animation: incrementItemFlash 1s ease; position: relative; }
 @keyframes newItemFlash {
     0% { background: #fff8e1; box-shadow: 0 0 0 0 rgba(255,193,7,0.6); }
     40% { background: #ffecb3; box-shadow: 0 0 0 6px rgba(255,193,7,0.0); }
     75% { background: #fff; }
+    100% { background: #fff; }
+}
+@keyframes incrementItemFlash {
+    0% { background: #e1f5fe; box-shadow: 0 0 0 0 rgba(3,169,244,0.55); }
+    40% { background: #b3e5fc; box-shadow: 0 0 0 6px rgba(3,169,244,0); }
+    80% { background: #fff; }
     100% { background: #fff; }
 }
 
