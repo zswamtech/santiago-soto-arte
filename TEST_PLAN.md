@@ -84,13 +84,14 @@ No incluye (futuro):
 
 ---
  
-## Cálculo Avanzado (Pricing v2)
+## Cálculo Avanzado (Pricing v2 / v3 Cupones)
 
 | # | Caso | Resultado |
 |---|------|-----------|
 |31 | CAL7 Shipping escalonado | Cruzar límites (<100k, 100k, 200k, 300k neto). Esperado: shipping 18000→15000→10000→0 consistente |
 |32 | CAL8 CAP descuento | Forzar >25% descuentos combinados. Esperado: descuento total limitado a 25% y breakdown indica CAP |
 |33 | CAL9 Hint próximo tier | Carrito físico con netAfterDiscount ligeramente bajo al umbral: verificar `shippingProgress.missing` >0 y hint UI “Te faltan $X…”; al superar umbral, hint cambia o desaparece mostrando nuevo tier / envío gratis |
+|34 | CAL10 Combo patron+cupón | Caso A: patron 15% + cupón 10% = 25% exacto → appliedCap=false; Caso B: patron 20% + cupón 15% = 35% teórico → total 25% tras reescalado proporcional y appliedCap=true; verificar ratio patron/cupón ≈ original (tolerancia 1 cent) |
 
 ---
 
@@ -98,10 +99,10 @@ No incluye (futuro):
 
 | # | Caso | Resultado |
 |---|------|-----------|
-|34 | ORD1 Crear y leer | Orden creada aparece en DB (SELECT * WHERE id=...) con pricing_snapshot inmutable |
-|35 | ORD2 Webhook duplicado | Segundo evento misma id no cambia updated_at ni estado |
-|36 | ORD3 Estado no retrocede | Intentar marcar failed tras paid no altera estado paid |
-|37 | ORD4 Fallback memoria | Sin POSTGRES_URL se crea en store memoria y no lanza 500 |
+|35 | ORD1 Crear y leer | Orden creada aparece en DB (SELECT * WHERE id=...) con pricing_snapshot inmutable |
+|36 | ORD2 Webhook duplicado | Segundo evento misma id no cambia updated_at ni estado |
+|37 | ORD3 Estado no retrocede | Intentar marcar failed tras paid no altera estado paid |
+|38 | ORD4 Fallback memoria | Sin POSTGRES_URL se crea en store memoria y no lanza 500 |
 
 ---
  

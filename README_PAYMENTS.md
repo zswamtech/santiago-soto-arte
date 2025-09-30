@@ -40,6 +40,32 @@ Estructura (memoria temporal):
 - Idempotencia: Registro de `event.id` procesados.
 - Nunca exponer `STRIPE_SECRET_KEY` en frontend.
 
+### Estado Interino: `patronPoints` (Descuento Art Patron)
+
+Actualmente el frontend envía un campo numérico `patronPoints` al endpoint `create-intent`. El backend:
+
+1. Ignora cualquier intento de enviar directamente un porcentaje de descuento.
+2. Aplica un mapping discreto interno puntos → % (tramos) y nunca supera el CAP global (25% combinado con cupón).
+3. Almacena en la tabla `orders` los campos: `patron_percent_applied`, `coupon_percent_applied`, `coupon_code`, `patron_points_snapshot`.
+
+Riesgos y mitigación:
+
+| Riesgo | Impacto | Mitigación Actual | Próximo Paso |
+|--------|---------|-------------------|--------------|
+| Usuario infla `patronPoints` | Descuento mayor al que le correspondería | Mapping discreto + CAP 25% limita el máximo | Reemplazar envío de puntos por lookup server authoritative (ledger) |
+| Divergencia analítica (snapshot no confiable) | Métricas sesgadas por manipulación | Snapshot se usa sólo indicativamente | Comparar contra ledger real cuando exista y registrar delta |
+| Cupones de nivel alto usados sin realmente tener puntos | Acceso anticipado a beneficios | Backend valida percent real del cupón, no confía en afirmaciones extra | Validar desbloqueo server (relación puntos reales ↔ catálogo cupones) |
+
+Estado: "Transición controlada". El impacto financiero máximo está acotado por el CAP; la deuda técnica principal es la ausencia de `user_points_ledger` y autenticación que permita cálculo server authoritative genuino. Esta deuda se resuelve en la Fase 1 del roadmap de gamificación.
+
+Checklist para cerrar la brecha:
+
+- [ ] Implementar `users`, `user_points_ledger`, `user_state`.
+- [ ] Endpoint `GET /api/gamification/state` → servidor retorna puntos reales.
+- [ ] Sustituir envío de `patronPoints` por identificación de usuario (cookie/token) y cálculo server.
+- [ ] Migrar mapping a tabla `reward_catalog` (editable sin despliegue).
+- [ ] Métrica de divergencia: comparar `patron_points_snapshot` vs puntos reales al momento de `paid`.
+
 ## Variables de Entorno (.env)
 
 Ver `.env.example` y configurar en Vercel.
@@ -103,8 +129,10 @@ Se implementó una capa de pricing avanzado tanto en frontend (`CartModule`) com
 
 ### 1. Descuentos
 
-- Fuentes actuales: Programa Art Patron (porcentual) y placeholder de cupón (todavía 0%).
-- CAP global: El total combinado de descuentos no puede exceder 25% del subtotal. Si ocurre, se reescala proporcionalmente y se marca `appliedCap=true`.
+- Fuentes actuales: Programa Art Patron (porcentual) y Cupones desbloqueados por puntos (PATRON5, PATRON8, PATRON10, PATRON15).
+- CAP global: El total combinado de descuentos (patron + cupón) no puede exceder 25% del subtotal. Si ocurre, se reescala proporcionalmente y se marca `appliedCap=true`.
+- Backend autoritativo: se envía `couponCode` desde el cliente pero el servidor resuelve el porcentaje real (ignora cualquier intento de inflar valores en cliente).
+- Endpoint auxiliar: `GET /api/payments/validate-coupon?code=CODE` devuelve `{ valid, percent }` (sin verificación de puntos todavía).
 - Breakdown de descuentos:
 
 ```json
@@ -171,16 +199,15 @@ Campo derivado en UI (no parte del breakdown backend): `effectiveDiscountPercent
 
 ### 6. Futuro
 
-- Añadir cupones reales (campo `couponPercent`) – UI ya tiene placeholder deshabilitado.
+- Verificación server-side de puntos para desbloqueo de cupones (evitar uso de cupones avanzados manipulando el frontend).
 - Parametrizar tiers vía archivo de configuración o panel admin.
 - Registrar histórico de cambios de reglas para auditoría.
-
-
-- Persistencia real (DB) reemplazando `order-store.js`.
+- Firmar snapshot (HMAC) `{ items, patronPercent, couponCode }` para detectar manipulación entre create-intent y confirmación.
+- Persistencia real de puntos / niveles (actualmente sólo en memoria frontend).
 - Emails post pago (SendGrid, Resend).
 - Integrar Wompi/Nequi: endpoint que crea transacción y escucha su webhook con mismo `orderId`.
 - Encriptar/firmar cookies con `orderId` para seguimiento.
-- Panel interno para revisar órdenes.
+- Panel interno para revisar órdenes y activar/desactivar cupones dinámicamente.
 
 ### (Stub) Flujo Nequi / Wompi
 
@@ -260,6 +287,42 @@ Fallo en migraciones bloquea merge, evitando despliegues con esquemas desactuali
 
 
 Implementación minimalista: cambiar `automatic_payment_methods` si deseas controlar métodos manualmente. Para multi-proveedor, crear adapter adicional.
+
+## Cupones (Pricing v3)
+
+Sistema de cupones ligado a progresión de puntos del programa Art Patron.
+
+Tabla actual (hardcoded en `coupon-rules.js`):
+
+| Código   | % | Umbral sugerido (frontend) |
+|----------|---|----------------------------|
+| PATRON5  | 5 | >= 100                     |
+| PATRON8  | 8 | >= 250                     |
+| PATRON10 |10 | >= 400                     |
+| PATRON15 |15 | >= 700                     |
+
+Notas:
+
+1. El frontend sólo muestra cupones cuando el usuario alcanza el umbral (estimación local de puntos). AÚN no se valida server-side el desbloqueo.
+2. El backend es autoridad: recibe `couponCode`, busca percent real y recalcula pricing completo + CAP.
+3. CAP: si `patronPercent + couponPercent == 25` no se considera excedido (`appliedCap=false`). Si supera 25 se reescala proporcionalmente.
+4. Reescalado proporcional: `factor = 25 / (patronTeorico + couponTeorico)` y luego se multiplican cada componente, redondeando a entero en centavos. Diferencias de redondeo se ajustan sobre el descuento patron.
+5. Smokes relevantes:
+
+- `tests/discount-cap.smoke.js`: CAP genérico.
+- `tests/discount-combo.smoke.js`: CAL10 (casos 15%+10% y 20%+15%).
+
+Limitaciones actuales:
+
+- Sin validación server de puntos → un usuario podría forzar un cupón de mayor nivel; mitigación parcial: no puede alterar el percent oficial.
+- Sin expiración / uso único de cupones (estáticos promocionales internos).
+- Sin firma del snapshot de carrito; riesgo leve de manipulación entre intent y confirm.
+
+Próximos pasos cortos:
+
+- Endpoint seguro para puntos (`/api/patron/points`).
+- Panel admin para (des)activar cupones y editar percent sin redeploy.
+- Telemetría: ratio uso de cada cupón y conversión asociada.
 
 ---
 Autor: Equipo Técnico Santiago Soto Arte
