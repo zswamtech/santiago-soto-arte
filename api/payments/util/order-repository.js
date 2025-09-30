@@ -56,8 +56,8 @@ async function pgCreate(order){
   const q = `INSERT INTO orders(
     id, provider, provider_ref, status, currency, subtotal, discount_total, tax, shipping, total,
     shipping_tier, discount_cap_applied, discounts, items, pricing_snapshot, customer_email, customer_name,
-    patron_percent_applied, coupon_percent_applied, coupon_code, patron_points_snapshot
-  ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::json,$14::json,$15::json,$16,$17,$18,$19,$20,$21)
+    patron_percent_applied, coupon_percent_applied, coupon_code, patron_points_snapshot, snapshot_signature
+  ) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::json,$14::json,$15::json,$16,$17,$18,$19,$20,$21,$22)
   RETURNING *`;
   const values = [
     order.id, order.provider, order.provider_ref||null, order.status, order.currency||'cop', order.subtotal,
@@ -65,9 +65,15 @@ async function pgCreate(order){
     !!order.discount_cap_applied, JSON.stringify(order.discounts||{}), JSON.stringify(order.items||[]),
     JSON.stringify(order.pricing_snapshot), order.customer_email||null, order.customer_name||null,
     order.patron_percent_applied||null, order.coupon_percent_applied||null, order.coupon_code||null,
-    order.patron_points_snapshot||0
+    order.patron_points_snapshot||0, order.snapshot_signature||null
   ];
   const { rows } = await pgClient.query(q, values);
+  // Registrar evento CAP si corresponde
+  try {
+    if(order.discount_cap_applied){
+      await pgClient.query('INSERT INTO discount_cap_events(order_id) VALUES($1)', [order.id]);
+    }
+  } catch(e){ console.warn('[order-repository] cap event insert warn:', e.message); }
   return rows[0];
 }
 
@@ -85,13 +91,14 @@ async function pgUpdateStatus(id, nextStatus, patch){
   const q = `UPDATE orders SET provider_ref=$2, status=$3, subtotal=$4, discount_total=$5, tax=$6, shipping=$7, total=$8,
     shipping_tier=$9, discount_cap_applied=$10, discounts=$11::json, items=$12::json, pricing_snapshot=$13::json,
     customer_email=$14, customer_name=$15, patron_percent_applied=$16, coupon_percent_applied=$17,
-    coupon_code=$18, patron_points_snapshot=$19, updated_at=NOW() WHERE id=$1 RETURNING *`;
+    coupon_code=$18, patron_points_snapshot=$19, snapshot_signature=$20, updated_at=NOW() WHERE id=$1 RETURNING *`;
   const values = [
     merged.id, merged.provider_ref||null, merged.status, merged.subtotal, merged.discount_total, merged.tax,
     merged.shipping, merged.total, merged.shipping_tier||null, !!merged.discount_cap_applied,
     JSON.stringify(merged.discounts||{}), JSON.stringify(merged.items||[]), JSON.stringify(merged.pricing_snapshot||{}),
     merged.customer_email||null, merged.customer_name||null, merged.patron_percent_applied||null,
-    merged.coupon_percent_applied||null, merged.coupon_code||null, merged.patron_points_snapshot||0
+    merged.coupon_percent_applied||null, merged.coupon_code||null, merged.patron_points_snapshot||0,
+    merged.snapshot_signature||null
   ];
   const { rows } = await pgClient.query(q, values);
   return rows[0];
