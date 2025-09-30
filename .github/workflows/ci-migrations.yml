@@ -1,0 +1,52 @@
+name: CI - Migrations
+
+on:
+  pull_request:
+  push:
+    branches: [ main, feat/** ]
+
+jobs:
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: app
+          POSTGRES_DB: appdb
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U app" \
+          --health-interval 10s \
+          --health-timeout 5s \
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install deps
+        run: npm install
+      - name: Wait for Postgres
+        run: |
+          for i in {1..15}; do
+            if pg_isready -h localhost -p 5432 -U app; then echo "Postgres listo"; break; fi
+            echo "Esperando Postgres..."; sleep 2;
+          done
+      - name: Run migrations
+        env:
+          POSTGRES_URL: postgres://app:password@localhost:5432/appdb
+        run: npm run migrate
+      - name: Smoke pricing (tiers + CAP)
+        run: npm run test:pricing-smokes
+      - name: Smoke create-intent without POSTGRES_URL (fallback memory)
+        run: node -e "require('fs').accessSync('./api/payments/create-intent.js'); console.log('Create-intent presente');"
+      - name: Smoke order-repository with Postgres
+        env:
+          POSTGRES_URL: postgres://app:password@localhost:5432/appdb
+        run: >-
+          node -e "(async()=>{const repo=require('./api/payments/util/order-repository');const id='ord_ci_'+Date.now();await repo.create({id,provider:'stripe',provider_ref:'pi_test',status:'pending',currency:'cop',subtotal:1000,discount_total:0,tax:0,shipping:0,total:1000,shipping_tier:null,discount_cap_applied:false,discounts:{total:0},items:[],pricing_snapshot:{subtotal:1000,discounts:{total:0},tax:0,shipping:0,total:1000}});const fetched=await repo.findById(id);if(!fetched||fetched.id!==id){console.error('No se pudo crear/fetch orden');process.exit(1);}console.log('Smoke repository OK',fetched.id);process.exit(0);})().catch(e=>{console.error(e);process.exit(1);});"

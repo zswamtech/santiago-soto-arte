@@ -1,0 +1,45 @@
+name: Update Migration Badge
+
+on:
+  push:
+    paths:
+      - 'migrations/**.sql'
+      - 'scripts/generate-migration-badge.js'
+  schedule:
+    - cron: '0 3 * * 1' # Lunes 03:00 UTC (revalida badge)
+  workflow_dispatch:
+
+jobs:
+  generate-badge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies (prod only)
+        run: npm ci --omit=dev
+
+      - name: Generate migration badge
+        run: npm run badge:migration
+
+      - name: Create PR if badge changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore: update migration badge'
+          branch: chore/update-migration-badge
+          title: 'chore: update migration badge'
+          body: 'Actualización automática del badge de migración.'
+          add-paths: |
+            badges/migration-badge.json
+          labels: documentation, automation
+          draft: false

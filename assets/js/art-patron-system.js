@@ -142,6 +142,11 @@ class ArtPatronSystem {
         this.checkAchievements();
         this.savePlayerData();
         this.updateDisplay();
+        // 🔔 Evento global para que otros módulos (ej. carrito) reaccionen a cambio de puntos / posible cambio descuento
+        try {
+            const discount = this.getPatronDiscount();
+            window.dispatchEvent(new CustomEvent('artpatron:points-updated', { detail: { totalPoints: this.playerData.totalPoints, discount, activity, added: points } }));
+        } catch(e) { /* noop */ }
         this.showPointsAnimation(points, activity);
     }
 
