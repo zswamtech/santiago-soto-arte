@@ -12,7 +12,8 @@
     "test:discount-cap": "node tests/discount-cap.smoke.js",
     "test:discount-combo": "node tests/discount-combo.smoke.js",
     "test:coupon-redemption": "node tests/coupon-redemption.smoke.js",
-    "test:pricing-smokes": "npm run test:pricing-tiers && npm run test:discount-cap && npm run test:discount-combo && npm run test:coupon-redemption"
+    "test:pricing-smokes": "npm run test:pricing-tiers && npm run test:discount-cap && npm run test:discount-combo && npm run test:coupon-redemption",
+    "badge:migration": "node scripts/generate-migration-badge.js"
   },
   "keywords": ["arte", "portfolio", "nft", "digital-art"],
   "author": "Santiago Soto",

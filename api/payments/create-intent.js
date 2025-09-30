@@ -14,13 +14,20 @@ module.exports = async (req, res) => {
   }
 
   try {
-  const { items = [], customer, couponCode } = req.body || {};
+  const { items = [], customer, couponCode, patronPoints } = req.body || {};
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'Items requeridos' });
     }
 
-    // Calcular precios oficiales
-  const pricing = computePricing(items, { couponCode });
+    // Derivar descuento patron server-side (temporal hasta ledger)
+    let patronDiscountPercent = 0;
+    try {
+      const { derivePatronDiscountPercent } = require('./util/patron-levels');
+      patronDiscountPercent = derivePatronDiscountPercent(patronPoints);
+    } catch(_) { /* fallback 0 */ }
+
+    // Calcular precios oficiales (server authoritative)
+  const pricing = computePricing(items, { couponCode, patronDiscountPercent });
 
     if (pricing.breakdown.total <= 0) {
       return res.status(400).json({ error: 'Total inválido' });
@@ -36,7 +43,9 @@ module.exports = async (req, res) => {
         subtotal: pricing.breakdown.subtotal,
         tax: pricing.breakdown.tax,
         shipping: pricing.breakdown.shipping,
-        coupon: couponCode || ''
+        coupon: couponCode || '',
+        patronPoints: typeof patronPoints === 'number' ? patronPoints : 0,
+        patronPercent: pricing.breakdown.discounts?.patron || 0
       },
       automatic_payment_methods: { enabled: true }
     });
@@ -57,7 +66,8 @@ module.exports = async (req, res) => {
       shipping_tier: pricing.breakdown.shippingTier || null,
       discount_cap_applied: !!discounts.appliedCap,
       discounts,
-      coupon_code: couponCode || null,
+  coupon_code: couponCode || null,
+  patron_points_snapshot: typeof patronPoints === 'number' ? patronPoints : 0,
       patron_percent_applied: typeof discounts.patronPercent === 'number' ? discounts.patronPercent : null,
       coupon_percent_applied: typeof discounts.couponPercent === 'number' ? discounts.couponPercent : null,
       items: pricing.items.map(i=>({ id:i.id, name:i.name, type:i.type, unitAmount:i.unitAmount||i.price, quantity:i.quantity, lineTotal:(i.lineTotal || (i.price*i.quantity)) })),
