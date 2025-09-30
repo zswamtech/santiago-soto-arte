@@ -42,6 +42,7 @@ module.exports = async (req, res) => {
     });
 
     // Guardar orden persistente (o fallback memoria)
+    const discounts = pricing.breakdown.discounts || { total: pricing.breakdown.discount || 0 };
     const orderData = {
       id: orderId,
       provider: 'stripe',
@@ -49,14 +50,16 @@ module.exports = async (req, res) => {
       status: 'pending',
       currency: pricing.currency,
       subtotal: pricing.breakdown.subtotal,
-      discount_total: pricing.breakdown.discounts ? pricing.breakdown.discounts.total : pricing.breakdown.discount || 0,
+      discount_total: discounts.total,
       tax: pricing.breakdown.tax,
       shipping: pricing.breakdown.shipping,
       total: pricing.breakdown.total,
       shipping_tier: pricing.breakdown.shippingTier || null,
-      discount_cap_applied: pricing.breakdown.discounts ? !!pricing.breakdown.discounts.appliedCap : false,
-  discounts: pricing.breakdown.discounts || { total: pricing.breakdown.discount || 0 },
-  coupon_code: couponCode || null,
+      discount_cap_applied: !!discounts.appliedCap,
+      discounts,
+      coupon_code: couponCode || null,
+      patron_percent_applied: typeof discounts.patronPercent === 'number' ? discounts.patronPercent : null,
+      coupon_percent_applied: typeof discounts.couponPercent === 'number' ? discounts.couponPercent : null,
       items: pricing.items.map(i=>({ id:i.id, name:i.name, type:i.type, unitAmount:i.unitAmount||i.price, quantity:i.quantity, lineTotal:(i.lineTotal || (i.price*i.quantity)) })),
       pricing_snapshot: pricing.breakdown,
       customer_email: customer?.email || null,
