@@ -17,6 +17,8 @@
   const POST_SECOND_FLIP_BUFFER_MS = 1500; // mucho más tiempo para ver las cartas
   // Tiempo que permanecen visibles cartas no coincidentes antes de voltearse de regreso
   const UNMATCH_VIEW_DELAY_MS = 5000; // 5 segundos completos para memorizar
+  // MODO EXTENDIDO: si se desea que las cartas no coincidentes permanezcan abiertas
+  const HOLD_UNTIL_NEXT_CLICK = true; // <== activado según solicitud del usuario
   // Espera adicional total antes de evaluar (Opción A solicitada) tras la segunda carta (además de animación+buffer)
   const EXTRA_EVAL_DELAY_MS = 2000; // más tiempo para pensar
   const FIRST_CARD_FLIP_MS = 1000; // sincronizado con animación CSS
@@ -810,6 +812,9 @@
         return;
       }
 
+      // BLOQUEO: No permitir clics mientras se está evaluando un par
+      if(this._evaluating) return;
+
       // Reglas básicas
       if(this.state.flipped.length >= 2) return;
       if(this.state.flipped.some(f => f.index === index)) return;
@@ -852,12 +857,11 @@
 
       this.state.flipped.push({ index, pairKey: card.pairKey });
       if(this.state.flipped.length === 2){
-        // Diferenciar comportamiento: si serán match queremos feedback rápido.
-        const [c1, c2] = this.state.flipped;
-        const willMatch = c1.pairKey === c2.pairKey;
-        const baseDelay = FLIP_ANIMATION_MS + POST_SECOND_FLIP_BUFFER_MS; // tiempo mínimo necesario para acabar el flip
-        const totalDelay = willMatch ? baseDelay : baseDelay + EXTRA_EVAL_DELAY_MS; // match inmediato, no-match espera extendida
-        setTimeout(()=> this.checkMatch(), totalDelay);
+        // BLOQUEAR más clics hasta que termine la evaluación
+        this._evaluating = true;
+        // Esperar solo el tiempo de animación para que termine de voltear la segunda carta
+        // Luego evaluar inmediatamente
+        setTimeout(()=> this.checkMatch(), FLIP_ANIMATION_MS + 300);
       }
     }
 
@@ -1078,6 +1082,8 @@
         if(this.state.matched.length === this.state.cards.length){
           setTimeout(() => this.finish(), 800);
         }
+        // Si hubo MATCH, desbloquear inmediatamente
+        this._evaluating = false;
       } else {
         // ❌ NO MATCH
         this.state.streak = 0;
@@ -1094,18 +1100,46 @@
           this.showFeedback('Intenta de nuevo', 'neutral');
         }
 
-        // Voltear de vuelta las cartas
-        setTimeout(() => {
-          cards[f1.index].classList.remove('flipped');
-          cards[f2.index].classList.remove('flipped');
-          cards[f1.index].querySelector('.card-front').setAttribute('data-revealed', 'false');
-          cards[f2.index].querySelector('.card-front').setAttribute('data-revealed', 'false');
-        }, UNMATCH_VIEW_DELAY_MS);
+        if(HOLD_UNTIL_NEXT_CLICK){
+          // Mantener abiertas hasta que el jugador haga otro clic en una tercera carta
+          this._pendingUnflip = [f1.index, f2.index];
+          // Desbloquear inmediatamente para permitir siguiente intento
+          this._evaluating = false;
+        } else {
+          // Modo clásico: cerrar después de delay
+          setTimeout(() => {
+            cards[f1.index].classList.remove('flipped');
+            cards[f2.index].classList.remove('flipped');
+            cards[f1.index].querySelector('.card-front').setAttribute('data-revealed', 'false');
+            cards[f2.index].querySelector('.card-front').setAttribute('data-revealed', 'false');
+            this._evaluating = false;
+          }, UNMATCH_VIEW_DELAY_MS);
+        }
       }
 
       this.state.flipped = [];
       this.updateStats();
     }
+
+    // Override de flipCard para cerrar par anterior sólo cuando se inicia un nuevo intento
+    const _origFlipCard = UnifiedMemoryGame.prototype.flipCard;
+    UnifiedMemoryGame.prototype.flipCard = function(index){
+      // Si hay un par pendiente de cerrar y el usuario intenta voltear una nueva carta (inicio nuevo intento)
+      if(HOLD_UNTIL_NEXT_CLICK && this._pendingUnflip && this.state.flipped.length === 0){
+        const cards = document.querySelectorAll('.memory-card');
+        const [i1, i2] = this._pendingUnflip;
+        [i1, i2].forEach(i => {
+          const el = cards[i];
+          if(el){
+            el.classList.remove('flipped');
+            const front = el.querySelector('.card-front');
+            if(front) front.setAttribute('data-revealed','false');
+          }
+        });
+        this._pendingUnflip = null;
+      }
+      return _origFlipCard.call(this, index);
+    };
 
     // 🔍 Actualiza el contenido visible de badges ΔE según modo analítico
     updateAnalyticBadges(){

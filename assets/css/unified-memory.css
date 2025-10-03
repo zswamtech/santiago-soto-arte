@@ -210,7 +210,7 @@
 /* Frente de la carta */
 .card-front {
   background: #fff;
-  transform: rotateY(180deg);
+  /* Ya no rotamos el frente: el giro se gestiona moviendo el contenedor y rotando solo el reverso */
   overflow: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -303,31 +303,28 @@
 }
 
 /* --- Accesibilidad: clase para contenido sólo para lectores de pantalla --- */
-.sr-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0 0 0 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
-
-/* --- Nuevo layout mezcla doble (A) --- */
-.color-bisect {
-  padding:0 !important;
-}
-.color-bisect-wrapper {
-  display:grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: stretch;
-  width:100%;
-  height:100%;
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
+.card-back {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%),
+    linear-gradient(135deg, #ff6b6b 0%, #f06595 50%, #cc5de8 100%);
+  background-size: 30px 30px, 30px 30px, 30px 30px, 30px 30px, 100% 100%;
+  background-position: 0 0, 15px 0, 15px -15px, 0 15px, 0 0;
+  color: #fff;
+  font-size: 3.5rem;
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
+  transition: all 0.3s ease;
+  /* Fallback color si gradientes tardan */
+  background-color:#d354a5;
+  transform: rotateY(180deg); /* ahora solo se rota el reverso */
 }
 .color-bisect-wrapper::after {
   content:'';
