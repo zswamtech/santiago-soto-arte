@@ -201,7 +201,7 @@
                 <div class="games-main">
                     <div class="games-menu">
                         <button class="game-btn featured" onclick="artGames.colorMixingGame()">🧪 Laboratorio de Mezclas</button>
-                        <button class="game-btn featured" onclick="GameCore && GameCore.mountGame ? GameCore.mountGame('unified-memory', document.getElementById('game-container')) : console.warn('GameCore no disponible')">🎨 Memoria Artística</button>
+                        <button id="btn-memory-game" class="game-btn featured" onclick="launchUnifiedMemory()">🎨 Memoria Artística</button>
                         <button class="game-btn" onclick="artGames.ideaGenerator()">💡 Generador de Ideas</button>
                         <button class="game-btn" onclick="showMotivation()">✨ Motivación Diaria</button>
                         <button class="game-btn" onclick="showContributionPortal()">➕ Aporta tu Par Creativo</button>
@@ -582,6 +582,64 @@
     <script src="assets/js/cart.js"></script>
     <script src="assets/js/payment-gateway.js"></script>
             <script src="assets/js/validation-logger.js"></script>
+        <script>
+            // Launcher robusto para Memoria Artística Unificada
+            (function(){
+                const BTN_ID = 'btn-memory-game';
+                const CONTAINER_ID = 'game-container';
+                let pendingClick = false;
+                let registered = false;
+
+                function log(msg){ console.log('[memory-launcher]', msg); }
+
+                function hasGame(){
+                    return window.GameCore && GameCore.listGames && GameCore.listGames().some(g => g.id === 'unified-memory');
+                }
+
+                function mount(){
+                    const container = document.getElementById(CONTAINER_ID);
+                    if(!container){ log('Contenedor no encontrado'); return; }
+                    GameCore.mountGame('unified-memory', container);
+                    pendingClick = false;
+                }
+
+                window.launchUnifiedMemory = function(){
+                    if(hasGame()) { log('Montando inmediato'); mount(); return; }
+                    log('Juego aún no registrado, se marca pendingClick');
+                    pendingClick = true;
+                    // Mostrar indicador simple
+                    const btn = document.getElementById(BTN_ID);
+                    if(btn && !btn.dataset.loading){ btn.dataset.loading = 'true'; btn.textContent = '⏳ Cargando Memoria...'; }
+                };
+
+                // Escuchar evento de registro diferido del propio unified-memory.js
+                window.addEventListener('unified-memory-registered', ()=> {
+                    log('Evento unified-memory-registered recibido');
+                    registered = true;
+                    if(pendingClick){ mount(); }
+                    const btn = document.getElementById(BTN_ID);
+                    if(btn && btn.dataset.loading){ btn.textContent = '🎨 Memoria Artística'; delete btn.dataset.loading; }
+                });
+
+                // Poll de seguridad (por si evento se pierde)
+                let tries = 0; const maxTries = 30; // 3s
+                const iv = setInterval(()=>{
+                    if(hasGame()){
+                        if(!registered){ log('Registro detectado vía poll'); }
+                        registered = true; if(pendingClick) mount(); clearInterval(iv);
+                        const btn = document.getElementById(BTN_ID);
+                        if(btn && btn.dataset.loading){ btn.textContent = '🎨 Memoria Artística'; delete btn.dataset.loading; }
+                    } else if(++tries >= maxTries){
+                        clearInterval(iv);
+                        if(pendingClick){
+                            const btn = document.getElementById(BTN_ID);
+                            if(btn){ btn.textContent = '⚠️ Error cargando'; }
+                            log('No se pudo registrar el juego en tiempo esperado');
+                        }
+                    }
+                }, 100);
+            })();
+        </script>
             <style>
                 .quiz-hidden { display:none; }
                     .quiz-live-panel { background:#111; border:1px solid #333; padding:12px 14px; border-radius:8px; margin-top:16px; font-size:0.9rem; line-height:1.3; }
