@@ -701,14 +701,15 @@ h1, h2, h3 {
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    /* Sincronizado con FLIP_ANIMATION_MS = 1200ms */
-    transition: transform 1.2s cubic-bezier(.19,1,.22,1);
+    /* Sincronizado con nuevo FLIP_ANIMATION_MS ≈ 1350ms para mayor tiempo de observación */
+    transition: transform 1.35s cubic-bezier(.19,1,.22,1);
     border-radius: 14px;
 }
 
 /* Fast-open: primera carta de la partida con giro más rápido */
 .unified-memory-game .memory-card.fast-open .card-inner {
-    transition: transform .65s cubic-bezier(.3,.9,.3,1.02);
+    /* Primera carta aún rápida, pero un poco más suave para consistencia */
+    transition: transform .8s cubic-bezier(.3,.9,.3,1.02);
 }
 .unified-memory-game .memory-card.flipped .card-inner { transform: rotateY(180deg); }
 

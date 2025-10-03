@@ -799,6 +799,21 @@
     }
 
     flipCard(index){
+      // 🔄 Limpieza diferida de un par no coincidente mantenido abierto (HOLD_UNTIL_NEXT_CLICK)
+      // Si existe un par pendiente y el usuario inicia un nuevo intento (ninguna carta seleccionada todavía en este turno)
+      if(HOLD_UNTIL_NEXT_CLICK && this._pendingUnflip && this.state.flipped.length === 0){
+        const cards = this.board.querySelectorAll('.memory-card');
+        const [i1, i2] = this._pendingUnflip;
+        [i1, i2].forEach(i => {
+          const el = cards[i];
+            if(el){
+              el.classList.remove('flipped');
+              const front = el.querySelector('.card-front');
+              if(front) front.setAttribute('data-revealed','false');
+            }
+        });
+        this._pendingUnflip = null; // limpiar estado
+      }
       const cardEl = this.board.querySelectorAll('.memory-card')[index];
       const card = this.state.cards[index];
       if(!cardEl || !card) return;
@@ -1120,26 +1135,6 @@
       this.state.flipped = [];
       this.updateStats();
     }
-
-    // Override de flipCard para cerrar par anterior sólo cuando se inicia un nuevo intento
-    const _origFlipCard = UnifiedMemoryGame.prototype.flipCard;
-    UnifiedMemoryGame.prototype.flipCard = function(index){
-      // Si hay un par pendiente de cerrar y el usuario intenta voltear una nueva carta (inicio nuevo intento)
-      if(HOLD_UNTIL_NEXT_CLICK && this._pendingUnflip && this.state.flipped.length === 0){
-        const cards = document.querySelectorAll('.memory-card');
-        const [i1, i2] = this._pendingUnflip;
-        [i1, i2].forEach(i => {
-          const el = cards[i];
-          if(el){
-            el.classList.remove('flipped');
-            const front = el.querySelector('.card-front');
-            if(front) front.setAttribute('data-revealed','false');
-          }
-        });
-        this._pendingUnflip = null;
-      }
-      return _origFlipCard.call(this, index);
-    };
 
     // 🔍 Actualiza el contenido visible de badges ΔE según modo analítico
     updateAnalyticBadges(){
