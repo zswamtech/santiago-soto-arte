@@ -129,6 +129,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
   border-radius: 12px;
   display: flex;
@@ -211,12 +212,12 @@
   background: #fff;
   transform: rotateY(180deg);
   overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* SOLUCIÓN: El contenido dentro debe estar correctamente orientado */
+/* Ajuste: ya no invertimos el contenido; solo aseguramos dimensiones */
 .card-front > * {
-  /* Cancelar el rotateY del padre para que el contenido se vea bien */
-  transform: rotateY(180deg) scaleX(-1) !important;
   width: 100%;
   height: 100%;
   display: block;
@@ -228,6 +229,16 @@
   height: 100% !important;
   object-fit: cover !important;
 }
+
+/* Soporte extra Safari / WebKit para evitar ver reverso transparente */
+@supports (-webkit-appearance: none) {
+  .memory-card { -webkit-transform-style: preserve-3d; transform-style: preserve-3d; }
+  .card-inner { -webkit-transform-style: preserve-3d; transform-style: preserve-3d; }
+  .card-back, .card-front { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+}
+
+/* Fix adicional: asegurar que imágenes nunca se volteen accidentalmente */
+.card-front img { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 
 /* Reemplazo de opacity por visibility para evitar salto */
 .card-front[data-revealed="false"] { visibility:hidden; }
