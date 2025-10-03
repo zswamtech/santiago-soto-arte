@@ -8,6 +8,7 @@
     "build": "echo 'Build complete'",
     "start": "live-server --port=3000",
     "migrate": "node scripts/run-migrations.js",
+    "images:optimize": "node scripts/convert-images.js",
     "test:pricing-tiers": "node tests/pricing-tiers.smoke.js",
     "test:discount-cap": "node tests/discount-cap.smoke.js",
     "test:discount-combo": "node tests/discount-combo.smoke.js",
@@ -19,7 +20,8 @@
   "author": "Santiago Soto",
   "license": "MIT",
   "devDependencies": {
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "sharp": "^0.33.4"
   },
   "dependencies": {
     "stripe": "^14.0.0",

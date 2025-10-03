@@ -16,8 +16,8 @@
     tax: 0,
     shipping: 0,
     total: 0, // subtotal - discount + tax + shipping
-    breakdown: { 
-      discounts: { patron: 0, coupon: 0, total: 0, appliedCap: false }, 
+    breakdown: {
+      discounts: { patron: 0, coupon: 0, game: 0, total: 0, appliedCap: false },
       shippingTier: null,
       netAfterDiscount: 0,
       shippingProgress: { nextTier: null, missing: 0 } // nextTier: { tier, threshold, shippingCost }
@@ -45,6 +45,16 @@
       return global.artPatronSystem.getPatronDiscount() || 0;
     }
     return 0;
+  }
+
+  // 🎮 Función para obtener descuento del juego (Memoria Artística)
+  function getGameDiscountPercent(){
+    try {
+      const gameDiscount = localStorage.getItem('artGameDiscount');
+      return gameDiscount ? parseInt(gameDiscount, 10) : 0;
+    } catch(e) {
+      return 0;
+    }
   }
 
   function calculateShipping(net, hasPhysical){
@@ -83,31 +93,38 @@
   function calculatePricing(items){
     const subtotal = items.reduce((s,i)=> s + i.price * i.quantity, 0);
     // Descuentos
-  const patronPct = getPatronDiscountPercent();
-  const patron = Math.round(subtotal * (patronPct/100));
-  const couponPct = state.coupon ? state.coupon.percent : 0;
+    const patronPct = getPatronDiscountPercent();
+    const patron = Math.round(subtotal * (patronPct/100));
+    const couponPct = state.coupon ? state.coupon.percent : 0;
     const coupon = Math.round(subtotal * (couponPct/100));
-    let totalDiscount = patron + coupon;
+    // 🎮 Descuento del juego
+    const gamePct = getGameDiscountPercent();
+    const game = Math.round(subtotal * (gamePct/100));
+
+    let totalDiscount = patron + coupon + game;
     const theoreticalPct = subtotal > 0 ? (totalDiscount / subtotal)*100 : 0;
     let appliedCap = false;
     if(theoreticalPct > DISCOUNT_CAP_PERCENT){
       totalDiscount = Math.round(subtotal * (DISCOUNT_CAP_PERCENT/100));
-      // Redistribución proporcional (simple) entre componentes
-      const baseSum = patron + coupon || 1;
+      // Redistribución proporcional entre componentes (patron, coupon, game)
+      const baseSum = patron + coupon + game || 1;
       const scale = totalDiscount / baseSum;
       const newPatron = Math.round(patron * scale);
       const newCoupon = Math.round(coupon * scale);
+      const newGame = Math.round(game * scale);
       // Ajuste por redondeo
-      const diff = totalDiscount - (newPatron + newCoupon);
+      const diff = totalDiscount - (newPatron + newCoupon + newGame);
       state.breakdown.discounts.patron = newPatron + diff; // asignar diff al patron
       state.breakdown.discounts.coupon = newCoupon;
+      state.breakdown.discounts.game = newGame;
       appliedCap = true;
     } else {
       state.breakdown.discounts.patron = patron;
       state.breakdown.discounts.coupon = coupon;
+      state.breakdown.discounts.game = game;
     }
 
-    const discount = appliedCap ? (state.breakdown.discounts.patron + state.breakdown.discounts.coupon) : totalDiscount;
+    const discount = appliedCap ? (state.breakdown.discounts.patron + state.breakdown.discounts.coupon + state.breakdown.discounts.game) : totalDiscount;
     const netAfterDiscount = Math.max(0, subtotal - discount);
     const hasPhysical = items.some(i => i.type === 'product' || i.type === 'custom_artwork');
     const { shipping, tier, progress } = calculateShipping(netAfterDiscount, hasPhysical);

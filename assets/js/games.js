@@ -439,8 +439,18 @@ class ArtGames {
                         name: 'Andaluz',
                         emoji: '🐴',
                         images: [
-                            'https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=300&h=300&fit=crop',
-                            'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=300&h=300&fit=crop'
+                            // Nuevas ilustraciones locales (variantes completas, no mitades) – asegúrate de que existan estos archivos
+                            'assets/img/caballos/caballo_andaluz/caballo_andaluz_v1.png',
+                            'assets/img/caballos/caballo_andaluz/caballo_andaluz_v2.png'
+                        ]
+                    },
+                    {
+                        name: 'Árabe',
+                        emoji: '🐴',
+                        images: [
+                            // Par acción vs postura reutilizado como dos variantes para el modo clásico
+                            'assets/img/caballos/caballo_arabe/caballos_caballo_arabe_action_v1.png',
+                            'assets/img/caballos/caballo_arabe/caballos_caballo_arabe_stance_v1.png'
                         ]
                     },
                     {
@@ -1073,54 +1083,90 @@ class ArtGames {
     }
 
     // 🖼️ Juego: Memoria de Obras - Selector de Categoría
+    // ====================================================================
+    // [DEPRECATED] Juego de Memoria (versión clásica)
+    // Estas funciones (memoryGame, showCategorySelection, selectCategory,
+    // startMemoryGameWithCategory, setupMemoryGame, showMemoryGameComplete)
+    // han sido reemplazadas por la versión accesible y modular en:
+    //   assets/js/games/memory-game.js  (registrada en GameCore como 'memory-game')
+    // Plan de retiro: eliminar lógica legacy una vez verificado uso estable
+    // de la versión accesible + migración React completa.
+    // Mientras tanto: memoryGame() redirige automáticamente a la nueva
+    // implementación si GameCore está disponible. Si no, cae en el flujo
+    // legacy para no romper sesiones existentes.
+    // ====================================================================
     memoryGame() {
-        if (!this.selectedCategory) {
-            this.showCategorySelection();
-        } else {
-            this.startMemoryGameWithCategory();
-        }
+        try {
+            if (window.GameCore && GameCore.mountGame) {
+                console.warn('[deprecated] Usando versión accesible de memoria vía GameCore.mountGame("memory-game")');
+                GameCore.mountGame('memory-game', document.getElementById('game-container'));
+                return;
+            }
+        } catch(e){ console.debug('[memoryGame legacy fallback]', e); }
+        // Fallback legacy original
+        if (!this.selectedCategory) this.showCategorySelection();
+        else this.startMemoryGameWithCategory();
     }
 
     // 🎯 Mostrar selector de categoría
+    // [DEPRECATED] ver comentario en memoryGame()
     showCategorySelection() {
         const gameContainer = document.getElementById('game-container');
         const categories = Object.keys(this.animalCategories);
 
+        // NUEVA VERSIÓN SIN PREVISUALIZACIONES: Ocultamos imágenes hasta dentro del juego
         gameContainer.innerHTML = `
-            <div class="category-selection">
-                <h3>🧠 Memoria Artística</h3>
-                <p>Elige una categoría de animales para empezar</p>
-                <div class="category-grid">
+            <div class="legacy-memory-root">
+            <div class="legacy-warning-banner" role="alert" aria-live="polite">
+               <strong>⚠ Versión clásica (en transición)</strong>
+               <p>Estás usando la versión antigua del juego de memoria. Prueba la nueva versión accesible con soporte de teclado y modos avanzados.</p>
+               <button class="legacy-upgrade-btn" onclick="if(window.GameCore){GameCore.mountGame('memory-game', document.getElementById('game-container'));} else { alert('Versión accesible no disponible aún.'); }">Ir a versión accesible ▶️</button>
+            </div>
+            <div class="category-selection compact">
+                <div class="header-block">
+                    <h3>🧠 Memoria Artística</h3>
+                    <p class="subtitle">Elige una categoría. Las imágenes se revelarán solo durante la partida.</p>
+                </div>
+                <ul class="category-grid compact-grid" role="list">
                     ${categories.map(categoryKey => {
                         const category = this.animalCategories[categoryKey];
-                        return `
-                            <button class="category-btn" onclick="artGames.selectCategory('${categoryKey}')">
-                                <div class="category-icon">${category.emoji}</div>
-                                <div class="category-name">${category.name}</div>
-                                <div class="category-count">${category.animals.length} razas</div>
+                        const totalAnimals = category.animals.length;
+                        const totalImages = category.animals.reduce((acc,a)=> acc + (a.images? a.images.length : 0),0);
+                        return `<li class="category-grid-item" role="listitem">
+                            <button class="category-card no-preview" onclick="artGames.selectCategory('${categoryKey}')" aria-label="${category.name} (${totalAnimals} razas, ${totalImages} imágenes)">
+                                <div class="card-symbol" aria-hidden="true">${category.emoji}</div>
+                                <div class="card-body">
+                                    <div class="cat-title">${category.name}</div>
+                                    <div class="cat-meta">${totalAnimals} razas · ${totalImages} imgs</div>
+                                    <div class="cat-difficulty diff-${category.difficulty}">Dificultad: ${category.difficulty}</div>
+                                </div>
                             </button>
-                        `;
+                        </li>`;
                     }).join('')}
+                </ul>
+                <div class="category-disclaimer">
+                    <p><strong>Nota:</strong> Material de práctica interno, no representa obras finales.</p>
                 </div>
-                <div class="game-info">
+                <div class="how-to">
                     <h4>🎮 ¿Cómo jugar?</h4>
-                    <ul>
-                        <li>Escoge tu categoría favorita de animales</li>
-                        <li>Encuentra las parejas de razas específicas</li>
-                        <li>¡Gana más puntos con categorías más difíciles!</li>
-                    </ul>
+                    <ol>
+                        <li>Selecciona una categoría.</li>
+                        <li>Encuentra las parejas (variantes) de cada raza.</li>
+                        <li>Minimiza intentos y mejora tu memoria visual-conceptual.</li>
+                    </ol>
                 </div>
-            </div>
-        `;
+            </div>`;
     }
 
     // 🎯 Seleccionar categoría
+    // [DEPRECATED]
     selectCategory(categoryKey) {
         this.selectedCategory = categoryKey;
         this.startMemoryGameWithCategory();
     }
 
     // 🎮 Iniciar juego con categoría específica
+    // [DEPRECATED]
     startMemoryGameWithCategory() {
         const gameContainer = document.getElementById('game-container');
         const category = this.animalCategories[this.selectedCategory];
@@ -1208,6 +1254,7 @@ class ArtGames {
         this.setupMemoryGame(gameAnimals.length / 2); // Dividir por 2 porque son pares
     }
 
+    // [DEPRECATED]
     setupMemoryGame(totalPairs = 6) {
         const cards = document.querySelectorAll('.memory-card');
         let flippedCards = [];
@@ -1296,6 +1343,7 @@ class ArtGames {
     }
 
     // 🏆 Mostrar pantalla de juego completado
+    // [DEPRECATED]
     showMemoryGameComplete(category, totalPairs) {
         const gameContainer = document.getElementById('game-container');
         const categoryBonus = this.getCategoryBonus(this.selectedCategory);

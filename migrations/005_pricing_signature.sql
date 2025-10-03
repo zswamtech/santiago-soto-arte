@@ -14,3 +14,6 @@ CREATE TABLE IF NOT EXISTS discount_cap_events (
 CREATE INDEX IF NOT EXISTS discount_cap_events_order_idx ON discount_cap_events(order_id);
 
 -- Nota: si la tabla orders es muy usada, se podría considerar un trigger de auditoría en lugar de eventos explícitos.
+
+-- Registrar versión en tabla de migraciones (idempotente)
+INSERT INTO schema_migrations(version) VALUES('005') ON CONFLICT DO NOTHING;

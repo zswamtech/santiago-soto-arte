@@ -1,0 +1,487 @@
+/**
+ * 🎨 Contribution Portal Styles
+ * Diseño moderno y artístico para el sistema de aportes
+ */
+
+/* ========================================
+   PORTAL CONTAINER
+   ======================================== */
+
+.game-portal {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 20px;
+    padding: 32px;
+    margin-top: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-portal::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
+    animation: portalPulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes portalPulse {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-10px, -10px) scale(1.05); }
+}
+
+.game-portal h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #ff6b6b;
+    margin-bottom: 12px;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+}
+
+.game-portal > p {
+    text-align: center;
+    color: #b8b8d1;
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+}
+
+/* ========================================
+   CONTRIBUTION STEPS
+   ======================================== */
+
+.contribution-step {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.contribution-step:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 107, 107, 0.3);
+    transform: translateY(-2px);
+}
+
+.contribution-step h4 {
+    font-family: 'Playfair Display', serif;
+    color: #ffd93d;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contribution-step h4::before {
+    content: '✦';
+    color: #ff6b6b;
+    font-size: 1.5rem;
+}
+
+/* ========================================
+   FORM INPUTS
+   ======================================== */
+
+.contribution-step input[type="text"],
+.contribution-step select,
+.contribution-step textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.contribution-step input[type="text"]:focus,
+.contribution-step select:focus,
+.contribution-step textarea:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+}
+
+.contribution-step textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.contribution-step input::placeholder,
+.contribution-step textarea::placeholder {
+    color: #888;
+}
+
+.contribution-step select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    padding-right: 45px;
+}
+
+/* ========================================
+   CARD DESIGNER
+   ======================================== */
+
+.card-designer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+    .card-designer {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card-preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-preview-container label {
+    color: #ffd93d;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-preview-container label::before {
+    content: '🎴';
+}
+
+.card-preview {
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+    border: 3px dashed rgba(255, 107, 107, 0.3);
+    border-radius: 16px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card-preview:hover {
+    border-color: rgba(255, 107, 107, 0.6);
+    background: linear-gradient(135deg, #1a1a2e 0%, #252545 100%);
+}
+
+.preview-placeholder {
+    color: #666;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.card-image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    animation: fadeInScale 0.4s ease;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.preview-check {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #4caf50;
+    color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    animation: checkPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes checkPop {
+    0% { transform: scale(0) rotate(-45deg); }
+    50% { transform: scale(1.2) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.contribution-step input[type="file"] {
+    background: rgba(255, 107, 107, 0.1);
+    border: 2px solid rgba(255, 107, 107, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contribution-step input[type="file"]:hover {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.5);
+}
+
+.contribution-step input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 12px;
+    transition: all 0.3s ease;
+}
+
+.contribution-step input[type="file"]::file-selector-button:hover {
+    background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+/* ========================================
+   REWARD DISPLAY
+   ======================================== */
+
+.contribution-reward {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 24px;
+    text-align: center;
+    color: #ffd93d;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.contribution-reward strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* ========================================
+   SUBMIT BUTTON
+   ======================================== */
+
+.game-portal .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 24px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-portal .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.game-portal .btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.game-portal .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(255, 107, 107, 0.5);
+}
+
+.game-portal .btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   SUCCESS MESSAGE
+   ======================================== */
+
+.contribution-success {
+    text-align: center;
+    padding: 40px 20px;
+    animation: successFadeIn 0.6s ease;
+}
+
+@keyframes successFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-icon {
+    font-size: 5rem;
+    margin-bottom: 24px;
+    animation: successIconPulse 1s ease infinite;
+}
+
+@keyframes successIconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.contribution-success h3 {
+    color: #4caf50;
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+}
+
+.contribution-success p {
+    font-size: 1.1rem;
+    color: #b8b8d1;
+    margin-bottom: 32px;
+}
+
+.success-rewards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.reward-item {
+    background: rgba(76, 175, 80, 0.1);
+    border: 2px solid rgba(76, 175, 80, 0.3);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #4caf50;
+    font-weight: 600;
+    animation: rewardSlideIn 0.5s ease backwards;
+}
+
+.reward-item:nth-child(1) { animation-delay: 0.1s; }
+.reward-item:nth-child(2) { animation-delay: 0.2s; }
+.reward-item:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes rewardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.reward-item.pending {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+}
+
+.reward-icon {
+    font-size: 1.5rem;
+}
+
+.success-note {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 0.95rem;
+    color: #888;
+    line-height: 1.6;
+}
+
+/* ========================================
+   CLOSE BUTTON
+   ======================================== */
+
+.portal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.portal-close-btn:hover {
+    background: rgba(255, 107, 107, 0.3);
+    border-color: rgba(255, 107, 107, 0.5);
+    transform: rotate(90deg);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .game-portal {
+        padding: 24px 16px;
+    }
+
+    .game-portal h3 {
+        font-size: 1.6rem;
+    }
+
+    .contribution-step {
+        padding: 16px;
+    }
+
+    .card-designer {
+        gap: 16px;
+    }
+}

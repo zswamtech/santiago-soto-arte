@@ -1020,6 +1020,30 @@
         padding: 1rem;
     }
 
+    /* === Memoria: Selector de Categorías Mejorado === */
+    .category-selection.enhanced { display:flex; flex-direction:column; gap:1.75rem; }
+    .category-selection .header-block h3 { margin:0 0 .35rem; font-size:1.65rem; }
+    .category-selection .subtitle { margin:0; font-size:.95rem; opacity:.8; }
+    .category-grid.improved { display:grid; gap:1rem; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); }
+    .category-card { position:relative; background:#fff; border:1px solid #e2e6f0; border-radius:18px; padding:0; text-align:left; cursor:pointer; display:flex; flex-direction:column; overflow:hidden; transition:box-shadow .25s, transform .25s; }
+    .category-card:focus-visible, .category-card:hover { box-shadow:0 4px 18px -4px rgba(102,126,234,.35); transform:translateY(-3px); }
+    .category-card .card-top { aspect-ratio: 4/3; background:#f2f4f9; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .cat-mosaic { display:grid; width:100%; height:100%; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:2px; padding:4px; box-sizing:border-box; }
+    .cat-mosaic.empty { font-size:2rem; opacity:.4; }
+    .cat-mosaic .mosaic-cell { position:relative; overflow:hidden; border-radius:6px; }
+    .cat-mosaic img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(1.05); transition:transform .6s; }
+    .category-card:hover .cat-mosaic img { transform:scale(1.06); }
+    .category-card .card-body { padding:.75rem .85rem 1rem; display:flex; flex-direction:column; gap:.35rem; }
+    .cat-title { font-weight:600; font-size:1rem; line-height:1.1; }
+    .cat-meta { font-size:.7rem; letter-spacing:.5px; text-transform:uppercase; opacity:.65; font-weight:600; }
+    .cat-difficulty { font-size:.65rem; padding:3px 7px; border-radius:20px; width:max-content; background:#eef1f9; color:#455; font-weight:600; letter-spacing:.5px; }
+    .cat-difficulty.diff-easy { background:#e3f8e6; color:#1d6e32; }
+    .cat-difficulty.diff-medium { background:#fff4d8; color:#8a5a00; }
+    .cat-difficulty.diff-hard { background:#fbe3e3; color:#962e2e; }
+    .category-disclaimer { font-size:.75rem; line-height:1.3; background:#f5f7fb; padding:.75rem 1rem; border:1px solid #e3e7ef; border-radius:12px; }
+    .how-to h4 { margin:.2rem 0 .4rem; }
+    .how-to ol { margin:0; padding-left:1.2rem; font-size:.85rem; line-height:1.35; }
+
     .color-mixing-game {
         padding: 1.5rem 1rem;
     }

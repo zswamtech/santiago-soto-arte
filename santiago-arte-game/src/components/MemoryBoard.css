@@ -1,0 +1,10 @@
+.memory-board-wrapper { padding: 1.5rem; max-width: 860px; margin: 0 auto; color: #eee; font-family: system-ui, sans-serif; }
+.memory-board-header { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
+.memory-stats { display: flex; gap: 1.2rem; font-size: .9rem; opacity: .9; flex-wrap: wrap; }
+.restart-btn { background:#333; color:#fff; border:1px solid #555; padding:.5rem .9rem; border-radius:6px; cursor:pointer; font-size:.85rem; }
+.restart-btn:hover { background:#444; }
+.memory-grid-react { display:grid; gap:.75rem; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+.memory-grid-react.locked { pointer-events:none; opacity:.85; }
+.memory-finish-panel { margin-top:1rem; background:#1e1e1e; border:1px solid #333; padding:1rem; border-radius:8px; text-align:center; }
+.memory-finish-panel button { margin-top:.5rem; background:#444; color:#fff; border:1px solid #666; padding:.5rem 1rem; border-radius:6px; cursor:pointer; }
+.memory-finish-panel button:hover { background:#555; }

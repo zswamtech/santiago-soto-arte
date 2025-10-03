@@ -41,6 +41,12 @@
     <link rel="stylesheet" href="assets/css/pricing.css">
     <link rel="stylesheet" href="assets/css/gamification.css">
     <link rel="stylesheet" href="assets/css/payment-gateway.css">
+    <link rel="stylesheet" href="assets/css/memory-game.css">
+    <link rel="stylesheet" href="assets/css/memory-legacy.css">
+    <link rel="stylesheet" href="assets/css/unified-memory.css">
+    <link rel="stylesheet" href="assets/css/contribution-portal.css">
+    <link rel="stylesheet" href="assets/css/contributor-dashboard.css">
+    <link rel="stylesheet" href="assets/css/leaderboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <!-- JSON-LD Schema.org -->
         <script type="application/ld+json">
@@ -185,6 +191,7 @@
         </div>
     </section>
 
+
     <section id="juegos" class="games-section">
         <div class="container">
             <h2>🎮 Espacio Creativo</h2>
@@ -194,9 +201,11 @@
                 <div class="games-main">
                     <div class="games-menu">
                         <button class="game-btn featured" onclick="artGames.colorMixingGame()">🧪 Laboratorio de Mezclas</button>
-                        <button class="game-btn" onclick="artGames.memoryGame()">🧠 Memoria Artística</button>
+                        <button class="game-btn featured" onclick="GameCore && GameCore.mountGame ? GameCore.mountGame('unified-memory', document.getElementById('game-container')) : console.warn('GameCore no disponible')">🎨 Memoria Artística</button>
                         <button class="game-btn" onclick="artGames.ideaGenerator()">💡 Generador de Ideas</button>
                         <button class="game-btn" onclick="showMotivation()">✨ Motivación Diaria</button>
+                        <button class="game-btn" onclick="showContributionPortal()">➕ Aporta tu Par Creativo</button>
+                        <button class="game-btn" onclick="showLeaderboard()">🏆 Salón de la Fama</button>
                     </div>
                     <div id="game-container" class="game-container">
                         <div class="welcome-game">
@@ -213,11 +222,90 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Portal de Contribución -->
+                    <div id="contribution-portal" class="game-portal" style="display:none;">
+                        <button class="portal-close-btn" id="close-contribution-portal" aria-label="Cerrar portal">×</button>
+
+                        <h3>🎨 Conviértete en Creador</h3>
+                        <p>Aporta tu conocimiento artístico y gana recompensas únicas.</p>
+
+                        <div class="contribution-step">
+                            <h4>Paso 1: Describe tu Par</h4>
+                            <input type="text" id="contribution-pair-name" placeholder="Nombre del par (ej. Colores Cálidos y Fríos)" maxlength="50">
+
+                            <select id="contribution-category">
+                                <option value="colorTheory">🎨 Teoría del Color</option>
+                                <option value="techniques">🖌️ Técnicas de Pintura</option>
+                                <option value="artHistory">🏛️ Historia del Arte</option>
+                                <option value="composition">📐 Composición</option>
+                                <option value="materials">🎯 Materiales</option>
+                            </select>
+
+                            <select id="contribution-difficulty">
+                                <option value="easy">🌱 Fácil (+200 pts)</option>
+                                <option value="medium">🧠 Medio (+350 pts)</option>
+                                <option value="hard">🎓 Difícil (+500 pts)</option>
+                            </select>
+                        </div>
+
+                        <div class="contribution-step">
+                            <h4>Paso 2: Diseña las Cartas</h4>
+                            <div class="card-designer">
+                                <div class="card-preview-container">
+                                    <label>Carta 1 (Pregunta/Concepto)</label>
+                                    <div class="card-preview" id="card1-preview">
+                                        <span class="preview-placeholder">📷 Subir imagen</span>
+                                    </div>
+                                    <input type="file" id="card1-file" accept="image/svg+xml, image/png, image/jpeg">
+                                </div>
+                                <div class="card-preview-container">
+                                    <label>Carta 2 (Respuesta/Par)</label>
+                                    <div class="card-preview" id="card2-preview">
+                                        <span class="preview-placeholder">📷 Subir imagen</span>
+                                    </div>
+                                    <input type="file" id="card2-file" accept="image/svg+xml, image/png, image/jpeg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contribution-step">
+                            <h4>Paso 3: El Toque Educativo</h4>
+                            <textarea id="contribution-educational" placeholder="¿Por qué este par es artísticamente relevante? (ej. Los colores cálidos transmiten energía, mientras los fríos evocan calma)"></textarea>
+                            <textarea id="contribution-learning" placeholder="¿Qué concepto clave aprende el jugador? (ej. Comprender la temperatura del color mejora la composición emocional)"></textarea>
+                        </div>
+
+                        <button class="btn-primary" id="submit-contribution">✨ Enviar para Aprobación</button>
+                        <p class="contribution-reward">
+                            Al ser aprobado, recibirás <strong>200 puntos</strong> y el badge de <strong>Creador Aprendiz</strong> 🏆
+                        </p>
+                    </div>
+
+                    <!-- Salón de la Fama -->
+                    <div id="leaderboard-container" class="game-portal" style="display:none;">
+                        <button class="leaderboard-close-btn" onclick="Leaderboard.close()" aria-label="Cerrar salón de la fama">×</button>
+
+                        <h3>🏆 Salón de la Fama de Creadores</h3>
+                        <p>Los artistas que dan vida a este juego con sus contribuciones.</p>
+
+                        <div id="leaderboard-grid">
+                            <!-- El leaderboard se renderizará dinámicamente aquí -->
+                        </div>
+                    </div>
                 </div>
 
                 <div class="games-sidebar">
                     <div id="patron-display">
                         <!-- El Art Patron System se cargará aquí -->
+                    </div>
+                    <div id="contributor-dashboard">
+                        <!-- El Contributor Dashboard se cargará aquí -->
+                    </div>
+                    <div id="quiz-live-panel" class="quiz-live-panel" aria-live="polite" hidden>
+                        <h4>❓ Quiz Progreso</h4>
+                        <p><strong>Aciertos:</strong> <span id="quiz-correct-count">0</span>/<span id="quiz-total-count">0</span></p>
+                        <p><strong>Racha:</strong> <span id="quiz-streak">0</span></p>
+                        <p class="quiz-last-feedback" id="quiz-last-feedback"></p>
                     </div>
                 </div>
             </div>
@@ -471,13 +559,77 @@
     <script src="assets/js/pencil-hero.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/about-artistic.js"></script>
+    <!-- Núcleo modular de juegos y dataset de razas (debe cargarse antes del memory-game modular) -->
+    <script src="assets/js/data/animal-data.js"></script>
+    <script src="assets/js/data/creative-pairs.js"></script>
+    <script src="assets/js/data/pairs-library.js"></script>
+    <script src="assets/js/user-profile.js"></script>
+    <script src="assets/js/contributor-dashboard.js"></script>
+    <script src="assets/js/games/core.js"></script>
+    <script src="assets/js/games/storage.js"></script>
+    <script src="assets/js/games/xp.js"></script>
+    <script src="assets/js/games/memory-game.js"></script>
+    <script src="assets/js/games/quiz-game.js"></script>
+    <script src="assets/js/games/unified-memory.js"></script>
+    <script src="assets/js/games/contribution-portal.js"></script>
+    <script src="assets/js/games/leaderboard.js"></script>
+    <!-- Legacy bundle de juegos (manteniendo memoria clásica temporalmente) -->
     <script src="assets/js/games.js"></script>
     <script src="assets/js/real-artworks.js"></script>
     <script src="assets/js/contact.js"></script>
     <script src="assets/js/pricing-calculator.js"></script>
     <script src="assets/js/cart.js"></script>
     <script src="assets/js/payment-gateway.js"></script>
-    <script src="assets/js/validation-logger.js"></script>
+            <script src="assets/js/validation-logger.js"></script>
+            <style>
+                .quiz-hidden { display:none; }
+                    .quiz-live-panel { background:#111; border:1px solid #333; padding:12px 14px; border-radius:8px; margin-top:16px; font-size:0.9rem; line-height:1.3; }
+                    .quiz-live-panel h4 { margin:0 0 6px; font-size:1rem; }
+                    .quiz-live-panel .good { color:#4caf50; }
+                    .quiz-live-panel .bad { color:#ff5252; }
+                    .quiz-live-panel .streak { color:#ffb300; font-weight:600; }
+            </style>
+        <script>
+            // Mostrar botón Quiz si flag activo
+            (function(){
+                function revealQuiz(){
+                    try {
+                        if(window.GameCore && GameCore.flags && GameCore.flags.enableQuiz){
+                              const btn = document.getElementById('quiz-btn'); if(btn) btn.classList.remove('quiz-hidden');
+                                    // Registrar listeners para panel live
+                                    setupQuizLivePanel();
+                        }
+                    } catch(e) {}
+                }
+                // Intentar varias veces por carga asíncrona
+                if(document.readyState === 'loading'){
+                    document.addEventListener('DOMContentLoaded', revealQuiz);
+                } else { revealQuiz(); }
+                setTimeout(revealQuiz, 500);
+                setTimeout(revealQuiz, 1200);
+                        function setupQuizLivePanel(){
+                            if(window.__quizPanelSetup) return; window.__quizPanelSetup = true;
+                            const panel = document.getElementById('quiz-live-panel'); if(!panel) return;
+                            const correctEl = document.getElementById('quiz-correct-count');
+                            const totalEl = document.getElementById('quiz-total-count');
+                            const fbEl = document.getElementById('quiz-last-feedback');
+                            const streakEl = document.getElementById('quiz-streak');
+                            let correct = 0; let total = 0; let streak = 0;
+                            GameCore.eventBus.on('quiz.started', (e)=>{
+                                correct = 0; streak = 0; total = e.total || 0; panel.hidden = false;
+                                correctEl.textContent = '0'; totalEl.textContent = total; streakEl.textContent = '0'; fbEl.textContent='';
+                            });
+                                GameCore.eventBus.on('quiz.answered', (e)=>{
+                                if(e.correct){ correct++; streak++; fbEl.innerHTML = '<span class="good">✔ Correcto (+'+ (e.earned||0) +')</span>'; }
+                                else { streak = 0; fbEl.innerHTML = '<span class="bad">✖ Incorrecto</span>'; }
+                                correctEl.textContent = correct; streakEl.textContent = streak; if(streak>1) fbEl.innerHTML += ' <span class="streak">Racha x'+streak+'</span>';
+                            });
+                            GameCore.eventBus.on('quiz.completed', ()=>{ fbEl.innerHTML += '<br><strong>Fin del quiz</strong>'; });
+                            // Opcional: ocultar si se desmonta juego distinto
+                            GameCore.eventBus.on('game.mounted', ({id})=>{ if(id !== 'quiz-color') { panel.hidden = true; }});
+                        }
+            })();
+        </script>
         <!-- Ejemplo de uso de authFetch (cuando exista backend):
         <script>
             // setInitialAccessToken('TOKEN_INICIAL') // después de login

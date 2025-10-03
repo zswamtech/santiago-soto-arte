@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Memoria Artística</title>
+    <link rel="stylesheet" href="assets/css/unified-memory.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a2e;
+            font-family: 'Inter', sans-serif;
+        }
+        #game-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .debug-info {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .test-image {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+        .test-image img {
+            max-width: 200px;
+            border: 2px solid #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info">
+        <h3>🔍 Debug Info - Memoria Artística</h3>
+        <p id="status">Cargando...</p>
+        <div id="image-tests"></div>
+    </div>
+
+    <div id="game-container"></div>
+
+    <script>
+        // Test 1: Verificar que las imágenes se pueden cargar
+        const testImages = [
+            'assets/img/memory-cards/par_01_van_goh_a.png',
+            'assets/img/memory-cards/par_02_infanta_a.png',
+            'assets/img/memory-cards/par_03_ola_kanagawa_a.png'
+        ];
+
+        const imageTestDiv = document.getElementById('image-tests');
+        let loadedCount = 0;
+
+        testImages.forEach(src => {
+            const testDiv = document.createElement('div');
+            testDiv.className = 'test-image';
+
+            const img = new Image();
+            img.onload = () => {
+                loadedCount++;
+                testDiv.innerHTML = `✅ OK: ${src}`;
+                imageTestDiv.appendChild(testDiv);
+
+                const imgEl = document.createElement('img');
+                imgEl.src = src;
+                testDiv.appendChild(imgEl);
+            };
+            img.onerror = () => {
+                testDiv.innerHTML = `❌ ERROR: ${src}`;
+                testDiv.style.background = 'rgba(255,0,0,0.2)';
+                imageTestDiv.appendChild(testDiv);
+            };
+            img.src = src;
+        });
+
+        setTimeout(() => {
+            document.getElementById('status').innerHTML =
+                `Imágenes cargadas: ${loadedCount}/${testImages.length}<br>` +
+                `Ruta base probada: assets/img/memory-cards/<br>` +
+                `GameCore disponible: ${typeof GameCore !== 'undefined' ? '✅' : '❌'}`;
+        }, 2000);
+    </script>
+
+    <script src="assets/js/game-core.js"></script>
+    <script src="assets/js/games/unified-memory.js"></script>
+
+    <script>
+        // Montar el juego después de cargar todo
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const container = document.getElementById('game-container');
+                if (typeof GameCore !== 'undefined' && GameCore.mountGame) {
+                    console.log('🎮 Montando juego...');
+                    GameCore.mountGame('unified-memory', container);
+                } else {
+                    console.error('❌ GameCore no disponible');
+                    container.innerHTML = '<div style="color:white;padding:20px;">ERROR: GameCore no disponible</div>';
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

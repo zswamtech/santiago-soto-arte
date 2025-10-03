@@ -442,5 +442,3 @@ cada efecto refleja la magia de tus 14 años.
 Con cariño juvenil,
 Tu equipo creativo 🎨💙
 `);
-
-export default PencilHero;
