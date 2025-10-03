@@ -1405,14 +1405,39 @@
   function unmount(){}
 
   // Registrar en GameCore si existe
-  if(global.GameCore){
-    GameCore.registerGame({
-      id: GAME_ID,
-      title: 'Memoria Artística Unificada',
-      icon: '🎨',
-      description: 'Juego único con colores, imágenes y quiz',
-      mount, unmount
-    });
+  const gameDef = {
+    id: GAME_ID,
+    title: 'Memoria Artística Unificada',
+    icon: '🎨',
+    description: 'Juego único con colores, imágenes y quiz',
+    mount, unmount
+  };
+
+  function attemptRegister(reason){
+    try {
+      if(global.GameCore){
+        if(!GameCore.listGames().some(g => g.id === GAME_ID)){
+          GameCore.registerGame(gameDef);
+          console.log('[unified-memory] Registrado en GameCore ('+reason+")");
+          global.dispatchEvent(new CustomEvent('unified-memory-registered'));
+        }
+        return true;
+      }
+    } catch(e){ console.warn('[unified-memory] Error registrando', e); }
+    return false;
+  }
+
+  // Intento inmediato
+  if(!attemptRegister('immediate')){
+    // Fallback DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', ()=> attemptRegister('DOMContentLoaded'));
+    // Poll ligero (máx 2s) por si core.js va después
+    let tries = 0;
+    const maxTries = 20; // 20 * 100ms = 2s
+    const iv = setInterval(()=>{
+      tries++;
+      if(attemptRegister('poll#'+tries) || tries >= maxTries){ clearInterval(iv); }
+    }, 100);
   }
 
 })(window);
