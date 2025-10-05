@@ -72,6 +72,7 @@ class PencilHero {
                 </div>
                 <div class="sketch-title">${sketch.title}</div>
                 <div class="sketch-description">${sketch.description}</div>
+                ${index === 0 ? this.createAnimatedSketchSVG() : ''}
             `;
 
             sketchContainer.appendChild(slide);
@@ -79,6 +80,42 @@ class PencilHero {
 
         // Iniciar rotación automática más lenta (juvenil y relajada)
         this.startSketchRotation();
+    }
+
+    // ✏️ Crear boceto SVG animado con efecto de dibujo
+    createAnimatedSketchSVG() {
+        return `
+            <svg class="animated-sketch-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Boceto de un perro simple con trazos de lápiz -->
+                <path class="sketch-path" d="M 60 80 Q 50 60, 70 50 Q 90 45, 100 50 Q 110 55, 110 70"
+                      stroke="#8a8a8a" stroke-width="1.5" fill="none"
+                      stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200"/>
+
+                <circle class="sketch-path" cx="75" cy="65" r="3"
+                        fill="#6a6a6a" opacity="0"/>
+
+                <path class="sketch-path" d="M 65 90 Q 75 100, 85 95 Q 95 90, 100 95"
+                      stroke="#8a8a8a" stroke-width="1.5" fill="none"
+                      stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100"/>
+
+                <!-- Orejas -->
+                <path class="sketch-path" d="M 60 75 Q 50 70, 55 55"
+                      stroke="#8a8a8a" stroke-width="1.5" fill="none"
+                      stroke-linecap="round" stroke-dasharray="50" stroke-dashoffset="50"/>
+
+                <path class="sketch-path" d="M 110 70 Q 120 65, 115 50"
+                      stroke="#8a8a8a" stroke-width="1.5" fill="none"
+                      stroke-linecap="round" stroke-dasharray="50" stroke-dashoffset="50"/>
+
+                <!-- Trazos de textura grafito -->
+                <line class="sketch-path texture-line" x1="70" y1="55" x2="75" y2="58"
+                      stroke="#b8b8b8" stroke-width="0.5" opacity="0.4"
+                      stroke-dasharray="10" stroke-dashoffset="10"/>
+                <line class="sketch-path texture-line" x1="95" y1="57" x2="100" y2="60"
+                      stroke="#b8b8b8" stroke-width="0.5" opacity="0.4"
+                      stroke-dasharray="10" stroke-dashoffset="10"/>
+            </svg>
+        `;
     }
 
     startSketchRotation() {
@@ -164,7 +201,7 @@ class PencilHero {
         });
     }
 
-    // ✨ Crear efectos de brillos juveniles
+    // ✨ Crear efectos de brillo plateado moderno
     createSparkles(element) {
         const rect = element.getBoundingClientRect();
 
@@ -176,41 +213,43 @@ class PencilHero {
                 sparkle.style.top = `${rect.top + Math.random() * rect.height}px`;
                 sparkle.style.width = '6px';
                 sparkle.style.height = '6px';
-                sparkle.style.background = `hsl(${Math.random() * 60 + 200}, 70%, 80%)`;
+                // Tonos plateados/grafito
+                const graphiteColors = ['#c0c0c0', '#b8b8b8', '#d0d0d0', '#c8c8c8'];
+                sparkle.style.background = graphiteColors[Math.floor(Math.random() * graphiteColors.length)];
                 sparkle.style.borderRadius = '50%';
                 sparkle.style.pointerEvents = 'none';
                 sparkle.style.zIndex = '1000';
-                sparkle.innerHTML = '✨';
-                sparkle.style.fontSize = '12px';
+                sparkle.style.boxShadow = '0 0 4px rgba(200, 200, 200, 0.6)';
 
                 document.body.appendChild(sparkle);
 
-                // Animación juvenil
+                // Animación moderna suave
                 sparkle.animate([
                     {
                         opacity: 0,
                         transform: 'scale(0) rotate(0deg)'
                     },
                     {
-                        opacity: 1,
-                        transform: 'scale(1) rotate(180deg)'
+                        opacity: 0.9,
+                        transform: 'scale(1.2) rotate(180deg)'
                     },
                     {
                         opacity: 0,
                         transform: 'scale(0) rotate(360deg)'
                     }
                 ], {
-                    duration: 800 + Math.random() * 400,
-                    easing: 'ease-out'
+                    duration: 900 + Math.random() * 400,
+                    easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
                 }).onfinish = () => sparkle.remove();
 
             }, i * 100);
         }
     }
 
-    // 🖱️ Efecto de click juvenil
+    // 🖱️ Efecto de click moderno con tonos grafito
     createClickEffect(event) {
-        const colors = ['#87CEEB', '#98FB98', '#DDA0DD', '#F0E68C', '#FFB6C1'];
+        // Paleta de grises plateados modernos
+        const colors = ['#c0c0c0', '#b8b8b8', '#d0d0d0', '#a8a8a8', '#c8c8c8'];
 
         for (let i = 0; i < 8; i++) {
             setTimeout(() => {
@@ -414,13 +453,14 @@ window.SketchUtils = {
     createSparkles: (element) => pencilHero?.createSparkles(element),
     createClickEffect: (event) => pencilHero?.createClickEffect(event),
 
-    // Paleta de colores juveniles
+    // Paleta de colores moderna - grafito plateado
     colors: {
-        pencil: '#8a8a8a',
-        paper: '#fefefe',
-        highlight: '#87CEEB',
-        accent: '#98FB98',
-        soft: '#DDA0DD'
+        graphite: '#8a8a8a',
+        silver: '#c0c0c0',
+        lightSilver: '#d0d0d0',
+        paper: '#fafafa',
+        grid: '#e0e0e0',
+        accent: '#b8b8b8'
     }
 };
 
@@ -442,5 +482,3 @@ cada efecto refleja la magia de tus 14 años.
 Con cariño juvenil,
 Tu equipo creativo 🎨💙
 `);
-
-export default PencilHero;

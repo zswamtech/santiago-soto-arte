@@ -1,0 +1,93 @@
+/* memory-legacy.css - Estilos consolidados para la versión clásica (DEPRECATED) del juego de memoria.
+   Objetivo: Dar coherencia estética con la identidad visual existente, sin competir con la versión accesible nueva.
+   NOTA: Todo este bloque puede eliminarse cuando se retire la versión legacy.
+*/
+:root {
+  --legacy-mg-bg: #faf9fc;
+  --legacy-mg-surface: #ffffff;
+  --legacy-mg-border: #d8d5e2;
+  --legacy-mg-border-strong: #b8b2c8;
+  --legacy-mg-accent: #667eea;
+  --legacy-mg-accent-alt: #764ba2;
+  --legacy-mg-warn-bg: #332; /* se mantiene para alerta */
+  --legacy-mg-warn-border: #775;
+  --legacy-mg-warn-accent: #ffde85;
+  --legacy-mg-text: #2c2f38;
+  --legacy-mg-muted: #666a75;
+  --legacy-mg-radius-sm: 6px;
+  --legacy-mg-radius: 12px;
+  --legacy-mg-radius-lg: 18px;
+  --legacy-mg-shadow: 0 6px 18px -4px rgba(40,32,70,0.15);
+  --legacy-mg-shadow-soft: 0 4px 12px -3px rgba(40,32,70,0.12);
+  --legacy-mg-gradient: linear-gradient(135deg,#667eea,#764ba2);
+  --legacy-mg-badge-easy: #4CAF50;
+  --legacy-mg-badge-medium: #FF9800;
+  --legacy-mg-badge-hard: #F44336;
+}
+
+.legacy-memory-root { width:100%; }
+
+/* Banner de advertencia */
+.legacy-warning-banner { background:var(--legacy-mg-warn-bg); border:1px solid var(--legacy-mg-warn-border); padding:14px 16px; border-radius:var(--legacy-mg-radius); margin-bottom:18px; font-size:0.9rem; line-height:1.35; box-shadow:0 0 0 1px #000 inset; color:#eee; position:relative; }
+.legacy-warning-banner strong { display:block; margin-bottom:4px; color:var(--legacy-mg-warn-accent); font-weight:600; letter-spacing:.3px; }
+.legacy-warning-banner p { margin:0 0 10px; }
+.legacy-upgrade-btn { background:#ffb300; color:#222; border:none; padding:7px 14px; border-radius:var(--legacy-mg-radius-sm); font-weight:600; cursor:pointer; font-size:.85rem; box-shadow:0 2px 6px rgba(0,0,0,.25); }
+.legacy-upgrade-btn:hover { background:#ffca2e; }
+.legacy-upgrade-btn:focus-visible { outline:3px solid #ffd54f; outline-offset:2px; box-shadow:0 0 0 3px rgba(0,0,0,.45); }
+
+/* Grid de categorías */
+.category-selection.compact { text-align:left; }
+.category-selection .header-block { margin-bottom:1.25rem; }
+.category-selection .header-block h3 { font-size:1.9rem; background:var(--legacy-mg-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; margin:0 0 .4rem; font-family:'Playfair Display',serif; letter-spacing:.5px; }
+.category-selection .header-block .subtitle { color:var(--legacy-mg-muted); font-size:.95rem; }
+
+.category-grid.compact-grid { display:grid; gap:1.1rem; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); margin-bottom:1.5rem; }
+.category-grid.compact-grid { list-style:none; padding:0; margin-left:0; }
+.category-grid.compact-grid > .category-grid-item { margin:0; padding:0; }
+.category-card.no-preview { background:var(--legacy-mg-surface); border:1px solid var(--legacy-mg-border); padding:14px 14px 12px; border-radius:var(--legacy-mg-radius); cursor:pointer; text-align:left; position:relative; overflow:hidden; display:flex; gap:.75rem; align-items:stretch; box-shadow:var(--legacy-mg-shadow-soft); transition:all .35s ease; }
+.category-card.no-preview::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 60%); opacity:0; transition:opacity .4s; }
+.category-card.no-preview:hover { border-color:var(--legacy-mg-accent); box-shadow:0 6px 20px -2px rgba(102,126,234,.35); transform:translateY(-4px); }
+.category-card.no-preview:hover::before { opacity:1; }
+.category-card.no-preview:focus-visible { outline:3px solid #ffd54f; outline-offset:2px; }
+
+.card-symbol { font-size:2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.15)); flex-shrink:0; display:flex; align-items:center; }
+.card-body { display:flex; flex-direction:column; justify-content:center; min-width:0; }
+.cat-title { font-size:1.05rem; font-weight:600; color:var(--legacy-mg-text); margin-bottom:.15rem; line-height:1.15; }
+.cat-meta { font-size:.7rem; letter-spacing:.5px; font-weight:600; text-transform:uppercase; color:var(--legacy-mg-muted); margin-bottom:.3rem; }
+.cat-difficulty { font-size:.65rem; font-weight:700; letter-spacing:.5px; padding:3px 6px; border-radius:20px; background:rgba(0,0,0,.06); width:max-content; text-transform:uppercase; }
+.cat-difficulty.diff-easy { background:var(--legacy-mg-badge-easy); color:#fff; }
+.cat-difficulty.diff-medium { background:var(--legacy-mg-badge-medium); color:#fff; }
+.cat-difficulty.diff-hard { background:var(--legacy-mg-badge-hard); color:#fff; }
+
+/* Estados de enfoque accesibles para las tarjetas y badges */
+.category-card.no-preview:focus-visible .cat-difficulty,
+.category-card.no-preview:focus-visible .cat-title { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+
+/* Mejora de accesibilidad: indicadores de focus también para usuarios que navegan con teclado sobre el contenedor clickable */
+.category-card.no-preview:focus-visible { outline:3px solid #ffd54f; outline-offset:2px; }
+
+/* Prefiere reducir movimiento si el usuario lo solicita */
+@media (prefers-reduced-motion: reduce) {
+  .category-card.no-preview, .legacy-upgrade-btn { transition:none; }
+}
+
+/* Disclaimer & How-to */
+.category-disclaimer { font-size:.75rem; color:var(--legacy-mg-muted); margin-bottom:1.1rem; background:linear-gradient(90deg,rgba(102,126,234,.08),rgba(118,75,162,.08)); padding:.65rem .8rem; border:1px solid var(--legacy-mg-border); border-radius:var(--legacy-mg-radius); }
+.category-disclaimer strong { color:var(--legacy-mg-text); }
+.how-to { background:var(--legacy-mg-surface); border:1px solid var(--legacy-mg-border); padding:1rem 1.1rem .9rem; border-radius:var(--legacy-mg-radius); box-shadow:var(--legacy-mg-shadow-soft); }
+.how-to h4 { margin:0 0 .6rem; font-size:1rem; background:var(--legacy-mg-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; font-family:'Playfair Display',serif; }
+.how-to ol { margin:0; padding-left:1.25rem; counter-reset: howto; }
+.how-to li { margin-bottom:.5rem; font-size:.85rem; line-height:1.35; color:var(--legacy-mg-text); position:relative; }
+.how-to li:last-child { margin-bottom:.2rem; }
+
+/* Estado general dentro del contenedor principal de juegos */
+.games-section .game-container .category-selection { max-width:980px; margin:0 auto; }
+
+/* Ajustes responsivos */
+@media (max-width:680px){
+  .category-grid.compact-grid { grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.85rem; }
+  .category-card.no-preview { padding:12px 12px 10px; }
+  .cat-title { font-size:.95rem; }
+  .card-symbol { font-size:1.7rem; }
+  .legacy-warning-banner { font-size:.85rem; }
+}

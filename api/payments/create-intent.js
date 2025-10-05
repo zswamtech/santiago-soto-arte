@@ -3,6 +3,7 @@
 
 const Stripe = require('stripe');
 const { computePricing } = require('./util/pricing');
+const { signPricingSnapshot } = require('./util/pricing-signature');
 const orderRepo = require('./util/order-repository');
 const { createOrder } = require('./util/order-store'); // fallback dev
 
@@ -50,6 +51,14 @@ module.exports = async (req, res) => {
       automatic_payment_methods: { enabled: true }
     });
 
+    // Firmar snapshot (integridad)
+    let signature = null; let canonical = null;
+    try {
+      const s = signPricingSnapshot(pricing.breakdown);
+      signature = s.signature;
+      canonical = s.canonical; // opcional almacenar si se quisiera auditar
+    } catch(e){ console.warn('[payments] no se pudo firmar snapshot:', e.message); }
+
     // Guardar orden persistente (o fallback memoria)
     const discounts = pricing.breakdown.discounts || { total: pricing.breakdown.discount || 0 };
     const orderData = {
@@ -71,7 +80,8 @@ module.exports = async (req, res) => {
       patron_percent_applied: typeof discounts.patronPercent === 'number' ? discounts.patronPercent : null,
       coupon_percent_applied: typeof discounts.couponPercent === 'number' ? discounts.couponPercent : null,
       items: pricing.items.map(i=>({ id:i.id, name:i.name, type:i.type, unitAmount:i.unitAmount||i.price, quantity:i.quantity, lineTotal:(i.lineTotal || (i.price*i.quantity)) })),
-      pricing_snapshot: pricing.breakdown,
+  pricing_snapshot: pricing.breakdown,
+  snapshot_signature: signature,
       customer_email: customer?.email || null,
       customer_name: customer?.name || null
     };

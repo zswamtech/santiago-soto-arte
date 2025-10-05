@@ -1,0 +1,74 @@
+.memory-card {
+  width: 110px;
+  height: 140px;
+  perspective: 900px;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+}
+.memory-card:focus-visible {
+  box-shadow: 0 0 0 3px #5b8def;
+  border-radius: 10px;
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* Giro más pausado para contemplación */
+  transition: transform 1.85s cubic-bezier(.19,1,.22,1);
+}
+.memory-card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.card-front {
+  background: linear-gradient(135deg,#222 0%,#444 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  border: 2px solid #555;
+}
+.card-front-icon { filter: drop-shadow(0 2px 4px rgba(0,0,0,.4)); }
+.card-back {
+  background: #111;
+  transform: rotateY(180deg);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,.45);
+  border: 2px solid #222;
+}
+.card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+.memory-card:active .card-inner {
+  transition: transform 0.25s ease;
+  transform: scale(.97) rotateY(var(--rotateY,0deg));
+}
+/* Accesible: estado presionado */
+.memory-card[aria-pressed="true"] .card-front {
+  outline: 2px dashed #7db0ff;
+  outline-offset: -4px;
+}
+/* Pequeña animación de aparición */
+@keyframes cardPop {
+  0% { transform: scale(.5) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(1.05) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.memory-card { animation: cardPop .55s ease both; }
