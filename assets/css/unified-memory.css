@@ -115,16 +115,16 @@
   position: relative;
   width: 100%;
   height: 100%;
-  /* Aumento de duración para que el giro sea más lento y permita anticipar la imagen */
-  transition: transform 1.35s ease-out;
+  /* Giro más lento para contemplación */
+  transition: transform 1.85s ease-out;
   transform-style: preserve-3d;
   will-change:transform;
 }
 
 .memory-card.flipped .card-inner {
   transform: rotateY(180deg);
-  /* Duración simétrica (ligeramente diferente easing para sensación de asentamiento) */
-  transition: transform 1.35s ease-in;
+  /* Duración simétrica */
+  transition: transform 1.85s ease-in;
 }
 
 .card-back, .card-front {

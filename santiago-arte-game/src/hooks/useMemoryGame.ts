@@ -5,7 +5,7 @@ export type GameMode = 'variants' | 'split' | 'clues';
 
 export interface RawImageItem { id?: string; src: string; alt?: string; type?: string; role?: SplitRole | 'clue' | 'image'; pairGroup?: string; clue?: string; }
 export interface MemoryCardData { id: string; src: string; alt: string; key: string | number; type?: string; uuid?: string; }
-export interface UseMemoryGameOptions { images?: (string | RawImageItem)[]; autoStart?: boolean; lockDelay?: number; mode?: GameMode; }
+export interface UseMemoryGameOptions { images?: (string | RawImageItem)[]; autoStart?: boolean; lockDelay?: number; mode?: GameMode; holdUntilNextClick?: boolean; }
 export interface UseMemoryGameReturn {
   deck: MemoryCardData[];
   flipped: number[];
@@ -18,7 +18,7 @@ export interface UseMemoryGameReturn {
   actions: { flipCard: (index: number) => void; restart: () => void };
 }
 
-export function useMemoryGame({ images = [], autoStart = true, lockDelay = 900, mode = 'variants' }: UseMemoryGameOptions = {}): UseMemoryGameReturn {
+export function useMemoryGame({ images = [], autoStart = true, lockDelay = 1850, mode = 'variants', holdUntilNextClick = true }: UseMemoryGameOptions = {}): UseMemoryGameReturn {
   const baseCards: MemoryCardData[] = useMemo(() => {
     return images.map((img, idx) => {
       if (typeof img === 'string') {
@@ -90,6 +90,7 @@ export function useMemoryGame({ images = [], autoStart = true, lockDelay = 900, 
   const [matches, setMatches] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [status, setStatus] = useState<'init' | 'playing' | 'finished'>('init');
+  const [pendingUnflip, setPendingUnflip] = useState<number[] | null>(null);
 
   // Pairs calculation depends on mode
   const totalPairs = useMemo(() => {
@@ -124,6 +125,13 @@ export function useMemoryGame({ images = [], autoStart = true, lockDelay = 900, 
     if(flipped.includes(index)) return;
     if(matchedIds.has(deck[index].id)) return;
 
+    // Si estamos usando modo hold y hay un par pendiente de cerrar, ciérralo justo al iniciar un nuevo intento
+    if(holdUntilNextClick && pendingUnflip && flipped.length === 0){
+      setFlipped([]);
+      setPendingUnflip(null);
+      // Nota: no retornamos; permitimos que este clic cuente como primer clic del nuevo intento
+    }
+
     setFlipped(prev => {
       if(prev.length === 0) {
         return [index];
@@ -139,18 +147,24 @@ export function useMemoryGame({ images = [], autoStart = true, lockDelay = 900, 
           setMatches(m => m + 1);
           setTimeout(() => setFlipped([]), 400);
         } else {
-          setIsLocked(true);
-          setTimeout(() => {
-            setFlipped([]);
-            setIsLocked(false);
-          }, lockDelay);
+          if(holdUntilNextClick){
+            // Mantener ambas abiertas hasta que el usuario inicie el siguiente intento
+            setPendingUnflip([firstIndex, secondIndex]);
+            // No bloqueamos, para que el siguiente clic cierre y empiece el nuevo intento
+          } else {
+            setIsLocked(true);
+            setTimeout(() => {
+              setFlipped([]);
+              setIsLocked(false);
+            }, lockDelay);
+          }
         }
         return newFlipped;
       } else {
         return prev;
       }
     });
-  }, [deck, flipped, isLocked, matchedIds, lockDelay]);
+  }, [deck, flipped, isLocked, matchedIds, lockDelay, holdUntilNextClick, pendingUnflip]);
 
   useEffect(() => {
     if(status === 'playing' && matches === totalPairs && totalPairs > 0) {

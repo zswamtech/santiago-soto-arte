@@ -12,7 +12,7 @@
 
   // ⚙️ Parámetros de timing (experiencia de volteo) - VERSIÓN LENTA PARA DISFRUTAR
   // Duración de la animación CSS (debe sincronizar con unified-memory.css .card-inner transition: 1s)
-  const FLIP_ANIMATION_MS = 1000; // animación más lenta
+  const FLIP_ANIMATION_MS = 1850; // animación más lenta
   // Tiempo visible adicional antes de evaluar match (segunda carta ya volteada)
   const POST_SECOND_FLIP_BUFFER_MS = 1500; // mucho más tiempo para ver las cartas
   // Tiempo que permanecen visibles cartas no coincidentes antes de voltearse de regreso
@@ -21,7 +21,7 @@
   const HOLD_UNTIL_NEXT_CLICK = true; // <== activado según solicitud del usuario
   // Espera adicional total antes de evaluar (Opción A solicitada) tras la segunda carta (además de animación+buffer)
   const EXTRA_EVAL_DELAY_MS = 2000; // más tiempo para pensar
-  const FIRST_CARD_FLIP_MS = 1000; // sincronizado con animación CSS
+  const FIRST_CARD_FLIP_MS = 1850; // sincronizado con animación CSS
 
   // 🎯 Configuración de puntuación (Sistema V2)
   const SCORING = {
