@@ -633,22 +633,26 @@
     }
 }
 
-/* 🎮 Layout de Juegos con Gamificación */
+/* 🎮 Layout de Juegos con Gamificación - OPTIMIZADO */
 .games-layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr 340px; /* Ancho fijo más compacto para sidebar */
+    gap: 1.2rem; /* Gap reducido para ganar espacio */
+    margin-top: 1.5rem;
+    align-items: start;
 }
 
 .games-main {
     min-height: 500px;
+    overflow: visible;
 }
 
 .games-sidebar {
     position: sticky;
-    top: 100px;
+    top: 80px; /* Más cerca del top */
     height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 .game-benefits {

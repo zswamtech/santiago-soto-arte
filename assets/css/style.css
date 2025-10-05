@@ -568,6 +568,12 @@ h1, h2, h3 {
     color: white;
 }
 
+/* 🎯 EXPANDIR CONTAINER PARA JUEGOS - USA TODO EL ANCHO DISPONIBLE */
+.games-section .container {
+    max-width: 1600px; /* Mucho más ancho - aprovecha espacio izquierdo */
+    padding: 0 40px; /* Más padding para respirar en los bordes */
+}
+
 .games-menu {
     display: flex;
     justify-content: center;

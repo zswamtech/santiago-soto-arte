@@ -1,40 +1,40 @@
 /* 🎨 MEMORIA ARTÍSTICA UNIFICADA - Diseño Premium */
 
 .unified-memory-game {
-  max-width: 1300px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 1.5rem 2rem 2rem 2rem;
+  padding: 1rem 1.2rem 1.5rem 1.2rem;
   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
-  border-radius: 24px;
+  border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  min-height: 700px;
+  min-height: auto;
   position: relative;
 }
 
-/* Header Simplificado - COMPACTO */
+/* Header Simplificado - MÁS COMPACTO */
 .memory-header-simple {
   text-align: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
 }
 
 .memory-header-simple h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: 1.6rem;
   color: #fff;
-  margin: 0 0 0.8rem 0;
+  margin: 0 0 0.6rem 0;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Barra de Estadísticas - MINIMALISTA */
+/* Barra de Estadísticas - MÁS COMPACTA */
 .memory-stats-bar {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   background: rgba(255, 255, 255, 0.12);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  padding: 0.5rem 1.2rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -61,17 +61,17 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Tablero de Cartas - MAXIMIZADO */
+/* Tablero de Cartas - OPTIMIZADO PARA ESPACIO */
 .memory-board-container {
-  margin: 1.2rem 0 1.5rem 0;
+  margin: 0.8rem 0 1rem 0;
 }
 
 .memory-board {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.8rem; /* reducido para mejor aprovechamiento del espacio */
+  gap: 0.3125rem; /* gap ultra-compacto: 5px entre cartas */
   perspective: 1000px;
-  max-width: 950px; /* reducido de 1200px para cartas más pequeñas */
+  max-width: 770px; /* Tablero optimizado para cartas de 150px × 150px */
   margin: 0 auto;
 }
 
