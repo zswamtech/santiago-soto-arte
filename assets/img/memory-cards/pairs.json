@@ -1,0 +1,122 @@
+[
+  {
+    "key": "van_gogh_starry_night_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "La noche estrellada", "artist": "Vincent van Gogh", "year": 1889 },
+    "files": { "a": "par_01_van_goh_a.png", "b": "par_01_van_goh_b.png" },
+    "segments": { "a": "pueblo", "b": "cielo" },
+    "alt": { "a": "La noche estrellada (detalle pueblo y ciprés)", "b": "La noche estrellada (detalle cielo en espiral)" }
+  },
+  {
+    "key": "velazquez_infanta_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "Las Meninas (Infanta Margarita Teresa)", "artist": "Diego Velázquez", "year": 1656 },
+    "files": { "a": "par_02_infanta_a.png", "b": "par_02_infanta_b.png" },
+    "segments": { "a": "infanta rostro", "b": "infanta vestido" },
+    "alt": { "a": "Infanta (detalle rostro y tocado)", "b": "Infanta (detalle vestido y volumen)" }
+  },
+  {
+    "key": "hokusai_kanagawa_wave_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "La Gran Ola de Kanagawa", "artist": "Katsushika Hokusai", "year": "c. 1831" },
+    "files": { "a": "par_03_ola_kanagawa_a.png", "b": "par_03_ola_kanagawa_b.png" },
+    "segments": { "a": "ola", "b": "monte fuji" },
+    "alt": { "a": "La Gran Ola (detalle ola principal)", "b": "La Gran Ola (detalle monte Fuji)" }
+  },
+  {
+    "key": "color_mix_demo_segments_01",
+    "difficulty": "easy",
+    "meta": { "title": "Mezcla de Color (Demo)", "artist": "Generativo", "year": "2025" },
+    "files": { "a": "par_04_color_mix_a.png", "b": "par_04_color_mix_b.png" },
+    "segments": { "a": "color A", "b": "color B" },
+    "alt": { "a": "Color mix demo A", "b": "Color mix demo B" }
+  },
+  {
+    "key": "munch_el_grito_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "El Grito", "artist": "Edvard Munch", "year": 1893 },
+    "files": { "a": "par_05_el_grito_a.png", "b": "par_05_el_grito_b.png" },
+    "segments": { "a": "figura", "b": "cielo" },
+    "alt": { "a": "El Grito (detalle figura central)", "b": "El Grito (detalle fondo y cielo)" }
+  },
+  {
+    "key": "botticelli_nacimiento_venus_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "El Nacimiento de Venus", "artist": "Sandro Botticelli", "year": "c. 1485" },
+    "files": { "a": "par_06_nacimiento_a.png", "b": "par_06_nacimiento_b.png" },
+    "segments": { "a": "venus", "b": "entorno" },
+    "alt": { "a": "Nacimiento de Venus (detalle Venus)", "b": "Nacimiento de Venus (detalle caracola / entorno)" }
+  },
+  {
+    "key": "van_gogh_girasoles_segments_01",
+    "difficulty": "easy",
+    "meta": { "title": "Los Girasoles", "artist": "Vincent van Gogh", "year": 1888 },
+    "files": { "a": "par_07_girasol_a.png", "b": "par_07_girasol_b.png" },
+    "segments": { "a": "flor", "b": "ramo" },
+    "alt": { "a": "Girasoles (detalle flor principal)", "b": "Girasoles (detalle conjunto adicional)" }
+  },
+  {
+    "key": "escena_gotica_segments_01",
+    "difficulty": "hard",
+    "meta": { "title": "Escena Gótica", "artist": "Autor desconocido", "year": "s. XIX" },
+    "files": { "a": "par_08_gotica_a.png", "b": "par_08_gotica_b.png" },
+    "segments": { "a": "arco", "b": "traceria" },
+    "alt": { "a": "Escena gótica (detalle arco / vitral)", "b": "Escena gótica (detalle tracería / estructura)" }
+  },
+  {
+    "key": "klimt_el_beso_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "El Beso", "artist": "Gustav Klimt", "year": 1908 },
+    "files": { "a": "par_09_el_beso_a.png", "b": "par_09_el_beso_b.png" },
+    "segments": { "a": "figuras", "b": "manto dorado" },
+    "alt": { "a": "El Beso (detalle figuras)", "b": "El Beso (detalle manto y mosaico)" }
+  },
+  {
+    "key": "dali_persistencia_memoria_segments_01",
+    "difficulty": "hard",
+    "meta": { "title": "La persistencia de la memoria", "artist": "Salvador Dalí", "year": 1931 },
+    "files": { "a": "par_10_dali_a.png", "b": "par_10_dali_b.png" },
+    "segments": { "a": "reloj blando", "b": "paisaje" },
+    "alt": { "a": "Persistencia (detalle reloj blando)", "b": "Persistencia (detalle paisaje y horizonte)" }
+  },
+  {
+    "key": "da_vinci_ultima_cena_segments_01",
+    "difficulty": "hard",
+    "meta": { "title": "La Última Cena", "artist": "Leonardo da Vinci", "year": 1498 },
+    "files": { "a": "par_11_ultima_cena_a.png", "b": "par_11_ultima_cena_b.png" },
+    "segments": { "a": "cristo centro", "b": "apostoles" },
+    "alt": { "a": "Última Cena (Cristo centro)", "b": "Última Cena (apóstoles laterales)" }
+  },
+  {
+    "key": "picasso_guernica_segments_01",
+    "difficulty": "hard",
+    "meta": { "title": "Guernica", "artist": "Pablo Picasso", "year": 1937 },
+    "files": { "a": "par_12_guernica_a.png", "b": "par_12_guernica_b.png" },
+    "segments": { "a": "caballo", "b": "figura grito" },
+    "alt": { "a": "Guernica (detalle caballo herido)", "b": "Guernica (detalle figura gritando)" }
+  },
+  {
+    "key": "mano_de_dios_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "La Mano de Dios", "artist": "Autor / Serie Contemporánea", "year": "2025" },
+    "files": { "a": "par_13_la_mano_de_dios_a.png", "b": "par_13_la_mano_de_dios_b.png" },
+    "segments": { "a": "mano gesto A", "b": "mano gesto B" },
+    "alt": { "a": "Mano de Dios (gesto A)", "b": "Mano de Dios (gesto B)" }
+  },
+  {
+    "key": "arnolfini_matrimonio_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "El Matrimonio Arnolfini", "artist": "Jan van Eyck", "year": 1434 },
+    "files": { "a": "par_14_matrimonio_arnolfini_a.png", "b": "par_14_matrimonio_arnolfini_b.png" },
+    "segments": { "a": "pareja", "b": "espejo símbolos" },
+    "alt": { "a": "Matrimonio Arnolfini (pareja y gesto)", "b": "Matrimonio Arnolfini (espejo y símbolos)" }
+  },
+  {
+    "key": "vermeer_joven_de_perla_segments_01",
+    "difficulty": "medium",
+    "meta": { "title": "La joven de la perla", "artist": "Johannes Vermeer", "year": "c. 1665" },
+    "files": { "a": "par_15_joven_de_perla_a.png", "b": "par_15_joven_de_perla_b.png" },
+    "segments": { "a": "rostro y turbante", "b": "perla y fondo" },
+    "alt": { "a": "La Joven de la Perla (rostro y turbante)", "b": "La Joven de la Perla (perla y fondo oscuro)" }
+  }
+]

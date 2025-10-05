@@ -335,13 +335,14 @@
         previewReplayBtn.addEventListener('click', ()=> this.replayPreview());
       }
 
-      this.loadCards();
-      this.renderBoard();
-    // Pre-carga de imágenes de obras para que al primer giro ya estén nítidas
-    this.preloadArtworkImages();
-  // Actualizar total de pares dinámico
-  const totalPairsEl = document.getElementById('um-total-pairs');
-  if(totalPairsEl){ totalPairsEl.textContent = (this.state.cards.length / 2).toString(); }
+      this.loadCards().then(() => {
+        this.renderBoard();
+        // Pre-carga de imágenes de obras para que al primer giro ya estén nítidas
+        this.preloadArtworkImages();
+        // Actualizar total de pares dinámico
+        const totalPairsEl = document.getElementById('um-total-pairs');
+        if(totalPairsEl){ totalPairsEl.textContent = (this.state.cards.length / 2).toString(); }
+      });
       // 🔍 Atajo modo debug visual (Ctrl/Cmd + Shift + D)
       window.addEventListener('keydown', (e)=>{
         if(e.key && e.key.toLowerCase()==='d' && e.shiftKey && (e.ctrlKey || e.metaKey)){
@@ -505,8 +506,19 @@
       this.setOverlayVisible(hidden, true); // si estaba oculto => visible
     }
 
-    loadCards(){
-      // 1. Definir librería completa (cada entrada = un par)
+    async loadCards(){
+      // 1. Intentar cargar manifest dinámico de pares desde assets/img/memory-cards/pairs.json
+      //    Si falla, usar la librería embebida (fallback). Así podemos llegar a 20 pares sin tocar el código.
+      let dynamicLibrary = null;
+      try {
+        const res = await fetch(this.mapCardSrc('pairs.json'));
+        if(res.ok){
+          const json = await res.json();
+          if(Array.isArray(json) && json.length){ dynamicLibrary = json; }
+        }
+      } catch(e){ /* fallback */ }
+
+      // 2. Definir librería fallback (cada entrada = un par)
       const library = [
         {
           key: 'van_gogh_starry_night_segments_01', difficulty:'medium',
@@ -613,6 +625,14 @@
           ]
         },
         {
+          key: 'vermeer_joven_de_perla_segments_01', difficulty:'medium',
+          meta: { title: 'La joven de la perla', artist: 'Johannes Vermeer', year: 'c. 1665', source: 'Dominio público', blurb: 'Retrato enigmático donde la luz resalta rostro, turbante y la icónica perla.' },
+          segments: [
+            { src: this.mapCardSrc('par_15_joven_de_perla_a.png'), alt:'La Joven de la Perla (rostro y turbante)', segment:'rostro y turbante' },
+            { src: this.mapCardSrc('par_15_joven_de_perla_b.png'), alt:'La Joven de la Perla (perla y fondo oscuro)', segment:'perla y fondo' }
+          ]
+        },
+        {
           key: 'color_mix_demo_segments_01', difficulty:'easy',
           meta: { title: 'Mezcla de Color (Demo)', artist: 'Generativo', year: '2025', source: 'Interno', blurb: 'Par demostrativo de mecánica.' },
           segments: [
@@ -622,11 +642,22 @@
         }
       ];
 
-      // 2. Seleccionar aleatoriamente 10 pares (si hay más)
-      const shuffledPairs = this.shuffle(library);
+      // 3. Construir desde dynamicLibrary si existe; si no, desde fallback
+      const sourceLib = dynamicLibrary ? dynamicLibrary.map(item => ({
+        key: item.key,
+        difficulty: item.difficulty || 'medium',
+        meta: item.meta || {},
+        segments: [
+          { src: this.mapCardSrc(item.files?.a || ''), alt: item.alt?.a || '', segment: (item.segments?.a || 'A') },
+          { src: this.mapCardSrc(item.files?.b || ''), alt: item.alt?.b || '', segment: (item.segments?.b || 'B') }
+        ]
+      })) : library;
+
+      // 4. Seleccionar aleatoriamente 10 pares (si hay más) con probabilidad uniforme
+      const shuffledPairs = this.shuffle(sourceLib);
       const selected = shuffledPairs.slice(0, 10); // siempre 10 pares
 
-      // 3. Expandir a cartas
+      // 5. Expandir a cartas
       const cards = [];
       selected.forEach(pair => {
         pair.segments.forEach((seg, idx) => {
@@ -1385,11 +1416,14 @@
         seenCards: new Set(),
         cardClickCount: {}
       };
-      this.loadCards();
-      this.renderBoard();
-      this.updateStats();
-      const totalPairsEl = document.getElementById('um-total-pairs');
-      if(totalPairsEl){ totalPairsEl.textContent = (this.state.cards.length / 2).toString(); }
+      this.loadCards().then(() => {
+        this.renderBoard();
+        this.updateStats();
+        // Pre-carga nuevamente tras reinicio
+        this.preloadArtworkImages();
+        const totalPairsEl = document.getElementById('um-total-pairs');
+        if(totalPairsEl){ totalPairsEl.textContent = (this.state.cards.length / 2).toString(); }
+      });
     }
   }
 
