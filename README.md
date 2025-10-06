@@ -1,3 +1,6 @@
+<!-- markdownlint-disable MD033 -->
+# Santiago Soto Arte
+
 <div align="center">
 
   <h1>🎨 Santiago Soto Arte</h1>
@@ -59,7 +62,7 @@ Consulta [`aprendizaje.md`](./aprendizaje.md) para el paso a paso: **HTML** (est
 
 - Flip contemplativo (≈1.85s), UX accesible y “mantener abiertas hasta el siguiente clic”.
 - Librería de pares dinámica con `assets/img/memory-cards/pairs.json` → probabilidad uniforme y escalable a 20+ pares.
-- Precarga de imágenes y controles educativos (títulos/segmentos). 
+- Precarga de imágenes y controles educativos (títulos/segmentos).
 
 Para agregar pares: sube `par_XX_*.png` y añade una entrada al `pairs.json` (no hace falta tocar JS).
 
@@ -72,7 +75,7 @@ npm install
 npm run dev
 ```
 
-Abre http://localhost:3000/
+Abre <http://localhost:3000/>
 
 ---
 
