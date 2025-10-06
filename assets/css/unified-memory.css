@@ -1137,12 +1137,12 @@
   }
 }
 
-/* Móviles pequeños (< 640px) - 3 columnas */
+/* Móviles pequeños (< 640px) - 4 columnas optimizado */
 @media (max-width: 640px) {
   .memory-board {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem; /* 8px */
-    padding: 0 0.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem; /* 6.4px - gap reducido para 4 columnas */
+    padding: 0 0.4rem;
   }
 
   .unified-memory-game {
@@ -1177,7 +1177,7 @@
     font-size: 0.6rem;
   }
 
-  /* Optimizar cartas de colores para 3 columnas */
+  /* Optimizar cartas de colores para 4 columnas */
   .color-question-card {
     gap: 0.3rem;
     padding: 0.5rem;
@@ -1295,8 +1295,9 @@
 }
 
 /* Modo ultra-compacto < 320px (móviles muy antiguos) */
+/* Modo ultra-compacto < 320px - mantener 4 columnas */
 @media (max-width: 320px) {
-  .memory-board { gap: 0.6rem; grid-template-columns: repeat(3, 1fr); }
+  .memory-board { gap: 0.3rem; grid-template-columns: repeat(4, 1fr); }
 
   .color-question-card {
     gap: 0.25rem;
