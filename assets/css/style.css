@@ -243,23 +243,54 @@ h1, h2, h3 {
     padding: 0 1rem;
 }
 
-@media (max-width: 768px) {
+/* === 📱 GALLERY RESPONSIVE OPTIMIZADO === */
+
+/* Móvil vertical - 1 columna */
+@media (max-width: 640px) {
     .gallery-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 0;
+        gap: 1.25rem;
+        padding: 0 0.75rem;
+    }
+
+    .gallery-item,
+    .artwork-card {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Imágenes optimizadas para móvil */
+    .gallery-image,
+    .artwork-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        object-fit: cover;
     }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Móvil horizontal / Tablet vertical - 2 columnas */
+@media (min-width: 641px) and (max-width: 968px) {
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 0 0.75rem;
     }
 }
 
-@media (min-width: 1025px) {
+/* Tablet horizontal - 3 columnas */
+@media (min-width: 969px) and (max-width: 1280px) {
     .gallery-grid {
         grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+}
+
+/* Desktop grande - 4 columnas */
+@media (min-width: 1281px) {
+    .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
     }
 }
 
