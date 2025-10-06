@@ -1080,46 +1080,110 @@
 }
 
 /* Responsive - Tablet */
+/* === 📱 RESPONSIVE MOBILE-FIRST === */
+
+/* Tablets y pantallas medianas (768px - 968px) */
 @media (max-width: 968px) {
   .memory-board {
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
+    gap: 0.625rem; /* 10px - más espacio entre cartas */
+    max-width: 100%;
+    padding: 0 0.5rem;
   }
 
   .memory-stats-bar {
-    gap: 1.5rem;
+    gap: 1.2rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+  }
+
+  .unified-memory-game {
+    padding: 1rem 0.8rem 1.2rem;
+  }
+}
+
+/* Móviles (481px - 768px) */
+@media (max-width: 768px) {
+  .memory-board {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem; /* 8px */
+  }
+
+  .memory-card {
+    border-radius: 12px; /* Bordes menos redondeados para aprovechar espacio */
+    border-width: 1.5px;
+  }
+
+  /* Cartas más grandes y touch-friendly */
+  .memory-card:active:not(.matched):not(.selected) {
+    transform: scale(0.95); /* Feedback táctil */
   }
 
   .stat-value {
     font-size: 1.2rem;
   }
 
-  .stat-label {
-    font-size: 0.65rem;
+  .memory-header-simple h2 {
+    font-size: 1.4rem;
   }
 }
 
+/* Móviles pequeños (< 640px) - 3 columnas */
 @media (max-width: 640px) {
   .memory-board {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.9rem;
+    gap: 0.5rem; /* 8px */
+    padding: 0 0.5rem;
   }
 
   .unified-memory-game {
-    padding: 1rem;
+    padding: 0.8rem 0.5rem 1rem;
+  }
+
+  .memory-header-simple {
+    margin-bottom: 0.6rem;
   }
 
   .memory-header-simple h2 {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
   }
 
+  .memory-stats-bar {
+    gap: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .stat-item {
+    min-width: 70px;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+  }
+
+  /* Optimizar cartas de colores para 3 columnas */
   .color-question-card {
-    gap: 0.4rem;
-    padding: 0.6rem;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    flex-direction: column; /* Círculos en vertical en móvil pequeño */
   }
 
   .color-question-card .color-circle-simple {
-    width: 30%;
+    width: 45%;
   }
 
   .color-question-card .operator-simple {
@@ -1143,31 +1207,92 @@
   }
 }
 
-/* Ultra pequeño: optimización <380px */
+/* Móviles muy pequeños (< 480px) */
+@media (max-width: 480px) {
+  .memory-board {
+    gap: 0.4rem; /* 6.4px - más compacto */
+  }
+
+  .memory-card {
+    border-radius: 10px;
+  }
+
+  .unified-memory-game {
+    padding: 0.6rem 0.4rem 0.8rem;
+  }
+
+  .memory-header-simple h2 {
+    font-size: 1.2rem;
+  }
+
+  .memory-stats-bar {
+    gap: 0.6rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .stat-label {
+    font-size: 0.55rem;
+  }
+
+  /* Botones de control más pequeños */
+  .um-mode-toggle button,
+  .um-difficulty-selector button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .um-action-buttons button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Ultra pequeño: optimización < 380px */
 @media (max-width: 380px) {
+  .memory-board {
+    gap: 0.35rem; /* 5.6px */
+  }
+
+  .memory-card {
+    border-radius: 8px;
+    border-width: 1px;
+  }
+
+  .stat-value {
+    font-size: 0.9rem;
+  }
+
+  .stat-label {
+    font-size: 0.5rem;
+  }
+
   .color-question-card {
-    gap: 0.3rem;
-    padding: 0.5rem;
+    gap: 0.25rem;
+    padding: 0.4rem;
   }
 
   .color-question-card .color-circle-simple {
-    width: 30%;
+    width: 40%;
   }
 
   .color-question-card .operator-simple {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   .color-result {
-    width: 68%;
+    width: 70%;
   }
 
-  .emoji-xlarge { font-size: 4.5rem; }
-  .number-display { font-size: 4.5rem; }
-  .shape-xlarge { font-size: 4.5rem; }
+  .emoji-xlarge { font-size: 4rem; }
+  .number-display { font-size: 4rem; }
+  .shape-xlarge { font-size: 4rem; }
 }
 
-/* Modo ultra-compacto <320px (ej. móviles muy pequeños) */
+/* Modo ultra-compacto < 320px (móviles muy antiguos) */
 @media (max-width: 320px) {
   .memory-board { gap: 0.6rem; grid-template-columns: repeat(3, 1fr); }
 
@@ -1192,4 +1317,92 @@
   .emoji-xlarge { font-size: 4rem; }
   .number-display { font-size: 4rem; }
   .shape-xlarge { font-size: 4rem; }
+}
+
+/* === 📱 MEJORAS TÁCTILES Y ACCESIBILIDAD MÓVIL === */
+
+/* Eliminar hover effects en dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .memory-card:hover:not(.matched):not(.selected) {
+    transform: none; /* No hover en touch */
+  }
+
+  /* Mejor feedback táctil al tocar */
+  .memory-card:active:not(.matched):not(.selected) {
+    transform: scale(0.92);
+    transition: transform 0.1s ease;
+  }
+
+  /* Prevenir double-tap zoom */
+  .memory-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Optimización para reducir animaciones en móvil si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .memory-card,
+  .card-inner,
+  .memory-card:hover,
+  .memory-card:active {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .card-inner {
+    transition: transform 0.5s ease !important; /* Mantener flip básico */
+  }
+}
+
+/* Touch-friendly: aumentar área táctil de botones en móvil */
+@media (max-width: 640px) {
+  button,
+  .memory-card {
+    min-height: 44px; /* iOS/Android guideline */
+    min-width: 44px;
+  }
+
+  /* Espaciado adicional entre elementos interactivos */
+  .um-action-buttons {
+    gap: 0.75rem;
+  }
+
+  .um-mode-toggle button,
+  .um-difficulty-selector button {
+    min-height: 44px;
+  }
+}
+
+/* Landscape móvil: optimizar para orientación horizontal */
+@media (max-width: 968px) and (orientation: landscape) {
+  .unified-memory-game {
+    padding: 0.5rem;
+  }
+
+  .memory-header-simple {
+    margin-bottom: 0.4rem;
+  }
+
+  .memory-header-simple h2 {
+    font-size: 1.2rem;
+  }
+
+  .memory-stats-bar {
+    padding: 0.3rem 0.8rem;
+  }
+
+  .memory-board {
+    grid-template-columns: repeat(6, 1fr); /* Más columnas en landscape */
+    gap: 0.4rem;
+    max-height: 70vh;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .stat-label {
+    font-size: 0.55rem;
+  }
 }
