@@ -438,14 +438,66 @@ class PricingCalculator {
     }
 }
 
-// 🚀 Inicializar calculadora
-let pricingCalculator;
-document.addEventListener('DOMContentLoaded', function() {
-    pricingCalculator = new PricingCalculator();
+// 🎨 Funciones para abrir/cerrar el modal de la calculadora
+function openPricingCalculator() {
+    const modal = document.getElementById('pricing-calculator-modal');
+    const content = document.getElementById('calculator-modal-content');
 
-    // Cargar calculadora en el contenedor
-    const container = document.getElementById('calculator-container');
-    if (container) {
-        container.innerHTML = pricingCalculator.createCalculatorInterface();
+    if (modal && content) {
+        // Cargar la calculadora en el modal
+        if (!pricingCalculator) {
+            pricingCalculator = new PricingCalculator();
+        }
+
+        content.innerHTML = `
+            <h2>💰 Calculadora de Precios</h2>
+            <p class="calculator-subtitle">Obtén una estimación personalizada para tu encargo</p>
+            ${pricingCalculator.createCalculatorInterface()}
+        `;
+
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // Registrar evento de gamificación si está disponible
+        if (typeof artPatronSystem !== 'undefined') {
+            artPatronSystem.addPoints('calculator_use');
+        }
+    }
+}
+
+function closePricingCalculator() {
+    const modal = document.getElementById('pricing-calculator-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Cerrar modal con click fuera o tecla Escape
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('pricing-calculator-modal');
+
+    if (modal) {
+        // Click fuera del modal
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closePricingCalculator();
+            }
+        });
+
+        // Tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                closePricingCalculator();
+            }
+        });
     }
 });
+
+// Exportar funciones globales
+window.openPricingCalculator = openPricingCalculator;
+window.closePricingCalculator = closePricingCalculator;
+
+// 🚀 Inicializar calculadora (lazy load)
+let pricingCalculator;
+// Ya no cargamos la calculadora inmediatamente, solo cuando se abre el modal

@@ -28,36 +28,44 @@ function createPaintParticles() {
 
 // Calcular años y meses automáticamente
 function updateArtisticCounters() {
-    // Fecha de inicio de clases profesionales: Enero 2021 (4 años de clases)
-    const startDrawing = new Date('2021-01-01');
-    // Fecha de inicio con óleo: Diciembre 2023 (1 año)
-    const startOil = new Date('2023-12-01');
+    // Fecha de inicio dibujando: 2016 (5 años de edad)
+    const startDrawing = new Date('2016-01-01');
+    // Fecha de inicio clases profesionales: 2021
+    const startProfessional = new Date('2021-01-01');
+    // Fecha de inicio con óleo: Octubre 2024
+    const startOil = new Date('2024-10-01');
     const now = new Date();
-    
-    // Calcular años de experiencia en dibujo
-    const yearsExp = now.getFullYear() - startDrawing.getFullYear();
-    let adjustedYears = yearsExp;
-    
-    // Ajustar si aún no ha pasado el mes/día de aniversario este año
-    if (now.getMonth() < startDrawing.getMonth() || 
-        (now.getMonth() === startDrawing.getMonth() && now.getDate() < startDrawing.getDate())) {
-        adjustedYears--;
+
+    // Calcular años dibujando (desde 2016)
+    let yearsDrawing = now.getFullYear() - startDrawing.getFullYear();
+    if (now.getMonth() < startDrawing.getMonth()) {
+        yearsDrawing--;
     }
-    
-    // Calcular meses con óleo
+
+    // Calcular años de formación profesional (desde 2021)
+    let yearsProfessional = now.getFullYear() - startProfessional.getFullYear();
+    if (now.getMonth() < startProfessional.getMonth()) {
+        yearsProfessional--;
+    }
+
+    // Calcular meses con óleo (desde octubre 2024)
     let monthsOil = (now.getFullYear() - startOil.getFullYear()) * 12;
     monthsOil += now.getMonth() - startOil.getMonth();
-    
+
     // Si no ha pasado el día del mes, restar uno
     if (now.getDate() < startOil.getDate()) {
         monthsOil--;
     }
-    
+
+    // Mínimo 1 mes para óleo (acabamos de empezar)
+    monthsOil = Math.max(monthsOil, 1);
+
     // Animar los contadores
-    animateCounter('years-counter', adjustedYears);
+    animateCounter('years-counter', yearsDrawing);
+    animateCounter('professional-years', yearsProfessional);
     animateCounter('months-counter', monthsOil);
-    
-    console.log(`📊 Contadores actualizados: ${adjustedYears} años, ${monthsOil} meses con óleo`);
+
+    console.log(`📊 Contadores actualizados: ${yearsDrawing} años dibujando, ${yearsProfessional} años profesional, ${monthsOil} meses con óleo`);
 }
 
 // Función para animar los contadores
@@ -140,8 +148,32 @@ if (document.readyState === 'loading') {
     initArtisticAbout();
 }
 
+// Función para mostrar galería de un período específico
+function showTimelineGallery(period) {
+    console.log(`🖼️ Mostrando galería del período: ${period}`);
+
+    // Por ahora, abrir la sección de galería
+    // En el futuro, esto podría filtrar obras por período
+    const gallerySection = document.getElementById('galeria');
+    if (gallerySection) {
+        gallerySection.scrollIntoView({ behavior: 'smooth' });
+
+        // Si existe el botón de galería real, activarlo
+        setTimeout(() => {
+            const realGalleryTab = document.querySelector('.gallery-tab[onclick*="real"]');
+            if (realGalleryTab) {
+                realGalleryTab.click();
+            }
+        }, 500);
+    }
+}
+
+// Exportar funciones para uso global
+window.showTimelineGallery = showTimelineGallery;
+
 // Exportar funciones para uso externo si es necesario
 window.artisticAbout = {
     updateCounters: updateArtisticCounters,
-    createParticles: createPaintParticles
+    createParticles: createPaintParticles,
+    showTimelineGallery: showTimelineGallery
 };

@@ -21,7 +21,6 @@
   const HOLD_UNTIL_NEXT_CLICK = true; // <== activado según solicitud del usuario
   // Espera adicional total antes de evaluar (Opción A solicitada) tras la segunda carta (además de animación+buffer)
   const EXTRA_EVAL_DELAY_MS = 2000; // más tiempo para pensar
-  const FIRST_CARD_FLIP_MS = 1850; // sincronizado con animación CSS
 
   // 🎯 Configuración de puntuación (Sistema V2)
   const SCORING = {
@@ -886,13 +885,8 @@
       if(card.type === 'artwork-image'){
         this.announceArtwork(card); // anuncio accesible
       }
-      // Fast-open: si es la primera carta del turno y nunca se ha volteado ninguna antes en toda la partida, aplicamos clase temporal
-      if(this.state.matched.length === 0 && this.state.flipped.length === 0 && !this._fastOpenedOnce){
-        this._fastOpenedOnce = true;
-        cardEl.classList.add('fast-open');
-        // quitar la clase después de completarse la animación rápida
-        setTimeout(()=> cardEl.classList.remove('fast-open'), FIRST_CARD_FLIP_MS + 50);
-      }
+      // ELIMINADA funcionalidad fast-open: todas las cartas deben tener la misma velocidad
+      // para que el usuario pueda visualizar bien cada carta que voltea
       cardEl.classList.add('flipped');
 
       console.log('🔄 Carta volteada, clases:', cardEl.className);

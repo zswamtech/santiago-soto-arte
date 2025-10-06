@@ -212,7 +212,9 @@
 /* Frente de la carta */
 .card-front {
   background: #fff;
-  /* Ya no rotamos el frente: el giro se gestiona moviendo el contenedor y rotando solo el reverso */
+  /* IMPORTANTE: El frente debe estar pre-rotado 180deg para que cuando
+     el contenedor gire, quede en la orientación correcta */
+  transform: rotateY(180deg);
   overflow: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -248,15 +250,23 @@
 
 /* Carta emparejada */
 .memory-card.matched .card-inner {
-  transform: rotateY(180deg) scale(0.9);
-  opacity: 0.5;
+  /* MANTENER el flip en 180deg para que el frente quede visible */
+  transform: rotateY(180deg) scale(0.98);
+  opacity: 0.85;
   pointer-events: none;
 }
 
 .memory-card.matched .card-front {
   background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
   border: 3px solid #4caf50;
-  filter: brightness(0.9);
+  /* ELIMINAR filter brightness que oscurecía */
+  filter: none;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+/* Asegurar que el contenido de la carta emparejada NO se invierta */
+.memory-card.matched .card-front > * {
+  transform: none !important;
 }
 
 /* 🎨 CARTA DE PREGUNTA DE COLOR - Diseño SIMPLE: Círculos lado a lado */
