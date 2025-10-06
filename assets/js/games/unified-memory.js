@@ -214,6 +214,13 @@
       <div class="unified-memory-game">
         <div class="memory-header-simple">
           <h2>🎨 Memoria Artística</h2>
+          <button class="memory-help-btn" id="memory-help-btn" aria-label="Ayuda del juego" title="¿Cómo jugar?">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </button>
           <div class="memory-stats-bar">
             <div class="stat-item">
               <span class="stat-label">Puntos</span>
@@ -246,6 +253,52 @@
         </div>
         <div class="sr-only" id="um-announce" aria-live="polite"></div>
         <span id="merge-tip-small" class="sr-only">Colores muy diferentes: área de mezcla mínima (círculo pequeño). Colores similares generan una intersección más grande.</span>
+
+        <!-- Modal de Ayuda -->
+        <div class="memory-help-modal" id="memory-help-modal">
+          <div class="memory-help-content">
+            <button class="memory-help-close" id="memory-help-close" aria-label="Cerrar ayuda">&times;</button>
+            <h3>🎮 ¿Cómo Jugar?</h3>
+            <div class="help-rules">
+              <div class="help-rule">
+                <span class="help-icon">🎯</span>
+                <div class="help-text">
+                  <strong>Objetivo:</strong>
+                  <p>Encuentra todas las parejas de obras de arte</p>
+                </div>
+              </div>
+              <div class="help-rule">
+                <span class="help-icon">👆</span>
+                <div class="help-text">
+                  <strong>Cómo jugar:</strong>
+                  <p>Toca dos cartas para voltearlas y ver si coinciden</p>
+                </div>
+              </div>
+              <div class="help-rule">
+                <span class="help-icon">✨</span>
+                <div class="help-text">
+                  <strong>Parejas:</strong>
+                  <p>Cada obra tiene 2 versiones: completa y detalle</p>
+                </div>
+              </div>
+              <div class="help-rule">
+                <span class="help-icon">🏆</span>
+                <div class="help-text">
+                  <strong>Puntuación:</strong>
+                  <p>Gana puntos por cada pareja encontrada. ¡Las rachas dan bonus!</p>
+                </div>
+              </div>
+              <div class="help-rule">
+                <span class="help-icon">ℹ️</span>
+                <div class="help-text">
+                  <strong>Consejos:</strong>
+                  <p>Usa el botón "ℹ️ Overlay" para ver/ocultar los títulos de las obras</p>
+                </div>
+              </div>
+            </div>
+            <button class="memory-help-play-btn" id="memory-help-play">¡Entendido, a jugar! 🎨</button>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -332,6 +385,41 @@
       const previewReplayBtn = document.getElementById('um-preview-replay');
       if(previewReplayBtn){
         previewReplayBtn.addEventListener('click', ()=> this.replayPreview());
+      }
+
+      // 🆘 Botón de ayuda
+      const helpBtn = document.getElementById('memory-help-btn');
+      const helpModal = document.getElementById('memory-help-modal');
+      const helpClose = document.getElementById('memory-help-close');
+      const helpPlay = document.getElementById('memory-help-play');
+
+      if (helpBtn && helpModal) {
+        helpBtn.addEventListener('click', () => {
+          helpModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+
+        const closeHelp = () => {
+          helpModal.classList.remove('active');
+          document.body.style.overflow = '';
+        };
+
+        if (helpClose) helpClose.addEventListener('click', closeHelp);
+        if (helpPlay) helpPlay.addEventListener('click', closeHelp);
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && helpModal.classList.contains('active')) {
+            closeHelp();
+          }
+        });
+
+        // Cerrar al hacer click fuera del contenido
+        helpModal.addEventListener('click', (e) => {
+          if (e.target === helpModal) {
+            closeHelp();
+          }
+        });
       }
 
       this.loadCards().then(() => {
