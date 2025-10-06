@@ -244,6 +244,11 @@
 /* Fix adicional: asegurar que imágenes nunca se volteen accidentalmente */
 .card-front img { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 
+/* PRE-ROTACIÓN: card-front empieza volteado para compensar el flip del container */
+.card-front {
+  transform: rotateY(180deg);
+}
+
 /* Reemplazo de opacity por visibility para evitar salto */
 .card-front[data-revealed="false"] { visibility:hidden; }
 .memory-card.flipped .card-front { visibility:visible !important; }
@@ -264,10 +269,7 @@
   box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
 }
 
-/* Asegurar que el contenido de la carta emparejada NO se invierta */
-.memory-card.matched .card-front > * {
-  transform: none !important;
-}
+/* ✅ Con la pre-rotación de .card-front, el texto ya se ve correctamente */
 
 /* 🎨 CARTA DE PREGUNTA DE COLOR - Diseño SIMPLE: Círculos lado a lado */
 .color-question-card {
