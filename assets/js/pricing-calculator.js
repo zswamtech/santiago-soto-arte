@@ -1,6 +1,9 @@
 // 💰 Calculadora de Precios Inteligente - Santiago Soto Arte
 // Sistema que considera múltiples factores para pricing justo y competitivo
 
+// 🚀 Variable global (debe estar ANTES de las funciones que la usan)
+let pricingCalculator;
+
 class PricingCalculator {
     constructor() {
         this.basePrices = {
@@ -499,5 +502,5 @@ window.openPricingCalculator = openPricingCalculator;
 window.closePricingCalculator = closePricingCalculator;
 
 // 🚀 Inicializar calculadora (lazy load)
-let pricingCalculator;
+// Variable global declarada al inicio del archivo (línea 5)
 // Ya no cargamos la calculadora inmediatamente, solo cuando se abre el modal
