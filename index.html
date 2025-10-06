@@ -31,14 +31,29 @@
     <!-- Accesibilidad y color -->
     <meta name="theme-color" content="#ffffff">
 
+        <!-- No index en staging: evita indexación de staging.santiagosoto.art -->
+        <script>
+            (function(){
+                try {
+                    var h = (location.hostname||'').toLowerCase();
+                    if (h === 'staging.santiagosoto.art' || h.endsWith('.staging.santiagosoto.art')) {
+                        var m = document.createElement('meta');
+                        m.name = 'robots';
+                        m.content = 'noindex,nofollow';
+                        document.head.appendChild(m);
+                    }
+                } catch(e) {}
+            })();
+        </script>
+
     <!-- Preconnect Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=20251006">
     <link rel="stylesheet" href="assets/css/about-artistic.css">
     <link rel="stylesheet" href="assets/css/pencil-hero.css">
     <link rel="stylesheet" href="assets/css/contact.css">
-    <link rel="stylesheet" href="assets/css/pricing.css">
+    <link rel="stylesheet" href="assets/css/pricing.css?v=20251006">
     <link rel="stylesheet" href="assets/css/gamification.css">
     <link rel="stylesheet" href="assets/css/payment-gateway.css">
     <link rel="stylesheet" href="assets/css/memory-game.css">

@@ -581,7 +581,16 @@ function switchProductCategory(event, categoryName) {
     // Actualizar tabs activos
     const tabs = document.querySelectorAll('.category-tab');
     tabs.forEach(tab => tab.classList.remove('active'));
-    event.target.classList.add('active');
+    // Proteger cuando el evento sea nulo o no tenga target (llamadas programáticas)
+    if (event && event.target) {
+        event.target.classList.add('active');
+    } else {
+        // Si no hay evento, activar el primer tab o el tab que corresponda a la categoría
+        const byCategory = Array.from(tabs).find(
+            (t) => t.getAttribute('onclick') && t.getAttribute('onclick').includes(`'${categoryName}'`)
+        );
+        (byCategory || tabs[0])?.classList.add('active');
+    }
 
     // Actualizar contenido visible
     const contents = document.querySelectorAll('.product-category-content');
