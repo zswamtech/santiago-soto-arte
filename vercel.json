@@ -3,9 +3,15 @@
   "buildCommand": "echo 'Static site - no build'",
   "headers": [
     {
-      "source": "/assets/(.*)\\.(png|jpg|jpeg|gif|svg|webp|css|js)",
+      "source": "/assets/(.*)\\.(png|jpg|jpeg|gif|svg|webp)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)\\.(css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
       ]
     },
     {
