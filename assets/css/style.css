@@ -1078,6 +1078,24 @@ h1, h2, h3 {
 .unified-memory-game.um-images-ready .artwork-image-card img.artwork-image { transition: filter .5s ease; }
 /* Ocultar overlay educativo cuando el usuario lo desactiva */
 .unified-memory-game.um-overlay-hidden .artwork-image-card .artwork-edu-overlay { display:none; }
+
+/* 📱 Optimización móvil del overlay - 4 columnas */
+@media (max-width: 640px) {
+  .unified-memory-game .artwork-image-card .artwork-edu-overlay {
+    padding: 0.3rem 0.4rem 0.4rem;
+    font-size: 0.5rem; /* Reducido de 0.66rem */
+    gap: 1px;
+  }
+
+  .unified-memory-game .artwork-image-card .overlay-title {
+    font-size: 0.56rem; /* Reducido de 0.74rem */
+    line-height: 1.05;
+  }
+
+  .unified-memory-game .artwork-image-card .overlay-segment {
+    font-size: 0.48rem;
+  }
+}
 /* ========================================================== */
 
 .memory-grid {
