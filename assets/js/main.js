@@ -527,3 +527,80 @@ function switchGallery(galleryType, clickedButton) {
         }, 100);
     }
 }
+
+// ==========================================
+// 🍔 HAMBURGER MENU - MOBILE NAVIGATION
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const body = document.body;
+
+    // Función para abrir el menú
+    function openMenu() {
+        hamburgerBtn.classList.add('active');
+        navMenu.classList.add('active');
+        menuOverlay.classList.add('active');
+        body.classList.add('menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        hamburgerBtn.setAttribute('aria-label', 'Cerrar menú');
+    }
+
+    // Función para cerrar el menú
+    function closeMenu() {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        body.classList.remove('menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        hamburgerBtn.setAttribute('aria-label', 'Abrir menú');
+    }
+
+    // Toggle menú al hacer clic en el botón hamburger
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', function() {
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+    }
+
+    // Cerrar menú al hacer clic en el overlay
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', closeMenu);
+    }
+
+    // Cerrar menú al hacer clic en un link de navegación
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            closeMenu();
+            // Permitir que la navegación suave continúe
+        });
+    });
+
+    // Cerrar menú con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+
+    // Cerrar menú al cambiar orientación del dispositivo
+    window.addEventListener('orientationchange', function() {
+        if (navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+
+    // Cerrar menú al redimensionar a desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+});
