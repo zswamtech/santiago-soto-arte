@@ -7,21 +7,21 @@
     <!-- SEO Básico -->
     <meta name="description" content="Portfolio de Santiago Soto, joven artista de 14 años especializado en retratos hiperrealistas al óleo de mascotas.">
     <meta name="keywords" content="arte, pintura, oleo, mascotas, retratos, joven artista, hiperrealismo, Santiago Soto">
-    <link rel="canonical" href="https://santiago-soto-arte.vercel.app/">
+    <link rel="canonical" href="https://santiagosoto.art/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Santiago Soto - Pintor de Mascotas">
     <meta property="og:description" content="Retratos hiperrealistas al óleo que capturan la esencia de tus mascotas.">
-    <meta property="og:url" content="https://santiago-soto-arte.vercel.app/">
-    <meta property="og:image" content="https://santiago-soto-arte.vercel.app/assets/images/banner.png">
+    <meta property="og:url" content="https://santiagosoto.art/">
+    <meta property="og:image" content="https://santiagosoto.art/assets/images/favicon.svg">
     <meta property="og:locale" content="es_ES">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Santiago Soto - Pintor de Mascotas">
     <meta name="twitter:description" content="Retratos al óleo de mascotas – arte joven con detalle y alma.">
-    <meta name="twitter:image" content="https://santiago-soto-arte.vercel.app/assets/images/banner.png">
+    <meta name="twitter:image" content="https://santiagosoto.art/assets/images/favicon.svg">
 
     <!-- Favicon / Icons -->
     <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
@@ -55,23 +55,23 @@
             "@graph": [
                 {
                     "@type": "Person",
-                    "@id": "https://santiago-soto-arte.vercel.app/#person",
+                    "@id": "https://santiagosoto.art/#person",
                     "name": "Santiago Soto",
                     "alternateName": "Santiago Soto Arte",
                     "description": "Joven artista de 14 años especializado en retratos hiperrealistas al óleo de mascotas.",
-                    "url": "https://santiago-soto-arte.vercel.app/",
-                    "image": "https://santiago-soto-arte.vercel.app/assets/images/banner.png",
+                    "url": "https://santiagosoto.art/",
+                    "image": "https://santiagosoto.art/assets/images/favicon.svg",
                     "knowsAbout": ["pintura al óleo", "retratos de mascotas", "arte hiperrealista"],
                     "sameAs": []
                 },
                 {
                     "@type": "WebSite",
-                    "@id": "https://santiago-soto-arte.vercel.app/#website",
+                    "@id": "https://santiagosoto.art/#website",
                     "name": "Santiago Soto Arte",
-                    "url": "https://santiago-soto-arte.vercel.app/",
+                    "url": "https://santiagosoto.art/",
                     "inLanguage": "es",
                     "description": "Portfolio de arte y retratos de mascotas al óleo por Santiago Soto.",
-                    "publisher": { "@id": "https://santiago-soto-arte.vercel.app/#person" }
+                    "publisher": { "@id": "https://santiagosoto.art/#person" }
                 }
             ]
         }
@@ -87,13 +87,21 @@
                     <span>Pintura al Óleo</span>
                 </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#galeria">Galería</a></li>
-                <li><a href="#juegos">Juegos</a></li>
-                <li><a href="#sobre-mi">Sobre Mí</a></li>
-                <li><a href="#pricing">Precios</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+
+            <!-- Hamburger Menu Button (solo visible en móvil) -->
+            <button type="button" class="hamburger-menu" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#galeria" class="nav-link">Galería</a></li>
+                <li><a href="#juegos" class="nav-link">Juegos</a></li>
+                <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                <li><a href="#pricing" class="nav-link">Precios</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
                 <li>
                     <button class="cart-button" onclick="paymentGateway?.toggleCart()">
                         🛒 Carrito
@@ -101,6 +109,9 @@
                     </button>
                 </li>
             </ul>
+
+            <!-- Overlay para cerrar menú -->
+            <div class="menu-overlay" id="menu-overlay"></div>
         </div>
     </nav>
 
@@ -337,11 +348,11 @@
                 
                 <div class="story-content">
                     <p class="story-paragraph">
-                        Soy <span class="highlight">Santiago Soto</span>, tengo 14 años y descubrí mi pasión por la pintura a los 10. Desde hace un año me dedico a trabajar con la <span class="highlight">técnica de óleo sobre lienzo</span>, explorando especialmente el retrato de mascotas.
+                        Soy <span class="highlight">Santiago Soto</span>, tengo 14 años y mi viaje con el arte comenzó a los <span class="highlight">5 años</span> cuando hice mis primeros trazos. Desde entonces, no he dejado de crear. Hace <span class="highlight">un año</span> encontré mi verdadera pasión trabajando con la <span class="highlight">técnica de óleo sobre lienzo</span>, especializándome en retratos de mascotas.
                     </p>
-                    
+
                     <p class="story-paragraph">
-                        A través de mis obras busco <span class="highlight">inmortalizar los recuerdos</span> y transmitir los sentimientos que un animal despierta en la vida de una persona. Cada pincelada cuenta una historia, cada mirada expresa el alma de nuestros compañeros fieles.
+                        Mi formación musical en <span class="highlight">piano (2016-2018)</span> desde temprana edad despertó mi creatividad y sensibilidad artística, elementos que hoy se reflejan en cada obra. A través de mis pinturas busco <span class="highlight">inmortalizar los recuerdos</span> y transmitir los sentimientos que nuestros compañeros fieles despiertan. Cada pincelada cuenta una historia, cada mirada captura un alma.
                     </p>
                 </div>
             </div>
@@ -349,34 +360,81 @@
             <!-- Timeline -->
             <div class="timeline">
                 <h2 class="timeline-title">🎨 Mi Evolución Artística</h2>
-                
+
                 <div class="timeline-container">
                     <div class="timeline-line"></div>
-                    
+
+                    <!-- 2016: Primeros Trazos -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <div class="timeline-year">2020</div>
-                            <div class="timeline-event">Primeros trazos</div>
-                            <div class="timeline-description">Empecé a dibujar y descubrí que me gustaba expresarme a través del arte</div>
+                            <div class="timeline-year">2016</div>
+                            <div class="timeline-event">✏️ Primeros Trazos</div>
+                            <div class="timeline-description">A los 5 años, descubrí el arte haciendo mis primeros dibujos. Desde ese momento, el lápiz y el papel se convirtieron en mis mejores amigos.</div>
+                            <div class="timeline-gallery">
+                                <div class="timeline-note">🎨 Primeras exploraciones creativas</div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
+
+                    <!-- 2016-2018: Piano -->
+                    <div class="timeline-item special">
+                        <div class="timeline-dot musical"></div>
                         <div class="timeline-content">
-                            <div class="timeline-year">2024</div>
-                            <div class="timeline-event">Inicio con óleo</div>
-                            <div class="timeline-description">Comencé a pintar al óleo y me enfoqué en retratos de mascotas</div>
+                            <div class="timeline-year">2016 - 2018</div>
+                            <div class="timeline-event">🎹 Formación Musical</div>
+                            <div class="timeline-description">Dos años de clases de piano que desarrollaron mi sensibilidad artística, ritmo y disciplina. Esta experiencia musical enriqueció mi forma de crear y percibir el arte visual.</div>
+                            <div class="timeline-highlight">
+                                <span class="highlight-badge">🎵 Creatividad Musical</span>
+                            </div>
                         </div>
                     </div>
-                    
+
+                    <!-- 2021: Clases Profesionales -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <div class="timeline-year">Hoy</div>
-                            <div class="timeline-event">Aprendiendo cada día</div>
-                            <div class="timeline-description">Practico constantemente para mejorar mi técnica</div>
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-event">🎓 Clases Profesionales</div>
+                            <div class="timeline-description">Comencé mi formación artística formal. Aprendí técnicas de dibujo, teoría del color, composición y perspectiva que fortalecieron mi base como artista.</div>
+                            <div class="timeline-gallery">
+                                <div class="timeline-note">📚 Fundamentos del arte profesional</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2024: Óleo -->
+                    <div class="timeline-item highlight">
+                        <div class="timeline-dot featured"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">Oct 2024</div>
+                            <div class="timeline-event">🖌️ Inicio con Óleo</div>
+                            <div class="timeline-description">Descubrí mi verdadera pasión: la pintura al óleo. Me especialicé en retratos hiperrealistas de mascotas, combinando técnica y emoción en cada obra.</div>
+                            <div class="timeline-gallery">
+                                <button class="view-gallery-btn" onclick="showTimelineGallery('2024-oleo')">
+                                    🖼️ Ver Obras de este Período
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hoy -->
+                    <div class="timeline-item current">
+                        <div class="timeline-dot pulse"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2025</div>
+                            <div class="timeline-event">✨ Presente y Futuro</div>
+                            <div class="timeline-description">Continúo perfeccionando mi técnica, explorando nuevos estilos y aceptando encargos personalizados. Cada día es una oportunidad para crear algo único e inmortalizar momentos especiales.</div>
+                            <div class="timeline-stats">
+                                <div class="timeline-stat">
+                                    <span class="stat-value" id="active-projects">0</span>
+                                    <span class="stat-label">Proyectos activos</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="stat-value">∞</span>
+                                    <span class="stat-label">Por aprender</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -388,16 +446,23 @@
                     <div class="stat-icon">🎨</div>
                     <div class="stat-number" id="years-counter">0</div>
                     <div class="stat-label">Años dibujando</div>
-                    <div class="stat-sublabel">Clases profesionales desde 2021</div>
+                    <div class="stat-sublabel">Desde 2016 (5 años de edad)</div>
                 </div>
-                
+
+                <div class="stat-card">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-number" id="professional-years">0</div>
+                    <div class="stat-label">Años de formación profesional</div>
+                    <div class="stat-sublabel">Clases desde 2021</div>
+                </div>
+
                 <div class="stat-card">
                     <div class="stat-icon">🖌️</div>
                     <div class="stat-number" id="months-counter">0</div>
                     <div class="stat-label">Meses con óleo</div>
-                    <div class="stat-sublabel">Desde diciembre 2023</div>
+                    <div class="stat-sublabel">Desde octubre 2024</div>
                 </div>
-                
+
                 <div class="stat-card">
                     <div class="stat-icon">✨</div>
                     <div class="stat-number">∞</div>
@@ -440,10 +505,42 @@
                             <span>Tipo de mascota</span>
                         </div>
                     </div>
-                </div>
 
-                <div id="calculator-container">
-                    <!-- La calculadora se cargará aquí dinámicamente -->
+                    <!-- Botón para abrir calculadora -->
+                    <div class="pricing-cta">
+                        <button class="btn-primary open-calculator-btn" onclick="openPricingCalculator()">
+                            💰 Calculadora de Precios
+                        </button>
+                        <p class="pricing-note">Obtén una estimación personalizada en segundos</p>
+                    </div>
+
+                    <!-- Rangos de precios de referencia -->
+                    <div class="pricing-ranges">
+                        <h4>📊 Rangos de Referencia</h4>
+                        <div class="ranges-grid">
+                            <div class="range-card">
+                                <div class="range-size">Pequeño</div>
+                                <div class="range-dimensions">20x30 cm</div>
+                                <div class="range-price">$100 - $150</div>
+                            </div>
+                            <div class="range-card">
+                                <div class="range-size">Mediano</div>
+                                <div class="range-dimensions">30x40 cm</div>
+                                <div class="range-price">$150 - $250</div>
+                            </div>
+                            <div class="range-card featured">
+                                <div class="range-badge">Más Popular</div>
+                                <div class="range-size">Grande</div>
+                                <div class="range-dimensions">40x60 cm</div>
+                                <div class="range-price">$250 - $400</div>
+                            </div>
+                            <div class="range-card">
+                                <div class="range-size">Personalizado</div>
+                                <div class="range-dimensions">Tamaño a medida</div>
+                                <div class="range-price">Consultar</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -538,6 +635,16 @@
     <div id="checkout-modal">
         <div class="checkout-content">
             <!-- El contenido del checkout se cargará dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Modal de Calculadora de Precios -->
+    <div id="pricing-calculator-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closePricingCalculator()">&times;</span>
+            <div id="calculator-modal-content">
+                <!-- El contenido de la calculadora se cargará dinámicamente -->
+            </div>
         </div>
     </div>
 

@@ -243,23 +243,54 @@ h1, h2, h3 {
     padding: 0 1rem;
 }
 
-@media (max-width: 768px) {
+/* === 📱 GALLERY RESPONSIVE OPTIMIZADO === */
+
+/* Móvil vertical - 1 columna */
+@media (max-width: 640px) {
     .gallery-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 0;
+        gap: 1.25rem;
+        padding: 0 0.75rem;
+    }
+
+    .gallery-item,
+    .artwork-card {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Imágenes optimizadas para móvil */
+    .gallery-image,
+    .artwork-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        object-fit: cover;
     }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Móvil horizontal / Tablet vertical - 2 columnas */
+@media (min-width: 641px) and (max-width: 968px) {
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 0 0.75rem;
     }
 }
 
-@media (min-width: 1025px) {
+/* Tablet horizontal - 3 columnas */
+@media (min-width: 969px) and (max-width: 1280px) {
     .gallery-grid {
         grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+}
+
+/* Desktop grande - 4 columnas */
+@media (min-width: 1281px) {
+    .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
     }
 }
 
@@ -481,10 +512,137 @@ h1, h2, h3 {
     }
 }
 
+/* ==========================================
+   HAMBURGER MENU & MOBILE NAVIGATION
+   ========================================== */
+
+/* Hamburger Button - Solo visible en móvil */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    transition: transform 0.3s ease;
+}
+
+.hamburger-menu:hover {
+    transform: scale(1.1);
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background: #2c3e50;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Animación hamburger a X cuando está abierto */
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+}
+
+/* Overlay oscuro cuando el menú está abierto */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Mostrar hamburger en móvil */
+    .hamburger-menu {
+        display: flex;
+    }
+
+    /* Menú móvil - Drawer desde la derecha */
     .nav-menu {
-        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        max-width: 320px;
+        height: 100vh;
+        background: #ffffff;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 80px 0 20px 0;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+        transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-menu li {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .nav-menu li:last-child {
+        border-bottom: none;
+        padding: 1rem;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a:active {
+        background: #f8f9fa;
+        color: #667eea;
+        padding-left: 2rem;
+    }
+
+    /* Carrito en menú móvil */
+    .nav-menu .cart-button {
+        width: calc(100% - 3rem);
+        margin: 1rem 1.5rem;
+        justify-content: center;
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* Prevenir scroll del body cuando el menú está abierto */
+    body.menu-open {
+        overflow: hidden;
     }
 
     .hero h1 {

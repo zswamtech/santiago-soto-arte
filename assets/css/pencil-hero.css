@@ -622,24 +622,71 @@
         flex-direction: column;
         text-align: center;
         padding: 2rem 0;
+        min-height: auto; /* Permitir que el hero se adapte */
+    }
+
+    /* Reducir intensidad de animaciones en móvil para mejor performance */
+    .hero::before {
+        opacity: 0.4; /* Reducir efectos de grafito */
+        animation-duration: 25s; /* Más lento = menos carga */
+    }
+
+    .hero::after {
+        opacity: 0.3; /* Reducir cross-hatching */
+    }
+
+    /* Optimizar animaciones de lápices */
+    .pencil {
+        animation-duration: 20s !important; /* Más lento */
+        will-change: auto; /* Remover will-change para ahorrar memoria */
+    }
+
+    /* Reducir cantidad de lápices visibles en móvil */
+    .pencil:nth-child(n+6) {
+        display: none; /* Ocultar lápices adicionales */
     }
 
     .hero-content {
         padding: 0 1.5rem;
         margin-bottom: 2rem;
+        z-index: 2; /* Asegurar que esté sobre los efectos */
+    }
+
+    /* Mejorar tipografía para móvil */
+    .hero h1 {
+        font-size: clamp(2rem, 8vw, 3rem); /* Responsive fluido */
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        line-height: 1.6;
+        max-width: 90%; /* Evitar líneas muy largas */
+        margin: 0 auto 1.5rem;
     }
 
     .hero-buttons {
         justify-content: center;
+        gap: 1rem;
     }
 
+    /* CTAs más prominentes en móvil */
     .btn-primary, .btn-secondary {
-        padding: 0.9rem 2.2rem;
-        font-size: 1rem;
+        padding: 1rem 2.5rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        min-height: 48px; /* Touch target mínimo */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:active, .btn-secondary:active {
+        transform: scale(0.97); /* Feedback táctil */
     }
 
     .hero-visual {
-        height: 50vh;
+        height: 45vh;
+        max-height: 400px;
     }
 
     .notebook-page {
@@ -651,32 +698,75 @@
         bottom: 10%;
         right: 5%;
         transform: scale(0.8);
+        opacity: 0.7; /* Menos prominente */
     }
 }
 
 @media (max-width: 480px) {
+    /* Hero aún más compacto para móviles pequeños */
+    .hero {
+        padding: 1.5rem 0;
+    }
+
     .hero-content {
         padding: 0 1rem;
     }
 
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+    /* Tipografía optimizada para pantallas pequeñas */
+    .hero h1 {
+        font-size: clamp(1.75rem, 7vw, 2.5rem);
+        margin-bottom: 0.75rem;
     }
 
+    .hero p {
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+        margin-bottom: 1.25rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    /* Botones adaptados a pantalla completa */
     .btn-primary, .btn-secondary {
         width: 100%;
-        max-width: 300px;
+        max-width: none;
+        padding: 0.95rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* Reducir aún más los efectos visuales */
+    .hero::before,
+    .hero::after {
+        opacity: 0.2;
+    }
+
+    /* Ocultar más lápices en pantallas muy pequeñas */
+    .pencil:nth-child(n+4) {
+        display: none;
+    }
+
+    .hero-visual {
+        height: 35vh;
+        max-height: 300px;
     }
 
     .notebook-page {
-        width: 240px;
-        height: 300px;
+        width: 220px;
+        height: 280px;
     }
 
     .sketch-drawing {
-        font-size: 4.5rem;
+        font-size: 4rem;
+    }
+
+    .sketch-tools {
+        transform: scale(0.65);
+        opacity: 0.5;
     }
 }
 

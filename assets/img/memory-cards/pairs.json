@@ -118,5 +118,23 @@
     "files": { "a": "par_15_joven_de_perla_a.png", "b": "par_15_joven_de_perla_b.png" },
     "segments": { "a": "rostro y turbante", "b": "perla y fondo" },
     "alt": { "a": "La Joven de la Perla (rostro y turbante)", "b": "La Joven de la Perla (perla y fondo oscuro)" }
+  },
+  {
+    "key": "bosch_jardin_delicias_central_segments_01",
+    "difficulty": "hard",
+    "meta": {
+      "title": "El Jardín de las Delicias (Panel Central)",
+      "artist": "Hieronymus Bosch (El Bosco)",
+      "year": "c. 1500"
+    },
+    "files": { "a": "par_16_jardin_delicias_a.png", "b": "par_16_jardin_delicias_b.png" },
+    "segments": {
+      "a": "fuente de la vida y aves",
+      "b": "nudistas y frutas gigantes"
+    },
+    "alt": {
+      "a": "El Jardín de las Delicias (Panel central) — fuente rosa y aves",
+      "b": "El Jardín de las Delicias (Panel central) — nudistas y frutas gigantes"
+    }
   }
 ]

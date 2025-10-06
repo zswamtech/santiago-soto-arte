@@ -83,79 +83,316 @@ const contactModals = {
                 <h3>Lleva tu arte más allá del lienzo</h3>
                 <p>¡Tu mascota puede acompañarte en muchas formas!</p>
 
-                <div class="products-grid">
-                    <div class="product-card">
-                        <div class="product-icon">☕</div>
-                        <h4>Vasos Personalizados</h4>
-                        <p>Tu mascota en una taza especial para cada mañana</p>
-                        <span class="price">$25 - $35</span>
-                        <button class="add-to-cart-btn" data-item='{"id":"mug_001","type":"product","name":"Vaso Personalizado","description":"Taza personalizada con retrato de mascota","price":30,"image":null}'>
-                            🛒 Añadir al Carrito
-                        </button>
-                    </div>
+                <!-- Pestañas de categorías -->
+                <div class="product-categories">
+                    <button class="category-tab active" onclick="switchProductCategory(event, 'papeleria')">📓 Papelería</button>
+                    <button class="category-tab" onclick="switchProductCategory(event, 'ropa')">👕 Ropa & Textiles</button>
+                    <button class="category-tab" onclick="switchProductCategory(event, 'hogar')">🏠 Hogar & Deco</button>
+                    <button class="category-tab" onclick="switchProductCategory(event, 'especiales')">✨ Especiales</button>
+                </div>
 
-                    <div class="product-card">
-                        <div class="product-icon">👕</div>
-                        <h4>Camisetas Artísticas</h4>
-                        <p>Ropa única con el retrato de tu compañero</p>
-                        <span class="price">$30 - $45</span>
-                        <button class="add-to-cart-btn" data-item='{"id":"tshirt_001","type":"product","name":"Camiseta Artística","description":"Camiseta personalizada con arte de mascota","price":37,"image":null}'>
-                            🛒 Añadir al Carrito
-                        </button>
-                    </div>
+                <!-- Categoría: Papelería -->
+                <div class="product-category-content active" data-category="papeleria">
+                    <h4 class="category-title">📓 Papelería Personalizada</h4>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-icon">📓</div>
+                            <h4>Cuaderno Argollado A4</h4>
+                            <p>Cuaderno tamaño carta con arte de tu mascota y argollado profesional</p>
+                            <span class="price">$18 - $28</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"notebook_a4","type":"product","name":"Cuaderno Argollado A4","description":"Cuaderno tamaño carta argollado con arte personalizado","price":23,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
 
-                    <div class="product-card">
-                        <div class="product-icon">📦</div>
-                        <h4>Kit Memorial</h4>
-                        <p>Un conjunto especial para honrar a tu mascota</p>
-                        <span class="price">$80 - $120</span>
-                        <button class="add-to-cart-btn" data-item='{"id":"memorial_001","type":"product","name":"Kit Memorial","description":"Conjunto especial para honrar a tu mascota","price":100,"image":null}'>
-                            🛒 Añadir al Carrito
-                        </button>
-                    </div>
+                        <div class="product-card">
+                            <div class="product-icon">📔</div>
+                            <h4>Cuaderno Argollado A5</h4>
+                            <p>Libreta mediana perfecta para llevar a todas partes</p>
+                            <span class="price">$15 - $22</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"notebook_a5","type":"product","name":"Cuaderno Argollado A5","description":"Libreta mediana argollada personalizada","price":18,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
 
-                    <div class="product-card">
-                        <div class="product-icon">🖼️</div>
-                        <h4>Prints de Alta Calidad</h4>
-                        <p>Reproducciones profesionales de tu retrato</p>
-                        <span class="price">$20 - $40</span>
-                        <button class="add-to-cart-btn" data-item='{"id":"print_001","type":"product","name":"Print de Alta Calidad","description":"Reproducción profesional de retrato","price":30,"image":null}'>
-                            🛒 Añadir al Carrito
-                        </button>
+                        <div class="product-card">
+                            <div class="product-icon">🗒️</div>
+                            <h4>Libreta Pocket</h4>
+                            <p>Pequeña y práctica, ideal para bolsillo o cartera</p>
+                            <span class="price">$12 - $18</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"notebook_pocket","type":"product","name":"Libreta Pocket","description":"Libreta pequeña argollada para bolsillo","price":15,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">📒</div>
+                            <h4>Set de 3 Libretas</h4>
+                            <p>Combo de tamaños variados con diseño coordinado</p>
+                            <span class="price">$40 - $55</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"notebook_set","type":"product","name":"Set de 3 Libretas","description":"Combo de 3 libretas argolladas de diferentes tamaños","price":48,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Categoría: Ropa & Textiles -->
+                <div class="product-category-content" data-category="ropa">
+                    <h4 class="category-title">👕 Ropa & Textiles Personalizados</h4>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-icon">👕</div>
+                            <h4>Camiseta Básica</h4>
+                            <p>Camiseta 100% algodón con el arte de tu mascota</p>
+                            <span class="price">$25 - $35</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"tshirt_basic","type":"product","name":"Camiseta Básica Personalizada","description":"Camiseta 100% algodón con arte de mascota","price":30,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🎽</div>
+                            <h4>Camisa Polo</h4>
+                            <p>Polo elegante con bordado o estampado discreto</p>
+                            <span class="price">$35 - $50</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"polo_shirt","type":"product","name":"Camisa Polo Personalizada","description":"Polo con arte bordado o estampado","price":42,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🧥</div>
+                            <h4>Sudadera / Hoodie</h4>
+                            <p>Sudadera con capucha, perfecta para el frío</p>
+                            <span class="price">$45 - $65</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"hoodie","type":"product","name":"Sudadera Personalizada","description":"Hoodie con arte de mascota","price":55,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">👔</div>
+                            <h4>Camisa de Vestir</h4>
+                            <p>Camisa formal con detalle artístico sutil</p>
+                            <span class="price">$40 - $60</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"dress_shirt","type":"product","name":"Camisa de Vestir Personalizada","description":"Camisa formal con detalle artístico","price":50,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🧢</div>
+                            <h4>Gorra Personalizada</h4>
+                            <p>Gorra bordada con el retrato de tu mascota</p>
+                            <span class="price">$22 - $32</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"cap","type":"product","name":"Gorra Personalizada","description":"Gorra bordada con arte de mascota","price":27,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🎒</div>
+                            <h4>Mochila / Tote Bag</h4>
+                            <p>Bolsa de tela resistente con diseño único</p>
+                            <span class="price">$28 - $42</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"tote_bag","type":"product","name":"Mochila/Tote Personalizado","description":"Bolsa de tela con arte personalizado","price":35,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categoría: Hogar & Decoración -->
+                <div class="product-category-content" data-category="hogar">
+                    <h4 class="category-title">🏠 Hogar & Decoración</h4>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-icon">☕</div>
+                            <h4>Taza Personalizada</h4>
+                            <p>Taza de cerámica con el arte de tu mascota</p>
+                            <span class="price">$18 - $28</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"mug","type":"product","name":"Taza Personalizada","description":"Taza de cerámica con arte de mascota","price":23,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🍽️</div>
+                            <h4>Set de Tazas (2 uds)</h4>
+                            <p>Pareja de tazas con diseño coordinado</p>
+                            <span class="price">$32 - $48</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"mug_set","type":"product","name":"Set de 2 Tazas","description":"Par de tazas personalizadas","price":40,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🖼️</div>
+                            <h4>Print Enmarcado</h4>
+                            <p>Reproducción de alta calidad lista para colgar</p>
+                            <span class="price">$35 - $55</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"framed_print","type":"product","name":"Print Enmarcado","description":"Reproducción profesional enmarcada","price":45,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🖼️</div>
+                            <h4>Print Simple</h4>
+                            <p>Reproducción profesional sin marco</p>
+                            <span class="price">$15 - $30</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"print","type":"product","name":"Print de Alta Calidad","description":"Reproducción profesional sin marco","price":22,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🛏️</div>
+                            <h4>Funda de Almohada</h4>
+                            <p>Funda decorativa con el arte de tu mascota</p>
+                            <span class="price">$22 - $35</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"pillow_case","type":"product","name":"Funda de Almohada","description":"Funda decorativa personalizada","price":28,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-icon">🪴</div>
+                            <h4>Mousepad / Posavasos</h4>
+                            <p>Accesorios funcionales para tu espacio</p>
+                            <span class="price">$12 - $20</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"mousepad","type":"product","name":"Mousepad/Posavasos","description":"Accesorio funcional personalizado","price":16,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categoría: Especiales -->
+                <div class="product-category-content" data-category="especiales">
+                    <h4 class="category-title">✨ Kits Especiales</h4>
+                    <div class="products-grid">
+                        <div class="product-card featured">
+                            <div class="product-icon">📦</div>
+                            <h4>Kit Memorial Premium</h4>
+                            <p>Cuaderno A5, taza, print enmarcado y camiseta para honrar a tu mascota</p>
+                            <span class="price">$110 - $150</span>
+                            <span class="badge-save">Ahorra $25</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"memorial_premium","type":"product","name":"Kit Memorial Premium","description":"Conjunto completo para honrar a tu mascota","price":130,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card featured">
+                            <div class="product-icon">🎁</div>
+                            <h4>Kit Estudiante</h4>
+                            <p>Set de 3 cuadernos argollados + tote bag personalizado</p>
+                            <span class="price">$60 - $80</span>
+                            <span class="badge-save">Ahorra $15</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"student_kit","type":"product","name":"Kit Estudiante","description":"Set de papelería para estudiantes","price":70,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card featured">
+                            <div class="product-icon">💼</div>
+                            <h4>Kit Oficina</h4>
+                            <p>Cuaderno A4, taza premium, mousepad y polo personalizado</p>
+                            <span class="price">$85 - $115</span>
+                            <span class="badge-save">Ahorra $20</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"office_kit","type":"product","name":"Kit Oficina","description":"Conjunto profesional personalizado","price":100,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+
+                        <div class="product-card featured">
+                            <div class="product-icon">❤️</div>
+                            <h4>Kit Pareja</h4>
+                            <p>2 tazas, 2 camisetas y cuaderno compartido</p>
+                            <span class="price">$75 - $100</span>
+                            <span class="badge-save">Ahorra $18</span>
+                            <button class="add-to-cart-btn" data-item='{"id":"couple_kit","type":"product","name":"Kit Pareja","description":"Conjunto para parejas amantes de mascotas","price":88,"image":null}'>
+                                🛒 Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de solicitud -->
                 <form class="contact-form" onsubmit="submitContactForm(event, 'productos')">
-                    <h4>Solicita tu producto personalizado</h4>
+                    <h4>📝 Solicita tu producto personalizado</h4>
+                    <p class="form-intro">¿No encontraste lo que buscabas? Cuéntanos tu idea</p>
 
                     <div class="form-group">
                         <label>Tu nombre:</label>
-                        <input type="text" name="name" required>
+                        <input type="text" name="name" required placeholder="Nombre completo">
                     </div>
 
                     <div class="form-group">
                         <label>Email:</label>
-                        <input type="email" name="email" required>
+                        <input type="email" name="email" required placeholder="tu-email@ejemplo.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Teléfono (opcional):</label>
+                        <input type="tel" name="phone" placeholder="+57 300 123 4567">
                     </div>
 
                     <div class="form-group">
                         <label>Producto de interés:</label>
                         <select name="product" required>
                             <option value="">Selecciona un producto...</option>
-                            <option value="vaso">Vaso Personalizado</option>
-                            <option value="camiseta">Camiseta Artística</option>
-                            <option value="kit">Kit Memorial</option>
-                            <option value="print">Print de Alta Calidad</option>
-                            <option value="otro">Otro (especificar)</option>
+                            <optgroup label="📓 Papelería">
+                                <option value="cuaderno_a4">Cuaderno Argollado A4</option>
+                                <option value="cuaderno_a5">Cuaderno Argollado A5</option>
+                                <option value="libreta_pocket">Libreta Pocket</option>
+                                <option value="set_libretas">Set de 3 Libretas</option>
+                            </optgroup>
+                            <optgroup label="👕 Ropa & Textiles">
+                                <option value="camiseta">Camiseta Básica</option>
+                                <option value="polo">Camisa Polo</option>
+                                <option value="hoodie">Sudadera / Hoodie</option>
+                                <option value="camisa_vestir">Camisa de Vestir</option>
+                                <option value="gorra">Gorra</option>
+                                <option value="tote">Mochila / Tote Bag</option>
+                            </optgroup>
+                            <optgroup label="🏠 Hogar & Deco">
+                                <option value="taza">Taza Personalizada</option>
+                                <option value="set_tazas">Set de Tazas</option>
+                                <option value="print_enmarcado">Print Enmarcado</option>
+                                <option value="print">Print Simple</option>
+                                <option value="almohada">Funda de Almohada</option>
+                                <option value="mousepad">Mousepad / Posavasos</option>
+                            </optgroup>
+                            <optgroup label="✨ Kits Especiales">
+                                <option value="kit_memorial">Kit Memorial Premium</option>
+                                <option value="kit_estudiante">Kit Estudiante</option>
+                                <option value="kit_oficina">Kit Oficina</option>
+                                <option value="kit_pareja">Kit Pareja</option>
+                            </optgroup>
+                            <option value="otro">🎨 Otro (especificar en mensaje)</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Mensaje adicional:</label>
-                        <textarea name="message" rows="3" placeholder="Cuéntanos más detalles sobre lo que buscas..."></textarea>
+                        <label>Cantidad estimada:</label>
+                        <input type="number" name="quantity" min="1" value="1" placeholder="1">
+                        <p class="form-note">Para pedidos mayoristas (10+ unidades) ofrecemos descuentos especiales</p>
                     </div>
 
-                    <button type="submit" class="submit-btn">Solicitar Producto 💝</button>
+                    <div class="form-group">
+                        <label>Mensaje adicional:</label>
+                        <textarea name="message" rows="4" placeholder="Cuéntanos más detalles: colores preferidos, tamaños, ideas especiales, fecha de entrega deseada..."></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" name="hasPhoto" id="hasPhoto">
+                        <label for="hasPhoto">Ya tengo la foto/arte de mi mascota lista para enviar</label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Enviar Solicitud 💝</button>
+                    <p class="form-note">Te responderemos en 24-48 horas con cotización y opciones de personalización</p>
                 </form>
             </div>
         `
@@ -332,6 +569,29 @@ function showSuccessMessage(type, data) {
     }
 
     contentArea.innerHTML = successMessage;
+}
+
+// 🔄 Cambiar categoría de productos
+function switchProductCategory(event, categoryName) {
+    // Prevenir comportamiento por defecto si es necesario
+    if (event) {
+        event.preventDefault();
+    }
+
+    // Actualizar tabs activos
+    const tabs = document.querySelectorAll('.category-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Actualizar contenido visible
+    const contents = document.querySelectorAll('.product-category-content');
+    contents.forEach(content => {
+        if (content.dataset.category === categoryName) {
+            content.classList.add('active');
+        } else {
+            content.classList.remove('active');
+        }
+    });
 }
 
 // 🎯 Event listeners globales
