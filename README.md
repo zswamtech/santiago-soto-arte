@@ -9,7 +9,7 @@
   </p>
 
   <p>
-    <img src="assets/images/logosantiagoarte1.png" alt="Logo Santiago Soto Arte" width="160" height="160" />
+    <img src="assets/images/favicon.svg" alt="Logo Santiago Soto Arte" width="160" height="160" />
   </p>
 
   <p>
